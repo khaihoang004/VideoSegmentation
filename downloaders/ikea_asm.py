@@ -1,6 +1,7 @@
 """IKEA ASM: extract archives from mounted Drive, or fetch publisher packages."""
 
 from pathlib import Path
+from copy import copy
 
 from videosegmentation.downloads import download_drive
 from videosegmentation.storage import find_archives
@@ -44,6 +45,17 @@ class IkeaASMDownloader(DatasetDownloader):
         add_mounted_arguments(parser)
         parser.add_argument("--source", choices=("mounted", "download"), default="mounted", help="Default: extract archives already on mounted Drive")
         parser.add_argument("--part", choices=(*self.mounted_assets, "all"), action="append", help="Repeat to select packages; mounted default: rgb-top, annotations, utilities")
+        parser.add_argument("--video-only", action="store_true", help="For RGB archives extract only AVI/MP4/MKV/MOV/WebM; retain all labels/utilities")
+
+    def finish(self, paths, args, dataset, force_extract=False):
+        if args.video_only and args.extract_include:
+            raise ValueError("Use --video-only or --extract-include, not both.")
+        for path in paths:
+            selected_args = args
+            if args.video_only and "rgb" in path.name.lower():
+                selected_args = copy(args)
+                selected_args.extract_include = [f"*.{ext}" for ext in ("avi", "mp4", "mkv", "mov", "webm", "AVI", "MP4", "MKV", "MOV", "WEBM")]
+            super().finish([path], selected_args, dataset, force_extract)
 
     def run_mounted(self, args):
         source = args.source_dir or self.default_source

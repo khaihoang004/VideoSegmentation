@@ -18,6 +18,7 @@ class DatasetDownloader(ABC):
         parser.add_argument("--root", default=os.environ.get("VIDEOSEG_DATA_ROOT", str(DEFAULT_ROOT)), help="Dataset root (default: /content/drive/MyDrive/Datasets)")
         parser.add_argument("--list-files", action="store_true", help="Show available files/parts or source instructions without downloading payload")
         parser.add_argument("--extract", action="store_true", help="Extract selected supported archives on Drive, keeping originals")
+        add_execution_arguments(parser)
 
     def directory(self, args: argparse.Namespace) -> Path:
         dataset = dataset_directory(args.root, self.folder_name)
@@ -37,7 +38,7 @@ class DatasetDownloader(ABC):
                     continue
                 destination = dataset / "extracted" / stem
                 print(f"Extracting: {path} -> {destination}", flush=True)
-                extract_archive(path, destination)
+                extract_archive(path, destination, **extraction_options(args))
 
     def extract_mounted(self, args: argparse.Namespace) -> None:
         paths = find_archives(args.source_dir, getattr(args, "include", None), args.recursive)
@@ -57,6 +58,24 @@ def add_hf_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--exclude", action="append", help="File glob to exclude; repeat for more patterns")
     parser.add_argument("--revision", default="main", help="Hub branch/tag/commit SHA (default: main)")
     parser.add_argument("--workers", type=int, default=2)
+
+
+def add_execution_arguments(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument("--extract-workers", type=int, default=1, help="ZIP extraction threads, 1-8 (default: 1; try 2 on Drive); TAR is sequential")
+    parser.add_argument("--extract-include", action="append", help="Only extract archive members matching this glob; repeat for multiple patterns")
+    parser.add_argument("--extract-exclude", action="append", help="Skip archive members matching this glob")
+    parser.add_argument("--verify-existing", action="store_true", help="Read and CRC-check saved files instead of trusting the completion journal and file size")
+    parser.add_argument("--background", action="store_true", help="Launch a detached process in this runtime; log/status stay on Drive")
+    parser.add_argument("--_job-file", type=Path, help=argparse.SUPPRESS)
+
+
+def extraction_options(args):
+    return {
+        "workers": getattr(args, "extract_workers", 1),
+        "include": getattr(args, "extract_include", None),
+        "exclude": getattr(args, "extract_exclude", None),
+        "verify_existing": getattr(args, "verify_existing", False),
+    }
 
 
 def add_mounted_arguments(parser: argparse.ArgumentParser) -> None:

@@ -1,15 +1,8 @@
 """Storage layout and archive extraction without writing outside the dataset."""
 
-import json
 import fnmatch
-import os
 import re
-import shutil
-import stat
-import tarfile
-import tempfile
-import zipfile
-from pathlib import Path, PurePosixPath
+from pathlib import Path
 
 DEFAULT_ROOT = Path("/content/drive/MyDrive/Datasets")
 ARCHIVE_SUFFIXES = (".tar.gz", ".tar.bz2", ".tar.xz", ".tgz", ".tbz2", ".txz", ".tar", ".zip")
@@ -66,62 +59,8 @@ def archive_stem(path: Path) -> str:
     raise ValueError("Supported archives: zip, tar, tar.gz/tgz, tar.bz2/tbz2, tar.xz/txz.")
 
 
-def _member_path(base: Path, name: str) -> Path:
-    if "\\" in name or "\x00" in name:
-        raise ValueError(f"Unsafe archive member: {name!r}")
-    member = PurePosixPath(name)
-    if member.is_absolute() or ".." in member.parts or (member.parts and ":" in member.parts[0]):
-        raise ValueError(f"Unsafe archive member: {name!r}")
-    target = base.joinpath(*member.parts)
-    if not target.resolve().is_relative_to(base.resolve()):
-        raise ValueError(f"Archive member escapes the output directory: {name!r}")
-    return target
+def extract_archive(archive: Path, destination: Path, **options) -> Path:
+    """Extract with persistent per-file progress; see extraction.py for the engine."""
+    from .extraction import extract_archive as extract
 
-
-def _copy_member(source, target: Path) -> None:
-    target.parent.mkdir(parents=True, exist_ok=True)
-    with target.open("wb") as output:
-        shutil.copyfileobj(source, output, length=1024 * 1024)
-
-
-def extract_archive(archive: Path, destination: Path) -> Path:
-    """Extract into a temporary directory on the same drive, then rename on success."""
-    archive = archive.resolve(strict=True)
-    archive_stem(archive)
-    signature = {"archive": archive.name, "size": archive.stat().st_size, "mtime_ns": archive.stat().st_mtime_ns}
-    marker = destination / ".videoseg-extracted.json"
-    if destination.exists():
-        if marker.is_file() and json.loads(marker.read_text()) == signature:
-            print(f"Already extracted: {destination}")
-            return destination
-        raise ValueError(f"Extraction destination already exists: {destination}. Choose another --name or move it first.")
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix=f".{destination.name}.extract-", dir=destination.parent) as temporary:
-        staging = Path(temporary)
-        if archive.name.lower().endswith(".zip"):
-            with zipfile.ZipFile(archive) as bundle:
-                for member in bundle.infolist():
-                    target = _member_path(staging, member.filename)
-                    kind = stat.S_IFMT(member.external_attr >> 16)
-                    if kind not in (0, stat.S_IFREG, stat.S_IFDIR):
-                        raise ValueError(f"Archive links/special files are not supported: {member.filename}")
-                    if member.is_dir():
-                        target.mkdir(parents=True, exist_ok=True)
-                    else:
-                        with bundle.open(member) as source:
-                            _copy_member(source, target)
-        else:
-            with tarfile.open(archive, "r|*") as bundle:
-                for member in bundle:
-                    target = _member_path(staging, member.name)
-                    if member.isdir():
-                        target.mkdir(parents=True, exist_ok=True)
-                    elif member.isfile():
-                        with bundle.extractfile(member) as source:
-                            _copy_member(source, target)
-                    else:
-                        raise ValueError(f"Archive links/special files are not supported: {member.name}")
-        (staging / ".videoseg-extracted.json").write_text(json.dumps(signature, indent=2) + "\n")
-        os.rename(staging, destination)
-    print(f"Extracted: {destination}")
-    return destination
+    return extract(archive, destination, **options)
