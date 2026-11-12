@@ -9,6 +9,7 @@ from unittest.mock import patch
 
 from videosegmentation.cli import main
 from videosegmentation.storage import find_archives
+from downloaders.ikea_asm import IkeaASMDownloader
 
 
 class DatasetSourceTests(unittest.TestCase):
@@ -48,6 +49,64 @@ class DatasetSourceTests(unittest.TestCase):
     def test_ikea_list_mounted_archives_does_not_extract(self):
         self.archive()
         self.assertEqual(main(["ikea_asm", "--source-dir", str(self.source), "--list-files", "--root", str(self.output)]), 0)
+        self.assertFalse(self.output.exists())
+
+    def publisher_archives(self):
+        return [self.archive(name) for name in (
+            "data/ikea_asm_dataset_RGB_top.zip",
+            "data/utility_files.zip",
+            "data/camera_params.zip",
+            "data/ikea_asm_dataset_depth.zip",
+            "data/ikea_asm_dataset_RGB_multiview.zip",
+            "annotations/action_annotations.zip",
+            "annotations/pose_annotations.zip",
+            "trained_models/pt_models_action_recognition.zip",
+        )]
+
+    def test_ikea_publisher_default_extracts_only_rgb_labels_and_utilities(self):
+        archives = self.publisher_archives()
+        original = {path: path.read_bytes() for path in archives}
+        self.assertEqual(main(["ikea_asm", "--source-dir", str(self.source), "--root", str(self.output)]), 0)
+        extracted = self.output / "IKEA_ASM/extracted"
+        self.assertEqual({path.name for path in extracted.iterdir()}, {
+            "ikea_asm_dataset_RGB_top", "action_annotations", "utility_files",
+        })
+        self.assertEqual({path: path.read_bytes() for path in archives}, original)
+
+    def test_ikea_default_source_follows_a_shortcut_to_read_only_archives(self):
+        archives = self.publisher_archives()
+        for path in archives:
+            path.chmod(0o444)
+        shortcut = self.root / "shortcut"
+        shortcut.symlink_to(self.source, target_is_directory=True)
+        with patch.object(IkeaASMDownloader, "default_source", shortcut):
+            with patch("downloaders.ikea_asm.download_drive", side_effect=AssertionError("unexpected download")):
+                self.assertEqual(main(["ikea_asm", "--root", str(self.output)]), 0)
+        self.assertTrue((self.output / "IKEA_ASM/extracted/action_annotations/recording/video.txt").exists())
+        self.assertTrue(shortcut.is_symlink())
+
+    def test_ikea_publisher_part_selection_supports_multiple_parts(self):
+        self.publisher_archives()
+        args = ["ikea_asm", "--source-dir", str(self.source), "--part", "rgb-multi", "--part", "camera", "--root", str(self.output)]
+        self.assertEqual(main(args), 0)
+        self.assertEqual({p.name for p in (self.output / "IKEA_ASM/extracted").iterdir()}, {
+            "ikea_asm_dataset_RGB_multiview", "camera_params",
+        })
+
+    def test_ikea_custom_include_finds_publisher_subfolders(self):
+        self.publisher_archives()
+        self.assertEqual(main(["ikea_asm", "--source-dir", str(self.source), "--include", "annotations/action*", "--root", str(self.output)]), 0)
+        self.assertEqual({p.name for p in (self.output / "IKEA_ASM/extracted").iterdir()}, {"action_annotations"})
+
+    def test_ikea_missing_selected_part_fails_before_extracting_rgb(self):
+        self.archive("data/ikea_asm_dataset_RGB_top.zip")
+        (self.source / "annotations").mkdir()
+        self.assertEqual(main(["ikea_asm", "--source-dir", str(self.source), "--root", str(self.output)]), 1)
+        self.assertFalse(self.output.exists())
+
+    def test_ikea_parts_and_include_are_mutually_exclusive(self):
+        self.publisher_archives()
+        self.assertEqual(main(["ikea_asm", "--source-dir", str(self.source), "--part", "pose", "--include", "*", "--root", str(self.output)]), 1)
         self.assertFalse(self.output.exists())
 
     def test_mounted_selection_and_nested_archives(self):

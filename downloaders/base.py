@@ -35,7 +35,9 @@ class DatasetDownloader(ABC):
                 except ValueError:
                     print(f"Retained without extraction: {path.name}")
                     continue
-                extract_archive(path, dataset / "extracted" / stem)
+                destination = dataset / "extracted" / stem
+                print(f"Extracting: {path} -> {destination}", flush=True)
+                extract_archive(path, destination)
 
     def extract_mounted(self, args: argparse.Namespace) -> None:
         paths = find_archives(args.source_dir, getattr(args, "include", None), args.recursive)

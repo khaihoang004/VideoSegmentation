@@ -47,7 +47,7 @@ Trong cell Colab, thêm `!` trước lệnh CLI. Có thể dùng tương đươn
 | `repcount` | `downloaders/repcount.py` | Archive trên Drive đã mount hoặc URL archive trực tiếp |
 | `fineaction` | `downloaders/fineaction.py` | CLI OpenXLab chính thức; hỗ trợ archive trên Drive hoặc URL trực tiếp |
 
-Mặc định IndustReal/Assembly101/Breakfast/FineAction chọn gói **nhãn**; video chỉ được tải khi chọn `--part` tương ứng. IKEA yêu cầu đường dẫn Drive hoặc chọn rõ `--source download`. HA4M cần `--url`; RepCount cần `--source-dir` hoặc `--url`. `--list-files` không tải payload: tùy nguồn, nó hiển thị danh mục thực tế hoặc các gói/đường dẫn nguồn được công bố.
+Mặc định IndustReal/Assembly101/Breakfast/FineAction chọn gói **nhãn**; video chỉ được tải khi chọn `--part` tương ứng. IKEA tự nhận shortcut `/content/drive/MyDrive/Datasets/ikea_asm_dataset_public`; có thể đổi bằng `--source-dir` hoặc chọn rõ `--source download`. HA4M cần `--url`; RepCount cần `--source-dir` hoặc `--url`. `--list-files` không tải payload: tùy nguồn, nó hiển thị danh mục thực tế hoặc các gói/đường dẫn nguồn được công bố.
 
 ### IndustReal
 
@@ -97,18 +97,27 @@ os.environ['HF_TOKEN'] = userdata.get('HF_TOKEN')
 ```python
 !python download.py ikea_asm --list-files
 
-# Đổi thành đường dẫn thư mục hoặc shortcut trên Drive của bạn.
-!python download.py ikea_asm --source-dir '/content/drive/MyDrive/IKEA_ASM' --list-files
-!python download.py ikea_asm --source-dir '/content/drive/MyDrive/IKEA_ASM'
+# Shortcut đã có tại MyDrive/Datasets/ikea_asm_dataset_public: chỉ cần chạy.
+!python download.py ikea_asm
 
-# Chọn archive ở thư mục con, nếu cần.
-!python download.py ikea_asm --source-dir '/content/drive/MyDrive/IKEA_ASM' --recursive --include '*RGB*'
+# Đổi thành đường dẫn thư mục hoặc shortcut trên Drive của bạn.
+!python download.py ikea_asm --source-dir '/content/drive/MyDrive/Datasets/ikea_asm_dataset_public' --list-files
+
+# Chọn góc khác, nhãn hành động và utility files.
+!python download.py ikea_asm --part rgb-multi --part annotations --part utilities
+
+# Chỉ xem các gói depth, chưa giải nén.
+!python download.py ikea_asm --part depth --part depth-frames --list-files
 
 # Tùy chọn: tải gói của nhà phát hành khi chưa có trên Drive.
 !python download.py ikea_asm --source download --part annotations --part utilities --extract
 ```
 
-Thêm shortcut thư mục chia sẻ vào MyDrive nếu thư mục nguồn chưa hiện trong Drive đã mount. `--source-dir` nhận một archive hoặc thư mục chứa archive và **luôn giải nén**, không tải/copy lại. Mặc định chỉ tìm ở cấp thư mục đó; thêm `--recursive` nếu cần. `--include` lọc theo tên/đường dẫn tương đối và phân biệt chữ hoa/chữ thường. Archive gốc không bị sửa hoặc di chuyển. Kết quả nằm tại `MyDrive/Datasets/IKEA_ASM/extracted/<tên_archive>`.
+Downloader đi theo symlink/shortcut tới thư mục công khai chỉ đọc. Với cấu trúc chính thức có `data/`, `annotations/`, `trained_models/`, mặc định chỉ giải nén **RGB top + action annotations + utility files**. Không mặc định giải nén depth, pose, multiview hay trained models. Các gói lựa chọn được kiểm tra đầy đủ trước khi bắt đầu giải nén.
+
+Trong chế độ mounted, `--part` có thể lặp: `rgb-top`, `rgb-multi`, `annotations`, `utilities`, `camera`, `depth`, `depth-frames`, `pose`, `segmentation`, `model-action`, `model-pose`, `model-segmentation`, `all`. `all` bao gồm toàn bộ gói, kể cả depth và trained models. Có thể dùng `--include 'annotations/action*'` thay cho `--part` để chọn theo đường dẫn tương đối.
+
+`--source-dir` cũng nhận một archive/thư mục tùy chỉnh và **luôn giải nén**, không tải/copy lại. Với thư mục tùy chỉnh không theo cấu trúc nhà phát hành, mặc định chỉ tìm ở cấp thư mục đó; thêm `--recursive` nếu cần. `--include` phân biệt hoa/thường. Archive gốc không bị sửa hoặc di chuyển. Kết quả nằm tại `MyDrive/Datasets/IKEA_ASM/extracted/<tên_archive>`, bên ngoài shortcut chỉ đọc.
 
 Chỉ với `--source download`, `--part` có thể lặp: `annotations`, `utilities`, `camera`, `rgb-top`, `rgb-multi`, `depth`, `pose`, `segmentation`, `all`. Mặc định annotations + utilities. Các gói được chọn độc lập; tên archive lấy từ phản hồi Drive.
 
