@@ -4,6 +4,8 @@ Tải dataset nghiên cứu video trực tiếp vào **Google Drive** từ **Goo
 
 Mặc định lưu vào `/content/drive/MyDrive/Datasets/<tên_dataset>`. Không cần tải dataset về máy rồi upload lại.
 
+Tài liệu nằm trong [`docs/`](docs/README.md): [định nghĩa bài toán online](docs/problem.md), [khảo sát dataset và đề xuất xử lý video tạm thời](docs/datasets.md), [hướng dẫn thêm downloader](docs/adding_dataset.md).
+
 ## Colab: mount → clone → chạy CLI
 
 [Mở notebook trên Colab](https://colab.research.google.com/github/khaihoang004/VideoSegmentation/blob/main/notebooks/colab_download.ipynb)
