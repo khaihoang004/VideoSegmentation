@@ -6,6 +6,8 @@ Ngày cập nhật: 2026-11-13 (Asia/Saigon). Trạng thái: đặc tả nghiên
 
 Cho một luồng video quan sát một người thực hiện công việc, xử lý các frame/chunk theo thứ tự khi chúng tới, phát hiện lượt công việc hoàn thành và phát kết quả bắt đầu–kết thúc của lượt đó ngay trong quá trình luồng đang chạy. **Online là yêu cầu bắt buộc đã được người dùng xác nhận.** Tại mỗi quyết định chỉ được dùng dữ liệu đã quan sát đến thời điểm đó; không chờ toàn bộ video hoặc các lượt tiếp theo mới trả kết quả.
 
+**Góc nhìn đích là exocentric:** camera quan sát người thực hiện từ bên ngoài. Dữ liệu egocentric được phép dùng tạm để nghiên cứu khi chưa có dữ liệu exocentric phù hợp. Có thể sử dụng hướng tận dụng đặc điểm exocentric dù không áp dụng được trên egocentric; không yêu cầu mọi giải pháp phải dùng chung cho cả hai góc nhìn.
+
 Mỗi lượt có thể gồm nhiều thao tác khác nhau, có khoảng nghỉ, hoạt động ngoài công việc hoặc sửa lỗi. Đầu ra cần bao trọn **một lượt công việc**, thay vì chỉ lấy thao tác chính hoặc mỗi động tác nhỏ. Có thể dùng video đã quay để mô phỏng stream, nhưng pipeline suy luận vẫn phải tuân thủ ràng buộc online.
 
 Ví dụ minh họa, không phải quy trình bắt buộc:
@@ -37,6 +39,9 @@ Tên mô tả dùng trong dự án: **định vị online từng lượt công v
 | U07 | Phải xác định rõ yêu cầu và các vấn đề trước khi chọn hướng từ paper. |
 | U08 | Dữ liệu dự án lưu trên Google Drive trong `MyDrive/Datasets`; thao tác dữ liệu chủ yếu chạy bằng CLI trên Colab. |
 | U09 | Bài toán phải chạy online: xử lý luồng theo thời gian và phát kết quả khi nhận biết hoàn thành, không đợi xem hết video. |
+| U10 | Góc nhìn đích của bài toán là exocentric: quan sát người thực hiện từ bên ngoài. |
+| U11 | Được dùng dữ liệu egocentric tạm thời để nghiên cứu khi thiếu dữ liệu exocentric phù hợp. |
+| U12 | Được sử dụng giải pháp khai thác đặc điểm exocentric, kể cả khi giải pháp đó không áp dụng được cho egocentric. |
 
 U06 là mô tả của ứng dụng, **chưa chứng minh dấu hiệu này luôn nhìn thấy, luôn duy nhất hoặc đủ để xác nhận hoàn thành trong mọi video**.
 
@@ -49,7 +54,7 @@ U06 là mô tả của ứng dụng, **chưa chứng minh dấu hiệu này luô
 - Không biết trước số lượt trong video. Cần chấp nhận cả video không có lượt hoàn thành nào để kiểm tra báo nhầm.
 - Đơn vị công việc và quy ước ranh giới phải được định nghĩa trước khi gán nhãn; không tự chọn đơn vị chỉ vì dataset có nhãn thuận tiện.
 
-Ngoài ràng buộc online/causal xuất phát từ U09, các giới hạn còn lại là đề xuất nghiên cứu, không được ghi lại thành nhu cầu đã xác nhận của người dùng.
+Các giới hạn trong mục 2.2 là đề xuất nghiên cứu, không thay thế các yêu cầu đã xác nhận U01–U12. Đặc biệt, exocentric không tự có nghĩa camera cố định, thấy toàn thân hoặc có nhiều camera; các điều kiện này còn cần kiểm tra.
 
 ### 2.3. Những việc không mặc định nằm trong yêu cầu cốt lõi
 
@@ -105,6 +110,7 @@ Việc người đó ngừng làm, buông vật, rời bàn hoặc làm động 
 
 - Một luồng frame/chunk chưa cắt sẵn thành từng lượt, có timestamp/frame hoặc PTS. Trong benchmark video ghi sẵn có duration `D`, nhưng model online không được dùng duration tương lai hoặc đọc trước phần chưa được phát.
 - Một người chính cần theo dõi; không bắt buộc cung cấp sẵn skeleton hoặc bounding box.
+- Góc nhìn triển khai đích là exocentric. Metadata cần phân biệt exocentric/egocentric và camera cố định/di động khi có thông tin; không tự coi hai cách phân loại này là một.
 - Định nghĩa công việc mục tiêu `g`: có thể là cấu hình của model, không nhất thiết là một câu văn đầu vào.
 - Metadata cần giữ: video ID, phiên bản nguồn, duration, timestamp/fps, độ phân giải, camera/view và recording/session ID khi có.
 - Metadata phục vụ chia tập/gán nhãn như participant ID hoặc ground truth không được đưa vào model nếu lúc triển khai không có.
@@ -349,6 +355,8 @@ Các điểm phân biệt trên dùng để đọc và đối chiếu paper, kh�
 
 Với yêu cầu online đã chốt, bổ sung các điểm xuất phát: [CAG-QIL — On-TAL, ICCV 2021](https://openaccess.thecvf.com/content/ICCV2021/html/Kang_CAG-QIL_Context-Aware_Actionness_Grouping_via_Q_Imitation_Learning_for_Online_ICCV_2021_paper.html), [LSTR — OAD, NeurIPS 2021](https://arxiv.org/abs/2107.03377) và [Online Temporal Action Localization with Memory-Augmented Transformer — ECCV 2024](https://arxiv.org/abs/2408.02957). Chúng gợi ý các hướng streaming, temporal memory và định vị instance; chưa chứng minh giải quyết đúng ngữ nghĩa lượt công việc trong dự án.
 
+Khi chọn hướng, không loại bỏ giải pháp chỉ vì nó cần góc quan sát bên ngoài mà dữ liệu egocentric tạm thời không cung cấp. Các giả thuyết cần khảo sát gồm pose/chuyển động cơ thể nếu nhìn thấy, quan hệ người–bàn–vật thể, trạng thái sản phẩm và vùng bàn giao. ROI theo tọa độ ảnh hoặc thay đổi nền chỉ hợp lý nếu camera đủ ổn định. Đây là đề xuất có điều kiện, chưa phải kết luận về hiệu quả; xem [ghi chú dataset](datasets.md) để chọn dữ liệu kiểm chứng.
+
 ## 10. Yêu cầu dữ liệu và chuyển đổi dataset
 
 ### 10.1. Một mẫu benchmark phù hợp cần gì?
@@ -427,7 +435,9 @@ Tỷ lệ gán kép, kích thước pilot và dung sai ranh giới chưa đượ
 
 ### 12.2. Các điều kiện đánh giá riêng
 
-Benchmark chính: cùng loại công việc đã định nghĩa, video/phiên/người mới, suy luận **online causal**, mặc định đề xuất một góc RGB. Phát kết quả từng lượt trong khi stream còn chạy, có ngân sách latency cần chốt. Cần có nhóm nhiều lượt, background/negative và gián đoạn, không chỉ video một lượt đã trim.
+Benchmark chính đích: cùng loại công việc đã định nghĩa, video/phiên/người mới, **exocentric và online causal**, mặc định đề xuất một góc RGB. Phát kết quả từng lượt trong khi stream còn chạy, có ngân sách latency cần chốt. Cần có nhóm nhiều lượt, background/negative và gián đoạn, không chỉ video một lượt đã trim. Khi chỉ có dữ liệu egocentric, báo đó là kết quả pilot trên dữ liệu thay thế, chưa xác nhận hiệu quả trên miền đích.
+
+Ghi riêng các thực nghiệm exocentric, egocentric và chuyển góc nhìn nếu có. Không bắt buộc mọi model chạy trên cả hai; hướng cần pose/vùng cố định/hình học hoặc tín hiệu chỉ có ở exocentric được đánh giá trên dữ liệu đáp ứng điều kiện đó. Thí nghiệm chuyển góc nhìn phải công bố phần dữ liệu/nhãn miền đích được dùng để fine-tune, chọn threshold hoặc calibration; không gọi là zero-shot nếu đã dùng chúng.
 
 Các nhóm mở rộng: view mới, vật thể/sản phẩm mới, cách thực hiện mới, task mới có mô tả/exemplar, nhiều người và nhiều lượt đan xen. Online không còn là một nhóm mở rộng. Offline chỉ dùng làm đối chứng/upper bound có ghi rõ quyền nhìn tương lai, không thay benchmark chính.
 
@@ -541,6 +551,7 @@ Báo cả tổng thể và theo task, nhóm khó, người, view/môi trường 
 | A14 | State không mất chỉ vì đổi chunk; queue, frame drop và tài nguyên được đo theo thời lượng stream. |
 | A15 | Thông báo sai/trùng/revision đã từng phát được giữ trong event log và tham gia đánh giá. |
 | A16 | Mất kết nối hoặc end-of-file không tự được xem là completed; có xử lý censoring/reset được ghi nhận. |
+| A17 | Kết quả phân biệt miền exocentric đích với egocentric dùng tạm; công bố điều kiện quan sát của từng hướng và không suy diễn hiệu quả miền đích từ pilot egocentric. |
 
 Đây là yêu cầu về đặc tả và hành vi cần thử, không phải tuyên bố model tương lai sẽ đúng 100% mọi mẫu.
 
@@ -577,7 +588,7 @@ Dung sai start/end, ngân sách latency phát hiện/xuất clip, recall đúng 
 | Q07 | Xử lý/cắt clip cho aborted/unknown như thế nào? | Khác API và cách tính FP/ignore. |
 | Q08 | Dấu hiệu hoàn thành có quan sát đủ từ RGB không? | Có thể cần bổ sung cảm biến hoặc điều chỉnh tiêu chí quan sát được. |
 | Q09 | Dung sai cắt video và chi phí bỏ sót/báo thừa là bao nhiêu? | Khác threshold, metric chính và mục tiêu tối ưu. |
-| Q10 | Nguồn camera/replay, góc nhìn, FPS, độ dài lượt/stream, mất frame và phần cứng thực tế ra sao? | Khác yêu cầu context, sampling, queue, lưu video và tài nguyên online. |
+| Q10 | Exocentric đã chốt; camera cố định hay di động, vị trí/độ cao, vùng cơ thể/vật thể nhìn thấy, FPS, độ dài stream, mất frame và phần cứng thực tế ra sao? | Khác khả năng dùng pose, ROI/hình học, context, sampling, queue và tài nguyên online. |
 | Q11 | Bao nhiêu lượt công việc đúng cấp nhãn có thể lấy từ mỗi dataset? | Khác giá trị dữ liệu thực, không chỉ số GB/video. |
 | Q12 | Mức biến thiên annotator và tỷ lệ trường hợp không thể xác định là bao nhiêu? | Giới hạn độ chính xác có thể đo một cách có ý nghĩa. |
 
@@ -599,6 +610,7 @@ Mỗi paper cần được ghi nhận theo cùng một mẫu:
 10. Cơ chế nào có thể chuyển sang dự án, phần nào phải thay và rủi ro khi thay là gì?
 11. Code/checkpoint/data có tái lập được không; tài nguyên và chi phí feature là bao nhiêu?
 12. Hạn chế nào tác giả đã chứng minh và hạn chế nào là suy luận của người đọc?
+13. Góc nhìn train/test là exocentric hay egocentric? Cơ chế nào phụ thuộc camera cố định, toàn thân, ROI, calibration hoặc nhiều góc? Có phù hợp miền exocentric đích dù không chạy trên dữ liệu egocentric tạm thời không?
 
 Thứ tự đọc đề xuất: **On-TAL và OAD/memory causal** để chốt giao thức streaming; completion/goal-state và procedure understanding để hiểu tiêu chí “xong”; TAS causal để hiểu các bước/context; repetition để hiểu chu kỳ và ngắt quãng. TAL/TAS offline dùng để tham khảo thành phần hoặc đối chứng riêng. Không chọn model chỉ theo leaderboard thiếu ràng buộc online hoặc có đơn vị nhãn khác.
 
@@ -617,7 +629,7 @@ Các ý tưởng ở bước 7 là giả thuyết cần kiểm nghiệm, chưa p
 
 ## 19. Nguồn khái niệm
 
-Các yêu cầu U01–U09 đến từ trao đổi trong dự án; U09 chốt online là bắt buộc và thay giả định offline của bản ban đầu. Quy tắc benchmark, schema, tiêu chí chấp nhận và kế hoạch là đặc tả đề xuất, không được trình bày như kết quả của các paper sau.
+Các yêu cầu U01–U12 đến từ trao đổi trong dự án; U09 chốt online là bắt buộc và thay giả định offline của bản ban đầu. U10–U12 bổ sung miền đích exocentric, cho phép egocentric dùng tạm và cho phép giải pháp đặc trưng exocentric. Quy tắc benchmark, schema, tiêu chí chấp nhận và kế hoạch là đặc tả đề xuất, không được trình bày như kết quả của các paper sau.
 
 - [Action Completion: A Temporal Model for Moment Detection — BMVC 2018](https://dimadamen.github.io/ActionCompletion/): tham chiếu khái niệm hoàn thành mục tiêu và định vị mốc completion.
 - [IndustReal — WACV 2024](https://arxiv.org/abs/2310.17323): tham chiếu procedure step recognition, trạng thái lắp ráp và lỗi.

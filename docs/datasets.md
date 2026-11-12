@@ -1,10 +1,12 @@
 # Dataset cho định vị online từng lượt công việc — bản tạm
 
-Phiên bản: **v0.1 — 2026-11-13 (Asia/Saigon)**. Có thể thay đổi sau khi xem dữ liệu và chạy pilot. Yêu cầu bài toán tham chiếu [problem.md](problem.md); tài liệu này không thay đổi yêu cầu đó và chưa chốt kiến trúc, FPS, độ phân giải hay tập benchmark cuối cùng.
+Phiên bản: **v0.2 — 2026-11-13 (Asia/Saigon)**. Bổ sung góc nhìn đích exocentric theo xác nhận của người dùng. Có thể thay đổi sau khi xem dữ liệu và chạy pilot. Yêu cầu bài toán tham chiếu [problem.md](problem.md); chưa chốt kiến trúc, FPS, độ phân giải hay tập benchmark cuối cùng.
 
 ## 1. Phạm vi và mức độ xác minh
 
 Cần video liên tục để phát hiện **toàn bộ một lượt công việc nhiều bước**, bao gồm gián đoạn, và nhận biết hoàn thành trong lúc luồng đang chạy. Nhiều lượt có thể xuất hiện trong cùng video. Nhãn động tác, nhãn bước quy trình và nhãn lượt công việc là ba cấp khác nhau.
+
+**Miền đích là exocentric (camera quan sát từ bên ngoài).** Egocentric được dùng tạm để phát triển cơ chế online, hiểu quy trình và tín hiệu hoàn thành khi dữ liệu phù hợp chưa sẵn có. Không bắt buộc giải pháp dùng được cho cả hai góc nhìn; được tận dụng tín hiệu riêng của thiết lập exocentric. Việc đã có video exocentric không đồng nghĩa đã có nhãn cấp lượt phù hợp.
 
 Quy ước đọc tài liệu:
 
@@ -30,14 +32,35 @@ Không ghi số lượng video tải thành công từ số liệu paper. `--lis
 | Dataset | Điểm nên khai thác | Khoảng thiếu so với đầu ra cần có | Vai trò đề xuất |
 | --- | --- | --- | --- |
 | IKEA ASM | Lắp ráp nhiều thao tác, camera cố định; dữ liệu đã giải nén | Nhãn atomic action chưa xác định cả lượt; phải kiểm tra số lượt và bằng chứng hoàn thành | Pilot chính đầu tiên vì đã có dữ liệu |
-| IndustReal | Quy trình, trạng thái lắp ráp, lỗi thực thi và hoàn thành bước | Hoàn thành bước chưa đồng nghĩa hoàn thành toàn công việc; góc nhìn đeo đầu | Pilot chính về dấu hiệu hoàn thành và sửa lỗi |
-| Assembly101 | Thao tác lắp/tháo tự nhiên, nhiều góc và biến thể trình tự | Cần chọn mục tiêu, nhóm nhãn và kiểm tra lượt hoàn chỉnh | Mở rộng sau pilot; ưu tiên một góc |
+| IndustReal | Quy trình, trạng thái lắp ráp, lỗi thực thi và hoàn thành bước | Nhãn bước chưa là nhãn lượt; egocentric khác miền đích | Pilot bổ trợ về hoàn thành/sửa lỗi trên miền thay thế |
+| Assembly101 | Thao tác lắp/tháo tự nhiên, nhiều góc và biến thể trình tự | Cần chọn mục tiêu, nhóm nhãn và kiểm tra lượt hoàn chỉnh | Ứng viên exocentric tiếp theo với camera cố định |
 | RepCount | Có ranh giới từng chu kỳ lặp | Chu kỳ vận động thường đơn giản hơn lượt công việc nhiều bước | Kiểm tra cơ chế tách nhiều lượt và khoảng nghỉ |
 | FineAction | Nhiều đoạn hành động với start/end, nhiều lớp | Nhãn hành động chưa có mục tiêu hoàn thành công việc | Dữ liệu phụ cho học biểu diễn/định vị ranh giới |
 | HA4M | Quy trình lắp ráp trong môi trường sản xuất mô phỏng | Cần nhãn cấp lượt; chọn modality để hạn chế dung lượng | Đối chứng công nghiệp sau khi kiểm tra quyền tải |
 | Breakfast | Hoạt động nhiều bước trong bếp | Đổi miền; nhãn action unit chưa là nhãn lượt | Dữ liệu phụ nếu cần kiểm tra khả năng tổng quát |
 
 **Chưa có cơ sở coi một bộ nào là benchmark khớp hoàn toàn.** Đặc biệt, khả năng phát hiện nhiều lượt trong một stream dài, video không có lượt hoàn thành và độ trễ online cần được kiểm tra riêng. Nếu mỗi file chỉ có một quy trình, nó vẫn hữu ích cho pilot nhưng chưa đủ chứng minh yêu cầu nhiều lượt liên tiếp.
+
+### 2.1. Chính sách góc nhìn
+
+IKEA ASM có góc bên ngoài và đã giải nén, nên là điểm bắt đầu để kiểm chứng exocentric. Camera cố định của Assembly101 và HA4M là các ứng viên bổ sung theo mô tả nguồn ở từng mục. Việc ưu tiên vẫn cần cân bằng với mức phù hợp của công việc và nhãn; không chọn chỉ theo góc camera. FineAction, RepCount và Breakfast cần kiểm tra góc nhìn của subset thực dùng.
+
+IndustReal giữ giá trị về PSR/lỗi/trạng thái, nhưng kết quả trên bộ này phải ghi là egocentric. Không cần đổi tiến trình tải đang chạy. Khi có cả hai miền, lưu `view_domain` (exo/ego/unknown) riêng với `camera_motion` (fixed/moving/unknown); báo riêng kết quả cùng miền và chuyển miền.
+
+### 2.2. Hướng tận dụng exocentric cần khảo sát
+
+Bảng dưới là **giả thuyết thiết kế**, chưa phải giải pháp đã chọn hoặc kết quả paper. Điều kiện thuận lợi không có ở mọi video exocentric; cũng không khẳng định tín hiệu hoàn toàn vắng ở mọi video egocentric.
+
+| Hướng đề xuất | Điều kiện cần kiểm tra | Cách thử online |
+| --- | --- | --- |
+| Pose/chuyển động cơ thể và quan hệ tay–thân–bàn | Thấy đủ vùng cơ thể, pose đủ tin cậy | So sánh RGB với RGB + pose causal để tách đang làm, nghỉ, bàn giao; không coi rời bàn là hoàn thành. |
+| Vùng bàn làm việc, khay vào/ra, nơi đặt thành phẩm | Camera đủ ổn định; vùng có ý nghĩa đối với mục tiêu | Định nghĩa ROI trên train/calibration được phép; theo dõi vật thể đi vào/ra và lịch sử lượt. Không dùng tọa độ cố định cho camera di động. |
+| Theo dõi trạng thái sản phẩm qua cả lượt | Vật thể quan sát được, định danh và trạng thái đủ rõ | Kết hợp trạng thái với lịch sử thao tác để kiểm tra dấu hiệu cuối giả; giữ unknown khi bị che khuất. |
+| Thay đổi bố trí/vật thể trên bàn | Góc nhìn ổn định, ánh sáng và che khuất được kiểm soát | So sánh với trạng thái quá khứ của vùng bàn; không dùng nền trung bình tính từ cả video tương lai. |
+| Quỹ đạo trong hệ tọa độ mặt bàn | Có calibration hoặc mặt phẳng phù hợp | Thử quan hệ hình học/vùng tương tác, tính cả sai số; không mặc định có tọa độ 3D từ RGB một camera. |
+| Nhiều camera ngoài hỗ trợ che khuất | Có nhiều view đồng bộ ở chế độ train/test đã công bố | Đánh giá riêng đa góc hoặc teacher khi train. Baseline một camera không nhận thêm góc lúc test mà không đổi setting. |
+
+Các hướng này được phép chỉ thử trên exocentric. Thiếu dữ liệu đáp ứng điều kiện thì ghi là chưa kiểm chứng; không loại bỏ vì IndustReal không cung cấp tín hiệu tương ứng. Detector/tracker/pose estimator thêm vào vẫn phải qua audit causal, độ trễ và chi phí thực thi. Không gộp điểm ego/exo rồi kết luận đã giải quyết miền đích; chuyển miền có dùng nhãn exo để fine-tune/chọn threshold phải được ghi rõ.
 
 ## 3. IKEA ASM
 
@@ -113,6 +136,8 @@ Nguồn còn có gói `all_rgb_videos.zip` và `action_recognition_labels.zip`. 
 4. Với lỗi thực thi: tách “đã dừng thao tác”, “đã kết thúc lượt thực hiện” và “đạt kết quả đúng”. Giữ thông tin lỗi để phân tích, nhưng không tự thêm yêu cầu chấm chất lượng vào đầu ra chính.
 5. Giữ split chính thức để đối chiếu; kiểm tra participant/recording nào nằm ở mỗi split. Các file chuyển mã, frame và nhãn của cùng recording phải đi cùng nhau.
 6. Replay RGB theo thứ tự thời gian. PSR/ASD ground truth chỉ dùng để huấn luyện/đánh giá; nếu cần trạng thái vật thể lúc suy luận thì trạng thái đó phải được dự đoán từ dữ liệu đã tới.
+
+Đây là pilot egocentric được phép dùng tạm. Chưa chuyển trực tiếp tín hiệu chuyển động đầu/gaze, độ lớn vật thể hay ROI sang camera ngoài; muốn kết luận cho exocentric phải kiểm tra lại trên miền đích. Kết quả âm trên IndustReal cũng chưa loại bỏ một hướng chỉ phù hợp exocentric.
 
 **Cần kiểm tra:** cột và đơn vị timestamp trong từng CSV; nhãn PSR là thời điểm sự kiện hay khoảng; cách biểu diễn bước sai/sửa lại; mapping giữa MP4 đóng gói và ảnh gốc; video chứa assembly/maintenance nào, có đủ đầu/cuối và bao nhiêu lượt. Không giả định mỗi recording thành công chỉ vì có bước cuối được thực hiện.
 
@@ -228,7 +253,7 @@ Tác giả công bố trên OpenXLab: raw video, `annotations_gt.json`, features
 | Nhóm | Thông tin cần ghi |
 | --- | --- |
 | Nguồn | Dataset/version, archive, checksum khi có, revision/URL, ngày tải, điều kiện sử dụng của bản phát hành |
-| Danh tính | Recording/trial ID, người, mục tiêu, góc camera, nhóm đồng bộ và split gốc |
+| Danh tính | Recording/trial ID, người, mục tiêu, góc camera, exo/ego/unknown, camera fixed/moving/unknown, nhóm đồng bộ và split gốc |
 | Media | Đường dẫn tương đối, codec, kích thước, duration, frame count, time base/PTS, FPS danh nghĩa và biến thiên, audio có hay không |
 | Nhãn | File nguồn, lớp, cấp action/step/task, đơn vị thời gian, index base, quy tắc end inclusive/exclusive, mức bao phủ nhãn |
 | Chất lượng | Lỗi decode, frame thiếu/trùng, mất đồng bộ, chuyển cảnh, che khuất, nhiều người, thiếu đầu/cuối |
@@ -288,10 +313,10 @@ Nguồn mounted như shortcut IKEA có thể nằm ngoài cây đích này; khô
 Thứ tự đề xuất:
 
 1. **IKEA hiện có:** kiểm kê một số recording đa dạng; xác nhận cách nối video–nhãn và khả năng quan sát mục tiêu. Gán thử lượt công việc trên timeline gốc.
-2. **IndustReal:** đối chiếu bản RGB với PSR của các bản ghi tương ứng, xem ca thành công/lỗi/sửa lại; so sánh bằng chứng hoàn thành với IKEA.
+2. **IndustReal — pilot bổ trợ egocentric:** đối chiếu bản RGB với PSR của các bản ghi tương ứng, xem ca thành công/lỗi/sửa lại; ghi giả thuyết cần kiểm tra lại trên exocentric, không coi đó là kết quả miền đích.
 3. **Chốt quyết định dữ liệu sau hai pilot:** đơn vị công việc có khả thi không, cần bổ sung nhãn bao nhiêu, có đủ nhiều lượt liên tiếp/background/bỏ dở không, tài nguyên xử lý có đáp ứng không.
-4. **Mở rộng có mục đích:** RepCount cho nhiều chu kỳ, FineAction cho ranh giới phụ; Assembly101/HA4M/Breakfast khi cần kiểm tra một giả thuyết cụ thể. Chưa tải/xử lý tất cả chỉ vì đã có adapter.
+4. **Mở rộng có mục đích:** ưu tiên góc ngoài của Assembly101/HA4M khi IKEA chưa đủ để kiểm chứng hướng exocentric. RepCount cho nhiều chu kỳ, FineAction cho ranh giới phụ, Breakfast khi phù hợp một giả thuyết cụ thể; kiểm tra góc nhìn thực tế mỗi subset. Chưa tải/xử lý tất cả chỉ vì đã có adapter.
 
 Sau pilot, cập nhật tài liệu bằng kết quả kiểm tra: tree và schema thực tế, số recording khả dụng sau lọc, phân bố thời lượng/số lượt/gián đoạn, tỷ lệ quan sát được hoàn thành, nhãn cần bổ sung, protocol split và chi phí lưu trữ/compute. Từ đó mới viết parser/tiền xử lý riêng cho từng dataset và runner chung nếu cần.
 
-Các quyết định **để mở**: công việc/goal cụ thể, subset cuối, dùng một hay nhiều camera, FPS/resolution, backbone và feature, mức nhãn thủ công, ngân sách latency, nhu cầu thu thêm video liên tục. Bản v0.1 là ghi chú nghiên cứu có thể sửa, không phải cam kết mọi dataset đều phù hợp.
+Các quyết định **để mở**: công việc/goal cụ thể, subset cuối, camera cố định hay di động, vị trí/vùng quan sát, dùng một hay nhiều camera, FPS/resolution, backbone và feature, mức nhãn thủ công, ngân sách latency, nhu cầu thu thêm video liên tục. Online và miền đích exocentric đã được xác nhận. Bản v0.2 là ghi chú nghiên cứu có thể sửa, không phải cam kết mọi dataset đều phù hợp.
