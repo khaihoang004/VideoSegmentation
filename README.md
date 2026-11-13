@@ -12,6 +12,8 @@ Bổ sung từ danh sách người dùng: [đối chiếu 13 link, 4 bài trùng
 
 Huấn luyện: [pipeline online và hướng dẫn Colab](docs/training_pipeline.md), [config baseline](configs/online_gru.yaml). Chạy `python train.py --help`; cài `pip install -e '.[train]'` trước. Có `make-demo` để kiểm tra train/resume/evaluate trước khi chuẩn bị nhãn video thật.
 
+Trực quan: [mô phỏng I3D bằng HTML](experiments/i3d.html) — Conv3D, inflation, tensor qua mạng và điều kiện dùng online. Mở file bằng trình duyệt; xem thêm [hướng dẫn experiments](experiments/README.md).
+
 ## Colab: mount → clone → chạy CLI
 
 [Mở notebook trên Colab](https://colab.research.google.com/github/khaihoang004/VideoSegmentation/blob/main/notebooks/colab_download.ipynb)

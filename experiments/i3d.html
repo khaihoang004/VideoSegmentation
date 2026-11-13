@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Phòng thực hành tương tác: kernel 3D, weight inflation, kiến trúc I3D và điều kiện sử dụng cho video online.">
+  <title>I3D — Nhìn chuyển động theo thời gian</title>
+  <style>
+    :root{--paper:#f6f5f1;--white:#fff;--ink:#18283c;--muted:#5a6a7b;--line:#dce2e7;--blue:#2859ce;--blue-light:#edf2ff;--orange:#c75c27;--orange-light:#fff1e8;--green:#167256;--green-light:#eaf6f0;--radius:16px;--mono:ui-monospace,SFMono-Regular,Consolas,monospace}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.65 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select{font:inherit}button,select,input[type=range]{cursor:pointer}button{color:inherit}a{color:var(--blue);text-underline-offset:3px}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--orange);outline-offset:4px}button:disabled{cursor:default;opacity:.45}h1,h2,h3,p{margin:0}h1{font-size:clamp(34px,4.4vw,59px);line-height:1.12;letter-spacing:-2px;font-weight:750}h2{font-size:clamp(24px,2.5vw,32px);line-height:1.25;letter-spacing:-.9px}h3{font-size:17px;line-height:1.4}p+p{margin-top:12px}small,.small{font-size:12px}.muted{color:var(--muted)}.mono,code{font-family:var(--mono)}code{font-size:.9em}.eyebrow{font-size:11px;letter-spacing:1.8px;text-transform:uppercase;font-weight:750;color:var(--muted)}.tag{display:inline-flex;align-items:center;gap:7px;padding:5px 10px;border-radius:6px;background:var(--blue-light);color:var(--blue);font-size:12px;font-weight:650}.tag.orange{background:var(--orange-light);color:var(--orange)}.dot{width:6px;height:6px;border-radius:50%;background:currentColor}.skip{position:fixed;left:15px;top:-70px;z-index:20;background:var(--white);padding:12px}.skip:focus{top:15px}
+    .sidebar{position:fixed;top:0;bottom:0;left:0;width:224px;border-right:1px solid var(--line);padding:34px 23px;background:var(--paper);display:flex;flex-direction:column;z-index:5}.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:-.6px}.brand-mark{display:grid;grid-template-columns:repeat(2,8px);gap:3px;transform:rotate(-12deg)}.brand-mark i{width:8px;height:8px;background:var(--blue);border-radius:1px}.brand-mark i:last-child{background:var(--orange)}.sidebar .eyebrow{margin-top:9px;font-size:9px;letter-spacing:1.4px}.nav{margin-top:50px;display:grid;gap:8px}.nav a{display:flex;gap:13px;align-items:center;text-decoration:none;color:var(--muted);font-size:13px;line-height:1.4;padding:11px 10px;border-radius:8px}.nav a span{font-family:var(--mono);font-size:11px;opacity:.75}.nav a.active{background:var(--white);box-shadow:0 1px 3px #18283c0b;color:var(--blue);font-weight:700}.sidebar-bottom{margin-top:auto;padding-top:25px;border-top:1px solid var(--line);font-size:11px;color:var(--muted)}.sidebar-bottom strong{display:block;color:var(--ink);font-size:12px;margin-bottom:5px}.page{margin-left:224px;max-width:1600px;padding:52px clamp(24px,4.5vw,72px) 35px}.hero{position:relative;padding:10px 0 44px;border-bottom:1px solid var(--line)}.hero-top{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:32px}.hero h1{max-width:730px}.hero h1 em{font-style:normal;color:var(--blue)}.intro{max-width:690px;font-size:17px;color:var(--muted);margin-top:22px}.hero-facts{display:flex;flex-wrap:wrap;gap:24px;margin-top:30px;font-size:12px;color:var(--muted)}.hero-facts b{color:var(--ink);font-weight:650}.section{padding-top:54px;margin-top:6px;scroll-margin-top:20px}.section-heading{display:grid;grid-template-columns:42px 1fr;gap:15px;margin-bottom:24px}.section-number{font:13px var(--mono);padding-top:9px;color:var(--blue)}.section-heading p{max-width:790px;color:var(--muted);margin-top:10px}.lab{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 8px 24px #17263b03}.lab-header{padding:18px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}.lab-title{font-size:13px;font-weight:750}.controls{display:flex;gap:18px;flex-wrap:wrap;align-items:end}.field{display:grid;gap:5px;font-size:12px;color:var(--muted)}.field select{max-width:100%;border:1px solid #cbd4de;border-radius:7px;background:var(--white);color:var(--ink);padding:7px 28px 7px 10px;font-size:12px;min-height:35px}.segmented{display:flex;gap:3px;padding:3px;background:#edf0f3;border-radius:8px;flex-wrap:wrap}.segmented button{border:0;background:transparent;padding:6px 11px;border-radius:5px;font-size:12px;font-weight:600}.segmented button[aria-pressed=true]{background:var(--white);box-shadow:0 1px 4px #17263b18;color:var(--blue)}.btn{border:1px solid #cbd4de;background:var(--white);padding:7px 13px;border-radius:7px;font-size:12px;font-weight:650;min-height:35px}.btn.primary{background:var(--blue);border-color:var(--blue);color:white}.btn:hover{filter:brightness(.97)}.lab-body{padding:24px}.note{padding:13px 16px;background:var(--blue-light);border-left:3px solid var(--blue);font-size:13px;color:#314a75;border-radius:0 7px 7px 0}.note.warm{background:var(--orange-light);border-color:var(--orange);color:#804120}.note.success{background:var(--green-light);border-color:var(--green);color:var(--green)}.below{margin-top:18px}.label-row{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}.label-row strong{font-size:13px}.filmstrip{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:6px;margin-bottom:18px}.frame{border:1px solid var(--line);background:#fafbfc;border-radius:7px;padding:5px 4px 3px;min-width:0;transition:background .15s,border-color .15s}.frame svg{display:block;width:100%;height:auto}.frame span{font:10px var(--mono);color:var(--muted)}.frame.support{background:var(--blue-light);border-color:#a9bfee}.frame.current{border:2px solid var(--blue);padding:4px 3px 2px}.frame.current span{color:var(--blue);font-weight:800}.time-controls{display:grid;grid-template-columns:auto minmax(60px,1fr) auto;gap:15px;align-items:center}.time-controls input{width:100%;accent-color:var(--blue)}.time-value{font:12px var(--mono);white-space:nowrap}.conv-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,.85fr);gap:24px;margin-top:26px;padding-top:24px;border-top:1px solid var(--line)}.visual-title{font-size:12px;font-weight:700;display:flex;justify-content:space-between;gap:8px;margin-bottom:12px}.visual-title span{color:var(--muted);font-weight:400}.pixel-svg{display:block;width:100%;max-height:220px;touch-action:manipulation}.pixel-svg [role=button]{cursor:crosshair}.caption{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.65}.kernel-stack{display:grid;gap:6px}.kernel-slice{display:grid;grid-template-columns:42px 1fr 56px;gap:8px;align-items:center;font:11px var(--mono)}.kernel-slice .mini-matrix{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;max-width:110px}.mini-matrix span{text-align:center;border-radius:2px;padding:2px 0;background:#eff3f7;font-size:10px}.kernel-slice.current-slice{color:var(--blue)}.equation{font:13px/1.8 var(--mono);color:var(--ink);padding:13px 16px;background:#f7f8fa;border:1px solid var(--line);border-radius:8px;overflow-wrap:anywhere}.results{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}.result{padding:15px 17px;border:1px solid var(--line);border-radius:10px}.result small{display:block;color:var(--muted);font-size:11px}.result output{display:block;font:750 29px/1.3 var(--mono);margin:6px 0;color:var(--blue)}.result.accent{border-color:#b7c9f2;background:#f6f8ff}.result.accent output{color:var(--blue)}.legend{display:flex;gap:7px;align-items:center;font-size:10px;color:var(--muted);margin-top:8px}.legend i{display:block;height:7px;width:64px;border-radius:3px;background:linear-gradient(90deg,#c75c27,#f2f4f7,#2859ce)}.inflation-layout{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}.formula{font:clamp(16px,2vw,23px)/1.6 var(--mono);letter-spacing:-.6px;margin:18px 0}.proof-table{width:100%;border-collapse:collapse;font-size:13px}.proof-table td{padding:12px 0;border-bottom:1px solid var(--line)}.proof-table td:last-child{text-align:right;font-family:var(--mono);font-weight:700}.toggle-label{display:flex;align-items:center;gap:9px;font-size:13px;cursor:pointer}.toggle-label input{width:17px;height:17px;accent-color:var(--blue)}.weights-picture{display:flex;align-items:center;justify-content:center;gap:18px;min-height:130px;padding:17px;background:#f7f8fa;border-radius:10px;margin-bottom:18px}.weight-tile{display:grid;grid-template-columns:repeat(3,23px);gap:3px}.weight-tile span{display:flex;align-items:center;justify-content:center;height:23px;border-radius:3px;background:#e6ecf6;font:10px var(--mono);color:var(--blue)}.weight-layers{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}.weight-layers .weight-tile{grid-template-columns:repeat(3,15px);gap:2px}.weight-layers .weight-tile span{height:17px;font-size:8px}.shape-path{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin:24px 0}.stage{position:relative;background:#fafbfc;border:1px solid var(--line);padding:14px 8px;border-radius:9px;text-align:left;min-width:0}.stage:after{content:'→';position:absolute;right:-12px;top:40%;color:#8794a5;z-index:1;font-size:12px}.stage:last-child:after{display:none}.stage[aria-pressed=true]{border-color:var(--blue);background:var(--blue-light);box-shadow:0 0 0 1px var(--blue)}.stage small{display:block;font-size:9px;color:var(--muted);margin-bottom:5px}.stage b{display:block;font-size:11px;line-height:1.5;overflow-wrap:anywhere}.stage code{display:block;font-size:10px;margin-top:10px;line-height:1.6;white-space:normal;color:var(--blue)}.stage-detail{display:grid;grid-template-columns:1fr auto;gap:25px;padding:20px;background:#f5f7fb;border-radius:10px;margin-bottom:20px;align-items:center}.stage-detail p{font-size:13px;margin-top:5px;color:var(--muted)}.shape-badge{font:13px var(--mono);background:var(--white);border:1px solid var(--line);border-radius:7px;padding:11px 14px;white-space:nowrap}.inception{padding-top:25px;margin-top:24px;border-top:1px solid var(--line)}.branch-diagram{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0 0}.branch{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;padding:16px 9px;background:#f7f8fa;border:1px solid var(--line);border-radius:8px;font-size:11px}.branch strong{font:11px var(--mono);color:var(--blue);margin-bottom:9px}.branch .operation{font:11px/1.8 var(--mono)}.branch .channels{font:700 22px var(--mono);margin-top:auto;padding-top:12px;color:var(--ink)}.concat{position:relative;margin:20px 0 0;background:var(--blue-light);border:1px solid #c8d6f3;padding:12px;text-align:center;border-radius:7px;font:12px var(--mono);color:var(--blue)}.concat:before{content:'↓ concat theo trục C';display:block;font:11px system-ui;margin-bottom:5px}.streams{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0}.stream{border:1px solid var(--line);border-radius:10px;padding:22px;transition:opacity .15s}.stream.inactive{opacity:.4}.stream .modality{font:700 24px var(--mono);margin-bottom:5px;color:var(--blue)}.stream.flow .modality{color:var(--orange)}.stream-io{display:flex;gap:12px;align-items:center;margin:18px 0;font:12px var(--mono)}.stream-model{padding:12px 18px;border:1px solid #cbd8f1;border-radius:6px;background:var(--blue-light);white-space:nowrap}.stream.flow .stream-model{background:var(--orange-light);border-color:#f0d3c2;color:var(--orange)}.stream p{font-size:13px;color:var(--muted)}.merge-line{text-align:center;border-top:1px solid var(--line);padding-top:16px;font-size:13px}.timeline-wrap{margin:25px 0 20px}.timeline{display:grid;grid-template-columns:repeat(24,minmax(0,1fr));gap:4px}.tick{position:relative;height:47px;display:flex;align-items:center;justify-content:center;border:1px dashed #c8d1dc;background:#f8f9fb;border-radius:5px;font:10px var(--mono);color:#718095}.tick.observed{background:#e6ebf0;border-style:solid;border-color:#d5dde6;color:#526174}.tick.used{background:#e5edff;color:var(--blue);border:1px solid #89a7ec}.tick.used.future{background:repeating-linear-gradient(135deg,#fff2e9,#fff2e9 4px,#ffe4d2 4px,#ffe4d2 8px);border-color:#ce895f;color:#9d4f25}.tick.target{box-shadow:0 0 0 2px var(--ink)}.timeline-legend{display:flex;flex-wrap:wrap;gap:17px;font-size:11px;color:var(--muted);margin-top:12px}.timeline-legend span{display:flex;align-items:center;gap:6px}.key{width:10px;height:10px;border:1px solid #c8d1dc;border-radius:2px;background:#e6ebf0}.key.blue{background:#e5edff;border-color:#89a7ec}.key.orange{background:#ffe4d2;border-color:#ce895f}.key.target{background:white;border:2px solid var(--ink)}.online-readout{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:20px 0}.online-readout>div{padding:15px;background:#f7f8fa;border:1px solid var(--line);border-radius:9px}.online-readout small{display:block;color:var(--muted);font-size:11px}.online-readout output{font:700 18px/1.6 var(--mono)}.pipeline{display:flex;gap:8px;align-items:stretch;margin-top:24px;flex-wrap:wrap}.pipeline span{flex:1;padding:12px 10px;background:#edf0f4;border-radius:7px;font-size:11px;text-align:center;min-width:100px}.pipeline span:last-child{background:var(--blue-light);color:var(--blue)}.pipeline b{display:block;font-size:12px}.pipeline i{font-style:normal;align-self:center;color:var(--muted)}.quiz-list{display:grid;gap:0}.question{padding:23px 24px;border-bottom:1px solid var(--line)}.question:last-child{border:0}.question h3{font-size:14px;font-weight:650;margin-bottom:12px}.answers{display:flex;flex-wrap:wrap;gap:8px}.answer{font-size:12px;text-align:left;border:1px solid var(--line);border-radius:7px;background:white;padding:9px 13px}.answer[aria-pressed=true]{border-color:var(--blue);background:var(--blue-light);color:var(--blue)}.answer.correct[aria-pressed=true]{border-color:var(--green);background:var(--green-light);color:var(--green)}.answer.wrong[aria-pressed=true]{border-color:var(--orange);background:var(--orange-light);color:var(--orange)}.feedback{font-size:12px;margin-top:10px;min-height:0}.feedback:empty{display:none}.sources{padding-top:38px;margin-top:50px;border-top:1px solid var(--line)}.sources p{font-size:12px;color:var(--muted);margin-top:10px}.sources ol{padding-left:18px;font-size:12px;color:var(--muted);line-height:1.8}.sources a{overflow-wrap:anywhere}.footer{display:flex;justify-content:space-between;gap:15px;border-top:1px solid var(--line);margin-top:30px;padding-top:18px;color:var(--muted);font-size:11px}svg text{font-family:var(--mono)}
+    @media(min-width:1600px){.page{margin-right:auto}.conv-grid{gap:38px}}
+    @media(max-width:1150px){.sidebar{width:190px;padding:28px 16px}.page{margin-left:190px;padding:36px 27px}.shape-path{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.stage:nth-child(4):after{display:none}.conv-grid{gap:16px}.stream-io{font-size:10px;gap:7px}.stream-model{padding:10px}}
+    @media(max-width:800px){html{scroll-padding-top:105px}.sidebar{position:sticky;top:0;width:100%;height:auto;padding:11px 18px 0;border-right:0;border-bottom:1px solid var(--line);background:#f6f5f1f5;backdrop-filter:blur(12px)}.brand{font-size:16px}.sidebar>.eyebrow,.sidebar-bottom{display:none}.nav{margin-top:9px;display:flex;gap:3px;overflow-x:auto;padding-bottom:9px}.nav a{flex-shrink:0;font-size:11px;padding:7px 9px;gap:6px}.page{margin:0;padding:28px 21px}.hero{padding-top:0;padding-bottom:30px}.hero-top{margin-bottom:25px}.hero-top>.eyebrow{font-size:9px}.hero-top .tag{font-size:10px;padding:4px 7px}h1{letter-spacing:-1.3px}.intro{font-size:15px}.section{padding-top:38px;scroll-margin-top:105px}.section-heading{grid-template-columns:26px 1fr;gap:10px}.section-number{font-size:11px;padding-top:6px}.section-heading p{font-size:14px}.lab-body{padding:18px}.lab-header{padding:16px 18px}.conv-grid{grid-template-columns:1fr 1fr;gap:20px}.conv-grid>div:nth-child(2){grid-column:1/-1;grid-row:2}.kernel-stack{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.kernel-slice{grid-template-columns:1fr;gap:5px}.kernel-slice .mini-matrix{width:100%;max-width:120px}.kernel-slice>span:last-child{font-size:11px}.timeline{gap:3px}.tick{font-size:9px;height:39px}.inflation-layout{gap:22px}.stage-detail{grid-template-columns:1fr;gap:12px}.shape-badge{justify-self:start}.stream{padding:16px}.streams{gap:12px}.stream-io{flex-wrap:wrap}.online-readout{gap:8px}.online-readout>div{padding:12px}.online-readout output{font-size:16px}.weights-picture{gap:10px}.weight-tile{grid-template-columns:repeat(3,18px)}.weight-tile span{height:19px}.weight-layers .weight-tile{grid-template-columns:repeat(3,12px)}.weight-layers .weight-tile span{height:14px;font-size:7px}}
+    @media(max-width:520px){.hero-top{align-items:start;gap:12px}.hero-top .tag{max-width:150px;font-size:9px;line-height:1.5}.hero-facts{gap:10px 20px;font-size:11px}.controls{gap:12px;width:100%}.field{flex:1;min-width:100px}.field select{width:100%;font-size:11px}.filmstrip{gap:3px}.frame{padding:3px 1px 2px;border-radius:4px}.frame.current{padding:2px 0 1px}.frame span{font-size:8px}.time-controls{gap:8px}.time-controls .btn{padding:6px 9px}.time-value{font-size:10px}.visual-title{font-size:11px;flex-wrap:wrap;gap:3px}.caption{font-size:11px}.conv-grid{gap:16px}.kernel-stack{gap:6px}.kernel-slice{font-size:10px}.mini-matrix span{font-size:9px}.result{padding:12px}.result output{font-size:25px}.result small{font-size:10px}.inflation-layout{grid-template-columns:1fr;gap:18px}.formula{font-size:18px}.shape-path{grid-template-columns:repeat(2,minmax(0,1fr))}.stage:after{display:none}.stage b{font-size:12px}.stage code{font-size:11px}.branch-diagram{grid-template-columns:repeat(2,1fr);gap:8px}.concat{font-size:11px}.streams{grid-template-columns:1fr}.stream-io{font-size:12px}.stream-model{padding:10px 20px}.online-readout{grid-template-columns:1fr 1fr}.online-readout>div:last-child{grid-column:1/-1}.timeline{grid-template-columns:repeat(12,minmax(0,1fr));gap:5px}.tick{font-size:10px;height:35px}.timeline-legend{font-size:10px;gap:10px}.question{padding:19px 18px}.answers{flex-direction:column}.answer{width:100%}.pipeline{gap:6px}.pipeline i{display:none}.pipeline span{min-width:85px}.footer{flex-direction:column}.note{font-size:12px}.label-row{align-items:start}.segmented button{padding:6px 9px}.shape-badge{font-size:11px;max-width:100%;white-space:normal;overflow-wrap:anywhere}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+    .section-heading>div{min-width:0}.section-number{white-space:nowrap}.label-row .field{flex:0 0 auto;min-width:112px}
+    @media(max-width:520px){.controls label[for="kernel-mode"]{order:3;flex-basis:100%}.controls label[for="kernel-mode"] select{font-size:12px}}
+    @media print{.sidebar,.time-controls,.controls,.btn,.answers{display:none}.page{margin:0;padding:0}.lab{break-inside:avoid;box-shadow:none}.section{padding-top:24px}.hero{padding-bottom:20px}body{background:white}.section-heading{margin-bottom:15px}}
+  </style>
+</head>
+<body>
+<a class="skip" href="#main">Đến nội dung chính</a>
+<aside class="sidebar" aria-label="Điều hướng bài học">
+  <div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Video / Lab</div>
+  <div class="eyebrow">Experiments · 001</div>
+  <nav class="nav">
+    <a href="#convolution" class="active"><span>01</span> Từ frame đến volume</a>
+    <a href="#inflation"><span>02</span> Inflate một kernel</a>
+    <a href="#architecture"><span>03</span> Bên trong I3D</a>
+    <a href="#streams"><span>04</span> RGB & optical flow</a>
+    <a href="#online"><span>05</span> Đưa về online</a>
+    <a href="#check"><span>06</span> Kiểm tra đã hiểu</a>
+  </nav>
+  <div class="sidebar-bottom"><strong>Quo Vadis, Action Recognition?</strong>Carreira & Zisserman · CVPR 2017<br><a href="#sources">Paper & mã nguồn gốc ↗</a></div>
+</aside>
+<main class="page" id="main">
+  <header class="hero">
+    <div class="hero-top"><span class="eyebrow">Hiểu mô hình bằng phép tính</span><span class="tag"><span class="dot"></span>Mô phỏng · không chạy model weights</span></div>
+    <h1>I3D: nhìn chuyển động<br><em>theo thời gian.</em></h1>
+    <p class="intro">Một bức ảnh cho biết <b>có gì</b>. Một chuỗi ảnh giúp biết <b>đang xảy ra điều gì</b>. Khám phá cách I3D mở rộng mạng ảnh 2D thành mạng video 3D — rồi xem cần đổi gì khi xử lý online.</p>
+    <div class="hero-facts"><span><b>I</b>nflated <b>3D</b> ConvNet</span><span>3D = <b>thời gian × cao × rộng</b></span><span>Đi từ kernel → feature → thời điểm dự đoán</span></div>
+  </header>
+
+  <section class="section" id="convolution" aria-labelledby="conv-title">
+    <div class="section-heading"><span class="section-number">01 /</span><div><h2 id="conv-title">Video là một khối, không chỉ là một ảnh.</h2><p>Kernel 2D nhìn một frame. Kernel 3D phủ cả các frame lân cận. Thử đảo chiều thanh đang chạy và quan sát kết quả phép tích vô hướng.</p></div></div>
+    <div class="lab">
+      <div class="lab-header"><span class="lab-title">Bàn thí nghiệm Conv3D</span><div class="controls">
+        <label class="field" for="motion">Video mẫu<select id="motion"><option value="right">Sang phải →</option><option value="left">← Sang trái</option><option value="static">Đứng yên</option></select></label>
+        <label class="field" for="kernel-mode">Kernel theo thời gian<select id="kernel-mode"><option value="motion">Nhạy hướng chuyển động (minh họa)</option><option value="inflated">Khởi tạo inflate: các lát giống nhau</option></select></label>
+        <label class="field" for="kernel-size">Độ dài kernel<select id="kernel-size"><option value="3">3 frame</option><option value="5">5 frame</option></select></label>
+      </div></div>
+      <div class="lab-body">
+        <div class="label-row"><strong>Clip đồ chơi · T × H × W × C = 9 × 7 × 9 × 1</strong><span class="small muted">ô sáng = 1 · ô tối = 0</span></div>
+        <div id="filmstrip" class="filmstrip" role="group" aria-label="Chọn frame trung tâm"></div>
+        <div class="time-controls"><button class="btn primary" id="play" type="button" aria-pressed="false">▶ Phát</button><input id="frame-time" type="range" min="1" max="7" value="4" aria-label="Frame trung tâm t"><output id="frame-value" class="time-value" for="frame-time">t = 4 / 8</output></div>
+        <div class="conv-grid">
+          <div><div class="visual-title">Frame trung tâm <span id="patch-position">t = 4 · (y, x) = (3, 4)</span></div><svg id="input-grid" class="pixel-svg" viewBox="0 0 270 210" role="group" aria-label="Chọn tâm patch không gian; dùng Tab và Enter hoặc nhấp vào một ô"></svg><p class="caption">Viền cam là patch 3 × 3. Nhấp một ô bên trong hoặc dùng Tab → Enter để đổi tâm.</p></div>
+          <div><div class="visual-title">Các lát kernel 3 × 3 <span>từ trước → sau</span></div><div id="kernel-stack" class="kernel-stack"></div><p class="caption" id="kernel-explanation"></p></div>
+          <div><div class="visual-title">Feature map đầu ra <span>5 × 7</span></div><svg id="output-grid" class="pixel-svg" viewBox="0 0 210 150" role="img" aria-label="Bản đồ đáp ứng tích chập 3D tại frame đang chọn"></svg><div class="legend"><span>âm</span><i></i><span>0</span><span>→ dương</span></div><p class="caption">Đây là đáp ứng có dấu trước ReLU; <b>không phải xác suất</b> của một hành động.</p></div>
+        </div>
+        <div class="results"><div class="result"><small>Conv2D · chỉ patch ở frame t</small><output id="response-2d">0</output><small>Σ W₂D · X[t]</small></div><div class="result accent"><small>Conv3D · cùng patch qua nhiều frame</small><output id="response-3d" aria-live="polite">4</output><small id="response-sum"></small></div></div>
+        <p class="caption">Cách tính dùng cross-correlation như các lớp Conv thông dụng: nhân từng ô rồi cộng; không lật kernel. Chỉ xét vùng <b>valid</b>, không padding, một kênh và một filter để nhìn rõ phép tính. I3D thật dùng nhiều kênh, nhiều filter, BatchNorm và ReLU. Số hiển thị được làm tròn tới 3 chữ số thập phân.</p>
+      </div>
+    </div>
+    <div class="note below">Thử <b>phải → trái → đứng yên</b> với kernel chuyển động <b>3 frame</b>, t = 4, tâm (3, 4): kết quả là <b>+4 → −4 → 0</b>. Đây là kernel do ta thiết kế để minh họa, không phải trọng số đã học của I3D.</div>
+  </section>
+
+  <section class="section" id="inflation" aria-labelledby="inflate-title">
+    <div class="section-heading"><span class="section-number">02 /</span><div><h2 id="inflate-title">“Inflate” nghĩa là sao chép, rồi chia.</h2><p>I3D tận dụng trọng số mạng ảnh đã học: thêm trục thời gian, lặp kernel 2D N lần và chia cho N. Đây là cách <b>khởi tạo</b> trọng số; sau đó các lát thời gian có thể học khác nhau. <a href="#source-paper">[1]</a></p></div></div>
+    <div class="lab"><div class="lab-header"><span class="lab-title">Thí nghiệm “video đứng yên”</span><div class="controls"><label class="field" for="inflate-n">Số lát thời gian N<select id="inflate-n"><option value="3">3</option><option value="5">5</option><option value="7">7</option></select></label><label class="toggle-label"><input type="checkbox" id="normalize" checked> Chia trọng số cho N</label></div></div>
+      <div class="lab-body inflation-layout"><div>
+        <div class="eyebrow">Từ 2D sang 3D</div><div class="formula" id="inflate-formula">W₃D[τ] = W₂D / 3</div>
+        <div class="weights-picture"><div id="weight-2d" class="weight-tile" aria-label="Kernel Sobel 2D"></div><span aria-hidden="true">→</span><div id="weight-layers" class="weight-layers" aria-label="Các lát của kernel 3D"></div></div>
+        <p class="caption">Mỗi frame chứa cùng patch <code>[[0,0,1],[0,0,1],[0,0,1]]</code>. Kernel 2D là Sobel theo chiều ngang; đáp ứng của mỗi patch luôn bằng 4.</p>
+      </div><div><table class="proof-table"><caption class="eyebrow" style="text-align:left;margin-bottom:8px">So sánh đáp ứng</caption><tbody><tr><td>Conv2D trên một ảnh</td><td>4</td></tr><tr><td id="proof-slice-label">Mỗi lát 3D sau chia N</td><td id="proof-slice">4 / 3</td></tr><tr><td>Cộng tất cả N lát</td><td id="proof-total">4</td></tr></tbody></table><div class="note below" id="proof-feedback" aria-live="polite"></div><p class="caption">Tính chất này áp dụng cho cửa sổ có đủ các frame lặp lại. Zero-padding ở biên thời gian có thể làm đáp ứng khác đi. Phép thử chỉ minh họa phần tuyến tính của một lớp.</p></div></div>
+    </div>
+    <p class="caption below"><b>Điểm mấu chốt:</b> inflate không tự tạo khả năng phân biệt hướng chuyển động ngay lúc khởi tạo. Khả năng đó đến từ việc học các filter không gian–thời gian trong quá trình huấn luyện.</p>
+  </section>
+
+  <section class="section" id="architecture" aria-labelledby="arch-title">
+    <div class="section-heading"><span class="section-number">03 /</span><div><h2 id="arch-title">Một clip đi qua I3D như thế nào?</h2><p>Bản gốc inflate kiến trúc Inception-v1. Chọn một mốc để xem tensor thay đổi ra sao. Quy ước dưới đây là <code>[B, T, H, W, C]</code> theo mã TensorFlow gốc. <a href="#source-code">[2]</a></p></div></div>
+    <div class="lab"><div class="lab-header"><span class="lab-title">Bản đồ tensor · RGB I3D</span><div class="controls"><label class="field" for="clip-length">Độ dài clip đầu vào<select id="clip-length"><option value="32">32 frame</option><option value="64" selected>64 frame</option><option value="96">96 frame</option></select></label><div><span class="small muted">Đầu ra</span><div class="segmented" id="head-mode" role="group" aria-label="Chọn đầu ra I3D"><button type="button" data-value="features" aria-pressed="true">Trích feature</button><button type="button" data-value="classification" aria-pressed="false">Phân loại gốc</button></div></div></div></div>
+      <div class="lab-body"><div class="shape-path" id="shape-path" role="group" aria-label="Các mốc trong mạng I3D"></div><div class="stage-detail" aria-live="polite"><div><h3 id="stage-name"></h3><p id="stage-description"></p></div><div id="stage-shape" class="shape-badge"></div></div><div class="note" id="head-note"></div>
+        <div class="inception"><div class="label-row"><div><h3>Bên trong một khối Inception 3D</h3><p class="caption">Bốn nhánh chạy song song trên cùng đầu vào.</p></div><label class="field" for="mixed-block">Chọn block<select id="mixed-block"><option value="3b">Mixed_3b</option><option value="5c">Mixed_5c</option></select></label></div><div id="branch-diagram" class="branch-diagram"></div><div id="concat" class="concat"></div><p class="caption">Conv 1 × 1 × 1 trộn/giảm số kênh trước phép tính tốn hơn. Các nhánh được <b>nối theo kênh C</b>, không nối theo thời gian và không cộng từng phần tử.</p></div>
+      </div></div>
+    <div class="note warm below"><b>T′ không bằng T.</b> Một feature không tương ứng trực tiếp với một frame gốc. Bước lấy mẫu thời gian tổng thể là 8 ở các mốc này, nhưng receptive field lớn hơn 8 frame; không thể lấy chỉ số feature × 8 rồi mặc nhiên coi đó là timestamp nhân quả.</div>
+  </section>
+
+  <section class="section" id="streams" aria-labelledby="streams-title">
+    <div class="section-heading"><span class="section-number">04 /</span><div><h2 id="streams-title">Hai stream bổ sung cho nhau.</h2><p>RGB đưa vào hình ảnh. Optical flow đưa vào trường dịch chuyển (u, v). Paper đánh giá cả từng stream và kết hợp hai stream; <b>RGB I3D tự nó đã có thể học chuyển động</b>. <a href="#source-paper">[1]</a></p></div></div>
+    <div class="lab"><div class="lab-header"><span class="lab-title">Đầu vào khác nhau · các mạng riêng</span><div class="segmented" id="stream-mode" role="group" aria-label="Chọn stream"><button type="button" data-value="rgb" aria-pressed="false">RGB</button><button type="button" data-value="flow" aria-pressed="false">Flow</button><button type="button" data-value="both" aria-pressed="true">Cả hai</button></div></div><div class="lab-body"><div class="streams"><div class="stream" id="rgb-stream"><div class="modality">R G B</div><span class="tag">3 kênh · màu & hình dạng</span><div class="stream-io"><span>[B,T,H,W,3]</span><span aria-hidden="true">→</span><span class="stream-model">RGB I3D</span></div><p>Conv3D học cả cấu trúc không gian và sự thay đổi qua thời gian. Không cần optical flow để mô hình có trục thời gian.</p></div><div class="stream flow" id="flow-stream"><div class="modality">u → · v ↑</div><span class="tag orange">2 kênh · dịch chuyển pixel</span><div class="stream-io"><span>[B,T,H,W,2]</span><span aria-hidden="true">→</span><span class="stream-model">Flow I3D</span></div><p>Flow được ước lượng từ các ảnh trước khi đưa vào stream này. Nó không đơn giản là lấy hai frame trừ nhau và không phải bản đồ độ sâu.</p></div></div><div class="merge-line" id="stream-summary" aria-live="polite">Hai stream có trọng số riêng → kết hợp điểm dự đoán để phân loại clip.</div><p class="caption">Với online, phải kiểm tra cả timestamp của cặp ảnh dùng để tính flow. Nếu flow tại t dùng ảnh t + 1, feature ấy chưa sẵn sàng ở thời điểm t.</p></div></div>
+  </section>
+
+  <section class="section" id="online" aria-labelledby="online-title">
+    <div class="section-heading"><span class="section-number">05 /</span><div><h2 id="online-title">Đã quan sát đủ thì mới được dự đoán.</h2><p>I3D gốc phân loại <b>clip</b>, chưa tự phát hiện bắt đầu/kết thúc một lần hoàn thành công việc. Để dùng làm backbone online, trước hết phải kiểm soát những frame mà mỗi đầu ra sử dụng.</p></div></div>
+    <div class="lab"><div class="lab-header"><span class="lab-title">Đồng hồ quan sát · dự đoán cho frame 12</span><div class="controls"><label class="field" for="window-size">Cửa sổ minh họa<select id="window-size"><option value="3">3 frame</option><option value="5" selected>5 frame</option><option value="7">7 frame</option></select></label><div><span class="small muted">Cách đặt cửa sổ</span><div class="segmented" id="window-mode" role="group" aria-label="Cách lấy clip"><button type="button" data-value="centered" aria-pressed="true">Quanh tâm</button><button type="button" data-value="trailing" aria-pressed="false">Chỉ quá khứ</button></div></div></div></div>
+      <div class="lab-body"><div class="time-controls"><span class="small muted">Đã thấy đến</span><input type="range" id="observed-time" min="0" max="23" value="12" aria-label="Frame mới nhất đã quan sát"><output for="observed-time" id="observed-label" class="time-value">frame 12 · 3.00 s</output></div><div class="timeline-wrap"><div id="timeline" class="timeline" aria-label="Timeline 24 frame, tốc độ minh họa 4 FPS"></div><div class="timeline-legend"><span><i class="key"></i>Đã quan sát</span><span><i class="key blue"></i>Clip sử dụng</span><span><i class="key orange"></i>Clip cần nhưng chưa thấy</span><span><i class="key target"></i>Mốc muốn gắn nhãn</span></div></div><div class="online-readout"><div><small>Các frame cần có</small><output id="required-frames"></output></div><div><small>Sớm nhất có đủ đầu vào</small><output id="available-time"></output></div><div><small>Look-ahead so với frame 12</small><output id="lookahead"></output></div></div><div class="note warm" id="online-status" aria-live="polite"></div><p class="caption">Đồng hồ bắt đầu ở frame 0, dùng 4 FPS để dễ quan sát. Đây là quy tắc chọn cửa sổ minh họa, <b>không phải receptive field chính xác của I3D</b>. Chưa cộng thời gian decode, tính flow, chạy mạng và hậu xử lý.</p><div class="pipeline"><span><b>Clip đã quan sát</b>kết thúc ở t</span><i aria-hidden="true">→</i><span><b>I3D backbone</b>trích feature</span><i aria-hidden="true">→</i><span><b>Temporal model causal</b>trạng thái / tiến độ</span><i aria-hidden="true">→</i><span><b>Boundary decoder</b>start / completion</span></div></div>
+    </div><div class="note below"><b>Điều kiện đúng:</b> embedding của một clip chỉ chứa quá khứ có thể được phát tại <b>cuối clip</b>. Điều này không biến mọi feature ở bên trong I3D thành causal. Gắn temporal head causal lên feature đã nhìn tương lai vẫn gây leakage; phải kiểm tra cả backbone và thời điểm phát đầu ra. Cửa sổ đối xứng có thể dùng nếu chấp nhận trễ, nhưng phải báo rõ độ trễ đó.</div>
+  </section>
+
+  <section class="section" id="check" aria-labelledby="check-title"><div class="section-heading"><span class="section-number">06 /</span><div><h2 id="check-title">Đã nắm được ý chính?</h2><p>Năm câu ngắn để kiểm tra trước khi đọc paper hoặc dùng I3D trong pipeline của mình.</p></div></div><div class="lab"><div class="lab-header"><span class="lab-title" id="quiz-score" aria-live="polite">0 / 5 câu đúng · chưa trả lời</span><button type="button" id="quiz-reset" class="btn">Làm lại</button></div><div class="quiz-list" id="quiz"></div></div></section>
+
+  <section class="sources" id="sources" aria-labelledby="sources-title"><h3 id="sources-title">Đọc tiếp từ nguồn gốc</h3><ol><li id="source-paper"><a href="https://arxiv.org/abs/1705.07750" target="_blank" rel="noopener noreferrer">Carreira & Zisserman — Quo Vadis, Action Recognition? A New Model and the Kinetics Dataset</a> (CVPR 2017). Đọc §2.4: inflation, khởi tạo từ ImageNet và two-stream I3D.</li><li id="source-code"><a href="https://github.com/google-deepmind/kinetics-i3d/blob/master/i3d.py" target="_blank" rel="noopener noreferrer">Google DeepMind — I3D reference implementation</a>. Nguồn cho kernel, stride, số kênh và classification head trong sơ đồ.</li></ol><p>Mô phỏng Conv3D dùng dữ liệu và kernel nhỏ do ta tạo để giải thích. Sơ đồ tensor bám theo bản gốc; nhánh spatial pooling để trích feature và pipeline online là cách ứng dụng được minh họa thêm, không phải tuyên bố kết quả thực nghiệm của paper.</p></section>
+  <footer class="footer"><span>VideoSegmentation / experiments / i3d.html</span><a href="#main">Về đầu trang ↑</a></footer>
+  <noscript><p class="note warm">Bật JavaScript để sử dụng các phép tính và tương tác. Phần giải thích và nguồn đọc vẫn có trong trang.</p></noscript>
+</main>
+<script>
+'use strict';
+(() => {
+  const $ = id => document.getElementById(id);
+  const $$ = selector => Array.from(document.querySelectorAll(selector));
+  const fmt = n => Math.abs(n) < 1e-9 ? '0' : Number(n.toFixed(3)).toString();
+  const SOBEL = [[-1,0,1],[-2,0,2],[-1,0,1]];
+  const state = {motion:'right', mode:'motion', k:3, t:4, x:4, y:3, playing:false, timer:null, head:'features', stage:5, window:'centered'};
+  const T=9, H=7, W=9;
+  function pixel(t,y,x) {
+    const pos=state.motion==='static'?4:state.motion==='right'?1+Math.round(.75*t):7-Math.round(.75*t);
+    return y>=2 && y<=4 && x===pos ? 1:0;
+  }
+  function spatial(t,y,x) {
+    let v=0;
+    for(let dy=-1;dy<=1;dy++) for(let dx=-1;dx<=1;dx++) v+=SOBEL[dy+1][dx+1]*pixel(t,y+dy,x+dx);
+    return v;
+  }
+  function temporalWeights() {
+    if(state.mode==='inflated') return Array(state.k).fill(1/state.k);
+    return state.k===3 ? [-.5,0,.5] : [-.25,-.25,0,.25,.25];
+  }
+  function conv3d(y,x) {
+    const h=(state.k-1)/2;
+    return temporalWeights().reduce((sum,a,i)=>sum+a*spatial(state.t-h+i,y,x),0);
+  }
+  function frameSVG(t) {
+    let s='<svg viewBox="0 0 90 70" aria-hidden="true">';
+    for(let y=0;y<H;y++) for(let x=0;x<W;x++) s+=`<rect x="${x*10}" y="${y*10}" width="9" height="9" rx="1" fill="${pixel(t,y,x)?'#6f95ee':'#20334b'}"/>`;
+    return s+'</svg>';
+  }
+  function updateFilmstrip() {
+    const h=(state.k-1)/2;
+    $('filmstrip').innerHTML=Array.from({length:T},(_,t)=>`<button type="button" class="frame ${Math.abs(t-state.t)<=h?'support':''} ${t===state.t?'current':''}" data-time="${t}" aria-label="Frame ${t}${t<h||t>T-1-h?', không đủ cửa sổ valid':''}" aria-pressed="${t===state.t}" ${t<h||t>T-1-h?'disabled':''}>${frameSVG(t)}<span>t${t}</span></button>`).join('');
+    $('frame-time').min=h;$('frame-time').max=T-1-h;$('frame-time').value=state.t;
+    $('frame-value').textContent=`t = ${state.t} / 8`;
+  }
+  function drawInput() {
+    let s='';
+    for(let y=0;y<H;y++) for(let x=0;x<W;x++) {
+      const selectable=y>0&&y<H-1&&x>0&&x<W-1;
+      const selected=state.x===x&&state.y===y;
+      s+=`<g ${selectable?`role="button" tabindex="0" aria-label="Tâm patch hàng ${y}, cột ${x}, giá trị ${pixel(state.t,y,x)}" aria-pressed="${selected}" data-x="${x}" data-y="${y}"`:''}><rect x="${x*30+1}" y="${y*30+1}" width="28" height="28" rx="3" fill="${pixel(state.t,y,x)?'#6f95ee':'#20334b'}"/><text x="${x*30+15}" y="${y*30+19}" text-anchor="middle" font-size="10" fill="${pixel(state.t,y,x)?'#10254c':'#9daec4'}" pointer-events="none">${pixel(state.t,y,x)}</text></g>`;
+    }
+    s+=`<rect x="${(state.x-1)*30+.5}" y="${(state.y-1)*30+.5}" width="89" height="89" fill="none" stroke="#f19155" stroke-width="2.5" rx="4" pointer-events="none"/><circle cx="${state.x*30+15}" cy="${state.y*30+15}" r="12" stroke="white" stroke-width="1.5" fill="none" pointer-events="none"/>`;
+    $('input-grid').innerHTML=s;
+    $('patch-position').textContent=`t = ${state.t} · (y, x) = (${state.y}, ${state.x})`;
+  }
+  function color(v) {
+    const a=Math.min(1,Math.abs(v)/4), from=[242,244,247], to=v<0?[199,92,39]:[40,89,206];
+    return `rgb(${from.map((x,i)=>Math.round(x+(to[i]-x)*a)).join(',')})`;
+  }
+  function drawOutput() {
+    let s='';
+    for(let y=1;y<H-1;y++) for(let x=1;x<W-1;x++) {
+      const v=conv3d(y,x);
+      s+=`<rect x="${(x-1)*30+1}" y="${(y-1)*30+1}" width="28" height="28" rx="3" fill="${color(v)}"/><text x="${(x-1)*30+15}" y="${(y-1)*30+19}" text-anchor="middle" font-size="9" fill="${Math.abs(v)>2.5?'#fff':'#25384d'}">${fmt(v)}</text>`;
+    }
+    s+=`<rect x="${(state.x-1)*30+.5}" y="${(state.y-1)*30+.5}" width="29" height="29" rx="3" fill="none" stroke="#17283d" stroke-width="2"/>`;
+    $('output-grid').innerHTML=s;
+    $('output-grid').setAttribute('aria-label',`Bản đồ đáp ứng 5 hàng, 7 cột; tại hàng ${state.y}, cột ${state.x}: ${fmt(conv3d(state.y,state.x))}`);
+  }
+  function updateKernel() {
+    const h=(state.k-1)/2, weights=temporalWeights();
+    $('kernel-stack').innerHTML=weights.map((a,i)=>`<div class="kernel-slice ${i===h?'current-slice':''}"><span>t${state.t-h+i}<br>× ${fmt(a)}</span><div class="mini-matrix" aria-label="Trọng số lát ${i}">${SOBEL.flat().map(w=>`<span>${fmt(w*a)}</span>`).join('')}</div><span>Σ = <b>${fmt(spatial(state.t-h+i,state.y,state.x)*a)}</b></span></div>`).join('');
+    $('kernel-explanation').textContent=state.mode==='motion'?'Kernel minh họa = Sobel không gian × hệ số thời gian có dấu. Kết quả phụ thuộc vào cả hướng chuyển động và vị trí patch.':'Kernel inflate = Sobel / N ở mọi lát. Các lát ban đầu giống nhau; không tự mã hóa thứ tự trước/sau.';
+    $('response-2d').textContent=fmt(spatial(state.t,state.y,state.x));
+    $('response-3d').textContent=fmt(conv3d(state.y,state.x));
+    $('response-sum').textContent=weights.map((a,i)=>`(${fmt(spatial(state.t-h+i,state.y,state.x)*a)})`).join(' + ');
+  }
+  function renderConv(){updateFilmstrip();drawInput();drawOutput();updateKernel();}
+  function stopPlayback(){if(state.timer)clearInterval(state.timer);state.timer=null;state.playing=false;$('play').textContent='▶ Phát';$('play').setAttribute('aria-pressed','false');}
+  $('play').addEventListener('click',()=>{
+    if(state.playing){stopPlayback();return;}
+    state.playing=true;$('play').textContent='Ⅱ Dừng';$('play').setAttribute('aria-pressed','true');
+    state.timer=setInterval(()=>{const h=(state.k-1)/2;state.t=state.t>=T-1-h?h:state.t+1;renderConv();},650);
+  });
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)stopPlayback();});
+  $('motion').addEventListener('change',e=>{stopPlayback();state.motion=e.target.value;renderConv();});
+  $('kernel-mode').addEventListener('change',e=>{state.mode=e.target.value;renderConv();});
+  $('kernel-size').addEventListener('change',e=>{state.k=Number(e.target.value);const h=(state.k-1)/2;state.t=Math.max(h,Math.min(T-1-h,state.t));renderConv();});
+  $('frame-time').addEventListener('input',e=>{stopPlayback();state.t=Number(e.target.value);renderConv();});
+  $('filmstrip').addEventListener('click',e=>{const b=e.target.closest('button[data-time]');if(b&&!b.disabled){stopPlayback();state.t=Number(b.dataset.time);renderConv();$('filmstrip').querySelector(`[data-time="${state.t}"]`).focus();}});
+  function selectPatch(el){stopPlayback();state.x=Number(el.dataset.x);state.y=Number(el.dataset.y);renderConv();$('input-grid').querySelector(`[data-x="${state.x}"][data-y="${state.y}"]`).focus();}
+  $('input-grid').addEventListener('click',e=>{const el=e.target.closest('[data-x]');if(el)selectPatch(el);});
+  $('input-grid').addEventListener('keydown',e=>{const el=e.target.closest('[data-x]');if(el&&(e.key==='Enter'||e.key===' ')){e.preventDefault();selectPatch(el);}});
+
+  function renderInflation(){
+    const n=Number($('inflate-n').value),normalized=$('normalize').checked;
+    const matrix=divisor=>SOBEL.flat().map(v=>`<span>${fmt(v/divisor)}</span>`).join('');
+    $('weight-2d').innerHTML=matrix(1);
+    $('weight-layers').innerHTML=Array.from({length:n},()=>`<div class="weight-tile">${matrix(normalized?n:1)}</div>`).join('');
+    $('inflate-formula').textContent=`W₃D[τ] = W₂D${normalized?' / '+n:''}`;
+    $('proof-slice-label').textContent=normalized?'Mỗi lát 3D sau chia N':'Mỗi lát 3D không chia N';
+    $('proof-slice').textContent=normalized?`4 / ${n}`:'4';
+    $('proof-total').textContent=`${n} × ${normalized?'(4 / '+n+')':'4'} = ${normalized?4:4*n}`;
+    $('proof-feedback').className=`note below ${normalized?'success':'warm'}`;
+    $('proof-feedback').textContent=normalized?'Đáp ứng được giữ nguyên: 4. Việc thêm trục thời gian không làm khuếch đại tín hiệu của patch tĩnh này.':`Đáp ứng tăng ${n} lần thành ${4*n}. Sao chép mà không chia sẽ làm thay đổi độ lớn tín hiệu.`;
+  }
+  $('inflate-n').addEventListener('change',renderInflation);$('normalize').addEventListener('change',renderInflation);
+
+  function stages(){
+    const t=Number($('clip-length').value),half=Math.ceil(t/2),quarter=Math.ceil(t/4),eighth=Math.ceil(t/8);
+    return [
+      {name:'Input RGB',shape:[1,t,224,224,3],op:'Video đầu vào',description:'B = batch; T = thời gian; H, W = kích thước ảnh; C = kênh. PyTorch thường dùng thứ tự [B, C, T, H, W], khác cách hiển thị ở đây.'},
+      {name:'Conv_1a',shape:[1,half,112,112,64],op:'7 × 7 × 7 / s2',description:'Conv3D kernel 7 × 7 × 7, stride [2, 2, 2], 64 kênh, SAME padding. T, H và W cùng giảm khoảng một nửa; sau Conv là BatchNorm và ReLU.'},
+      {name:'Spatial stem',shape:[1,half,28,28,192],op:'đến MaxPool_3a',description:'MaxPool_2a [1,3,3] / [1,2,2] → Conv_2b 1×1×1 (64 kênh) → Conv_2c 3×3×3 (192 kênh) → MaxPool_3a [1,3,3] / [1,2,2]. Hai pooling chỉ giảm không gian, giữ T.'},
+      {name:'Mixed_3c',shape:[1,half,28,28,480],op:'Mixed_3b → 3c',description:'Hai khối Inception 3D: Mixed_3b cho 256 kênh, Mixed_3c cho 480 kênh. Các nhánh chạy song song rồi nối theo kênh; chưa giảm thêm T, H, W.'},
+      {name:'Mixed_4f',shape:[1,quarter,14,14,832],op:'pool → 4b…4f',description:'MaxPool_4a kernel 3×3×3, stride [2,2,2] giảm cả thời gian và không gian. Tiếp theo là Mixed_4b, 4c, 4d, 4e, 4f với số kênh lần lượt 512, 512, 512, 528, 832.'},
+      {name:'Mixed_5c',shape:[1,eighth,7,7,1024],op:'pool → 5b → 5c',description:'MaxPool_5a kernel 2×2×2, stride [2,2,2] → Mixed_5b (832 kênh) → Mixed_5c (1024 kênh). Đây là tensor trước classification head, có thể dùng làm đầu vào cho cách trích feature riêng.'},
+      state.head==='features'?{name:'Spatial pool',shape:[1,eighth,1024],op:'mean theo H, W',description:'Lựa chọn trích feature minh họa: lấy trung bình H, W và giữ trục thời gian T′. Đây là nhánh thêm cho downstream temporal model, không phải classification head gốc.'}:{name:'Classify',shape:[1,400],op:'head Kinetics-400',description:`Head gốc: AvgPool VALID [2,7,7], stride 1 → [1,${eighth-1},1,1,1024] → dropout → Conv 1×1×1 ra 400 kênh → bỏ H,W → [1,${eighth-1},400] → mean logits theo T → softmax. Đầu ra là lớp của cả clip.`}
+    ];
+  }
+  function renderArchitecture(){
+    const data=stages(),selected=data[state.stage];
+    $('shape-path').innerHTML=data.map((s,i)=>`<button type="button" class="stage" data-stage="${i}" aria-pressed="${i===state.stage}" aria-label="${s.name}, shape ${s.shape.join(', ')}"><small>${i===0?'ĐẦU VÀO':i===6?'ĐẦU RA':'MỐC '+i}</small><b>${s.name}</b><code>${s.shape.join(' × ')}</code></button>`).join('');
+    $('stage-name').textContent=`${selected.name} · ${selected.op}`;
+    $('stage-description').textContent=selected.description;
+    $('stage-shape').textContent=`[${selected.shape.join(', ')}]`;
+    $('head-note').textContent=state.head==='features'?`Nhánh feature: [B, T′, 1024] với T′ = ${Math.ceil(Number($('clip-length').value)/8)}. Chỉ pooling H và W; giữ trình tự feature để đưa vào một temporal model. Không dùng temporal mean của classification head.`:'Nhánh phân loại gốc gom toàn bộ clip thành một phân bố 400 lớp (Kinetics-400). Nó không trả về start/end hoặc thời điểm hoàn thành công việc.';
+  }
+  $('clip-length').addEventListener('change',renderArchitecture);
+  function segmented(id,callback){$(id).addEventListener('click',e=>{const b=e.target.closest('button[data-value]');if(!b)return;$(id).querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));callback(b.dataset.value);});}
+  segmented('head-mode',value=>{state.head=value;renderArchitecture();});
+  $('shape-path').addEventListener('click',e=>{const b=e.target.closest('button[data-stage]');if(b){state.stage=Number(b.dataset.stage);renderArchitecture();$('shape-path').querySelector(`[data-stage="${state.stage}"]`).focus();}});
+  function renderMixed(){
+    const last=$('mixed-block').value==='5c';
+    const branches=last?[['1×1×1',384],['1×1×1: 192<br>↓<br>3×3×3',384],['1×1×1: 48<br>↓<br>3×3×3',128],['MaxPool 3×3×3<br>↓<br>1×1×1',128]]:[['1×1×1',64],['1×1×1: 96<br>↓<br>3×3×3',128],['1×1×1: 16<br>↓<br>3×3×3',32],['MaxPool 3×3×3<br>↓<br>1×1×1',32]];
+    $('branch-diagram').innerHTML=branches.map((b,i)=>`<div class="branch"><strong>NHÁNH ${i+1}</strong><span class="operation">${b[0]}</span><span class="channels">${b[1]}</span><span class="small muted">kênh đầu ra</span></div>`).join('');
+    $('concat').textContent=`${branches.map(b=>b[1]).join(' + ')} = ${last?1024:256} kênh · T, H, W giữ nguyên`;
+  }
+  $('mixed-block').addEventListener('change',renderMixed);
+  segmented('stream-mode',value=>{
+    $('rgb-stream').classList.toggle('inactive',value==='flow');$('flow-stream').classList.toggle('inactive',value==='rgb');
+    $('stream-summary').textContent=value==='both'?'Hai stream có trọng số riêng → kết hợp điểm dự đoán để phân loại clip.':value==='rgb'?'Một RGB stream → điểm dự đoán của clip. RGB vẫn có khả năng học chuyển động qua Conv3D.':'Một flow stream → điểm dự đoán của clip. Cần tính optical flow trước khi chạy mạng.';
+  });
+
+  function renderOnline(){
+    const target=12,n=Number($('window-size').value),h=(n-1)/2,now=Number($('observed-time').value),fps=4;
+    const start=state.window==='centered'?target-h:target-n+1,end=state.window==='centered'?target+h:target;
+    $('observed-label').textContent=`frame ${now} · ${(now/fps).toFixed(2)} s`;
+    $('timeline').innerHTML=Array.from({length:24},(_,t)=>`<span class="tick ${t<=now?'observed':''} ${t>=start&&t<=end?'used':''} ${t>now?'future':''} ${t===target?'target':''}" title="Frame ${t}: ${t<=now?'đã quan sát':'chưa quan sát'}${t>=start&&t<=end?', nằm trong clip':''}${t===target?', mốc muốn gắn nhãn':''}">${t}</span>`).join('');
+    $('required-frames').textContent=`${start} → ${end}`;
+    $('available-time').textContent=`frame ${end} · ${(end/fps).toFixed(2)} s`;
+    $('lookahead').textContent=`${end-target} frame · ${((end-target)/fps).toFixed(2)} s`;
+    const ready=now>=end;$('online-status').className=`note ${ready?'success':'warm'}`;
+    $('online-status').textContent=ready?(state.window==='trailing'?'Đủ đầu vào. Clip kết thúc ở frame 12: có thể phát embedding tại mốc này, sau khi cộng thời gian xử lý.':'Đủ đầu vào, nhưng dự đoán cho frame 12 chỉ sẵn sàng từ frame '+end+'. Nếu dùng, phải ghi nhận look-ahead và phát kết quả ở thời điểm thực sự có đủ dữ liệu.'):`Chưa thể tính đúng clip này: còn thiếu frame ${Math.max(now+1,start)} → ${end}. Không được dùng các frame chưa quan sát để báo kết quả tại frame ${target}.`;
+  }
+  segmented('window-mode',value=>{state.window=value;renderOnline();});$('window-size').addEventListener('change',renderOnline);$('observed-time').addEventListener('input',renderOnline);
+
+  const questions=[
+    {q:'“3D” trong I3D nói đến những trục nào?',a:['Thời gian, chiều cao, chiều rộng','Tọa độ vật lý x, y, z hoặc camera depth'],correct:0,why:'Conv3D chạy trên T × H × W; video RGB thông thường đã đủ, không cần cảm biến độ sâu.'},
+    {q:'Inflate kernel 2D sang N lát thời gian thì khởi tạo thế nào?',a:['Sao chép W₂D vào mọi lát, giữ nguyên độ lớn','Sao chép W₂D / N vào mỗi lát'],correct:1,why:'Chia N giữ đáp ứng tuyến tính trên patch tĩnh lặp lại ở cửa sổ có đủ đầu vào; không chia sẽ khuếch đại N lần.'},
+    {q:'RGB I3D có cần optical flow mới học được chuyển động không?',a:['Không; Conv3D trên RGB đã mô hình hóa thời gian','Có; RGB chỉ học hình dạng tĩnh'],correct:0,why:'Flow là một stream bổ sung. RGB stream có các filter trải theo thời gian và có thể học sự thay đổi qua các frame.'},
+    {q:'Cửa sổ quanh tâm 5 frame, muốn gắn nhãn frame 10: sớm nhất đủ ảnh ở frame nào?',a:['Frame 10','Frame 12'],correct:1,why:'Cửa sổ [8, 9, 10, 11, 12] cần hai frame tương lai so với mốc 10. Timestamps và độ trễ phải phản ánh điều này.'},
+    {q:'Có thể dùng nguyên classification head gốc để lấy các đoạn hoàn thành công việc chưa?',a:['Có, softmax tự trả về start/end','Chưa; cần mô hình thời gian và cơ chế phát hiện biên'],correct:1,why:'I3D gốc dự đoán lớp của clip. Bài toán của mình còn cần nhận biết tiến độ/trạng thái và xuất start/completion cho từng lần thực hiện.'}
+  ];
+  let answers=Array(questions.length).fill(null);
+  function renderQuiz(){
+    $('quiz').innerHTML=questions.map((q,i)=>`<div class="question" role="group" aria-labelledby="q${i}"><h3 id="q${i}">${i+1}. ${q.q}</h3><div class="answers">${q.a.map((a,j)=>`<button type="button" class="answer ${answers[i]===j?(j===q.correct?'correct':'wrong'):''}" data-question="${i}" data-answer="${j}" aria-pressed="${answers[i]===j}" aria-describedby="feedback-${i}">${a}</button>`).join('')}</div><div id="feedback-${i}" class="feedback ${answers[i]===q.correct?'':'muted'}" aria-live="polite">${answers[i]===null?'':(answers[i]===q.correct?'✓ Đúng. ':'↳ Thử xem lại. ')+q.why}</div></div>`).join('');
+    const score=answers.filter((a,i)=>a===questions[i].correct).length,count=answers.filter(a=>a!==null).length;
+    $('quiz-score').textContent=`${score} / 5 câu đúng · ${count===0?'chưa trả lời':count+'/5 đã trả lời'}`;
+  }
+  $('quiz').addEventListener('click',e=>{const b=e.target.closest('[data-question]');if(!b)return;const i=Number(b.dataset.question),j=Number(b.dataset.answer);answers[i]=j;renderQuiz();$('quiz').querySelector(`[data-question="${i}"][data-answer="${j}"]`).focus();});
+  $('quiz-reset').addEventListener('click',()=>{answers=Array(questions.length).fill(null);renderQuiz();});
+  if('IntersectionObserver' in window){
+    const sections=$$('main>.section');
+    const visible=new Set();
+    const observer=new IntersectionObserver(entries=>{entries.forEach(e=>e.isIntersecting?visible.add(e.target):visible.delete(e.target));const first=sections.find(s=>visible.has(s));if(first)$$('.nav a').forEach(a=>{const active=a.hash==='#'+first.id;a.classList.toggle('active',active);if(active)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});},{rootMargin:'-12% 0px -45% 0px'});
+    sections.forEach(s=>observer.observe(s));
+  }
+  renderConv();renderInflation();renderArchitecture();renderMixed();renderOnline();renderQuiz();
+})();
+</script>
+</body>
+</html>
