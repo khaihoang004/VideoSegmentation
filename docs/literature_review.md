@@ -307,6 +307,8 @@ Sau khi bổ sung P19, nếu thử factual state/accepted progress phải có đ
 
 ## 8. Thứ tự đọc và quyết định hiện tại
 
+Đây là thứ tự ưu tiên câu hỏi nghiên cứu; nếu cần học từ kiến trúc nền, xem [lộ trình đọc CAG-QIL/OAT, các nhánh phát triển và prerequisite](reading_order.md). Ba PDF nền bổ sung nằm riêng ở [foundations](../papers/foundations/README.md), ngoài tập P01–P23 của bảng khảo sát này.
+
 Đọc kỹ **P19 → P20/P22 → P03 → P13 → P18 → P01 → P12 → P10**: kiểm tra protocol trước khi chọn model. P21 bổ sung góc nhìn/representation; P04/P05 cho memory/boundary, P15/P16/P17 cho xác suất. P06 giúp audit train/test causal; P07/P08/P09 hữu ích khi mở rộng sang task mới, luật ngôn ngữ hoặc prior thứ tự.
 
 Hướng nên kiểm chứng đầu tiên là **định vị instance online + bằng chứng goal-state exocentric + trạng thái lượt giữ qua pause**. Temporal model có thể là baseline có sẵn; chưa cần VLM lớn hoặc HDP-HSMM đầy đủ. Chỉ đi sâu mô hình xác suất nếu phân tích lỗi cho thấy uncertainty/duration/grouping thực sự là nút thắt.

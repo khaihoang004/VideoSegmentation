@@ -1,0 +1,54 @@
+{
+  "collection_date": "2026-11-13",
+  "scope": "Three supplementary foundations; separate from P01–P23 core map",
+  "papers": [
+    {
+      "id": "F01",
+      "year": 2022,
+      "title": "A Sliding Window Scheme for Online Temporal Action Localization",
+      "filename": "F01_2022_oat.pdf",
+      "source_url": "https://www.ecva.net/papers/eccv_2022/papers_ECCV/html/2307_ECCV_2022_paper.php",
+      "pdf_url": "https://www.ecva.net/papers/eccv_2022/papers_ECCV/papers/136940640.pdf",
+      "pages": 17,
+      "publication": "ECCV 2022",
+      "pdf_version": "Official open-access proceedings PDF",
+      "bytes": 482611,
+      "sha256": "1749b436813516613462800b493c7e43e98e83d6a81294ec7b4c89af9ad5bc8a",
+      "checked_date": "2026-11-13",
+      "selection_reason": "Historical/architectural prerequisite for the reading route; exception to the recent-paper window",
+      "review_status": "Definition, method and relation to later papers inspected; not reproduced"
+    },
+    {
+      "id": "F02",
+      "year": 2023,
+      "title": "MiniROAD: Minimal RNN Framework for Online Action Detection",
+      "filename": "F02_2023_miniroad.pdf",
+      "source_url": "https://openaccess.thecvf.com/content/ICCV2023/html/An_MiniROAD_Minimal_RNN_Framework_for_Online_Action_Detection_ICCV_2023_paper.html",
+      "pdf_url": "https://openaccess.thecvf.com/content/ICCV2023/papers/An_MiniROAD_Minimal_RNN_Framework_for_Online_Action_Detection_ICCV_2023_paper.pdf",
+      "pages": 10,
+      "publication": "ICCV 2023",
+      "pdf_version": "Official open-access proceedings PDF",
+      "bytes": 610050,
+      "sha256": "65d5264897fc0e1798fdb507951adf0e3bf9dcce8f65b86c85dc12532dc88331",
+      "checked_date": "2026-11-13",
+      "selection_reason": "Historical/architectural prerequisite for the reading route; exception to the recent-paper window",
+      "review_status": "Definition, method and relation to later papers inspected; not reproduced"
+    },
+    {
+      "id": "F03",
+      "year": 2021,
+      "title": "CAG-QIL: Context-Aware Actionness Grouping via Q Imitation Learning for Online Temporal Action Localization",
+      "filename": "F03_2021_cag_qil.pdf",
+      "source_url": "https://openaccess.thecvf.com/content/ICCV2021/html/Kang_CAG-QIL_Context-Aware_Actionness_Grouping_via_Q_Imitation_Learning_for_Online_ICCV_2021_paper.html",
+      "pdf_url": "https://openaccess.thecvf.com/content/ICCV2021/papers/Kang_CAG-QIL_Context-Aware_Actionness_Grouping_via_Q_Imitation_Learning_for_Online_ICCV_2021_paper.pdf",
+      "pages": 10,
+      "publication": "ICCV 2021",
+      "pdf_version": "Official open-access proceedings PDF",
+      "bytes": 3861040,
+      "sha256": "9f444cd90350173f61715cf3755f930f2dfbd31a4bb2609faf1f824c861c2c9d",
+      "checked_date": "2026-11-13",
+      "selection_reason": "Historical/architectural prerequisite for the reading route; exception to the recent-paper window",
+      "review_status": "Definition, method and relation to later papers inspected; not reproduced"
+    }
+  ]
+}

@@ -1,12 +1,14 @@
 # Thư viện paper
 
-Ngày thu thập: **2026-11-13**. Đã lưu 23 PDF từ nguồn công khai chính thức/tác giả, tổng 60.349.701 bytes (~57,6 MiB). Giữ nguyên nội dung PDF; quyền tác giả và điều kiện sử dụng theo bản gốc. Không lưu bản text trích xuất vào repo.
+Ngày thu thập: **2026-11-13**. Đã lưu 23 PDF khảo sát chính từ nguồn công khai chính thức/tác giả, tổng 60.349.701 bytes (~57,6 MiB). Bổ sung [3 PDF nền F01–F03](foundations/README.md) ở thư mục riêng, không tính trong tổng của 23 bài trên. Giữ nguyên nội dung PDF; quyền tác giả và điều kiện sử dụng theo bản gốc. Không lưu bản text trích xuất vào repo.
 
 Phân tích, số liệu, mức đáp ứng yêu cầu và khoảng trống nằm trong [docs/literature_review.md](../docs/literature_review.md). [manifest.json](manifest.json) ghi URL nguồn/PDF, phiên bản, checksum SHA-256, kích thước, số trang và vị trí kết quả để kiểm tra lại. Số liệu là tác giả báo cáo, chưa tái lập.
 
 Phân tích bổ sung về [PROVIA, nghiên cứu ảnh hưởng gián tiếp, metric và protocol](../docs/related_work_and_evaluation.md) ở tài liệu riêng; các bài mới vẫn có hàng tóm tắt trong bảng khảo sát chung.
 
 [Graph phân nhóm và ma trận paper × thành phần](../docs/paper_map.md) gom 23 bài thành 8 nhóm, kèm phạm vi xử lý trực tiếp, phần cần thích nghi và vị trí bằng chứng trong PDF.
+
+[Lộ trình đọc và graph phát triển](../docs/reading_order.md) phân biệt bài cần đọc trước, bài phát triển thành phần từ bài cũ và bài chỉ liên quan; bổ sung CAG-QIL/OAT/MiniROAD.
 
 | ID | Tên đầy đủ / PDF local | Công bố và bản tải | Nhóm / lý do chọn |
 | --- | --- | --- | --- |

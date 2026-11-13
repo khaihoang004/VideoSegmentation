@@ -167,6 +167,8 @@ Ba nhầm lẫn cần tránh khi chọn hướng:
 
 ## 6. Thứ tự đọc sâu theo graph
 
+Để học từ nền kiến trúc và phân biệt prerequisite với quan hệ phát triển, xem [lộ trình đọc chi tiết](reading_order.md). Bảng dưới ưu tiên câu hỏi nghiên cứu, không phải yêu cầu đọc hết mọi bài trước khi bắt đầu.
+
 | Nhánh | Thứ tự đề xuất | Câu hỏi cần trả lời trước khi viết model mới |
 | --- | --- | --- |
 | Protocol | P19 → P20/P22/P23 | Evaluator có thưởng duration/EOF/spam hay bỏ qua các lượt khó không? |
