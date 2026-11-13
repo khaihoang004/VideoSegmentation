@@ -8,6 +8,8 @@ Tài liệu nằm trong [`docs/`](docs/README.md): [định nghĩa bài toán on
 
 Nghiên cứu paper: [bảng tổng hợp và phân tích](docs/literature_review.md), [PROVIA, metric và protocol](docs/related_work_and_evaluation.md), [thư viện 23 PDF và nguồn](papers/README.md).
 
+Huấn luyện: [pipeline online và hướng dẫn Colab](docs/training_pipeline.md), [config baseline](configs/online_gru.yaml). Chạy `python train.py --help`; cài `pip install -e '.[train]'` trước. Có `make-demo` để kiểm tra train/resume/evaluate trước khi chuẩn bị nhãn video thật.
+
 ## Colab: mount → clone → chạy CLI
 
 [Mở notebook trên Colab](https://colab.research.google.com/github/khaihoang004/VideoSegmentation/blob/main/notebooks/colab_download.ipynb)
@@ -294,10 +296,11 @@ Yêu cầu Python 3.10+:
 python3 -m pip install -e .
 python3 download.py --list
 python3 download.py industreal --root ./Datasets --part labels --extract
-python3 -m unittest discover -s tests -v
+python3 -m pip install -e '.[train,video,test]'
+python3 -m pytest -q
 ```
 
-Tests dùng HTTP server cục bộ và file tổng hợp; không tải video dataset. Repo hiện cung cấp downloader, chưa có mô hình phân đoạn/huấn luyện.
+Tests dùng HTTP server cục bộ, dữ liệu tổng hợp và một video nhỏ tạo tại chỗ; không tải video dataset hoặc pretrained weights. Repo có downloader và pipeline huấn luyện/replay online v0; dữ liệu thật cần nhãn cấp lượt đã kiểm tra, xem [hướng dẫn training](docs/training_pipeline.md).
 
 ## Nguồn
 

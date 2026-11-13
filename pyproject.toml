@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "videosegmentation"
 version = "0.1.0"
-description = "Download video research datasets directly to Google Drive from Colab"
+description = "Dataset tools and causal online work-instance training for video research"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
@@ -15,8 +15,14 @@ dependencies = [
   "tqdm>=4.66,<5",
 ]
 
+[project.optional-dependencies]
+train = ["torch>=2.3,<3", "numpy>=1.23,<3", "PyYAML>=6,<7"]
+video = ["av>=12,<20", "torchvision>=0.18,<1"]
+test = ["pytest>=8,<10"]
+
 [project.scripts]
 videoseg = "videosegmentation.cli:main"
+videoseg-train = "videosegmentation.training.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["videosegmentation*", "downloaders*"]

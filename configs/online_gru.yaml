@@ -1,0 +1,51 @@
+# Example pilot paths. Create and verify goal-level annotations before training.
+# Paths relative to this file; feature/video paths relative to manifest or data.root.
+data:
+  manifest: /content/drive/MyDrive/Datasets/IKEA_ASM/processed/v0/features_manifest.jsonl
+  root: null
+  train_split: train
+  val_split: val
+  task_definition_version: ikea_pilot_v1
+  view_domains: [exo]
+  batch_size: 1
+  num_workers: 0
+model:
+  name: causal_gru
+  input_dim: 512
+  hidden_dim: 128
+  num_layers: 2
+  dropout: 0.1
+loss:
+  name: boundary_bce
+  pos_weight: [1.0, 10.0, 10.0]
+  head_weight: [1.0, 1.0, 1.0]
+  boundary_width_seconds: 0.5
+optimizer:
+  name: adamw
+  lr: 0.001
+  weight_decay: 0.01
+scheduler:
+  name: cosine
+  min_lr: 0.000001
+trainer:
+  epochs: 20
+  chunk_size: 128
+  device: auto
+  amp: true
+  grad_clip: 1.0
+  seed: 42
+  num_threads: 4
+  save_epoch_every: 5
+  log_every_steps: 50
+decoder:
+  start_threshold: 0.5
+  completion_threshold: 0.5
+  completion_patience: 1
+  min_duration_seconds: 0.1
+  refractory_seconds: 0.5
+evaluation:
+  tiou_thresholds: [0.3, 0.5, 0.7]
+  endpoint_tolerance_seconds: 1.0
+  max_latency_seconds: 2.0
+  inference_chunk_size: 1
+output_dir: /content/drive/MyDrive/Datasets/experiments/ikea_pilot_v1/online_gru_run01

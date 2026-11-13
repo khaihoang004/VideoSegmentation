@@ -278,6 +278,8 @@ Không gán background cho mọi vùng không có nhãn: có thể là chưa đ�
 
 Nhãn nguồn được giữ nguyên ở một lớp; nhãn dẫn xuất ở lớp khác. Dự kiến mỗi lượt có recording ID, task definition/version, instance ID, start/end, trạng thái completed/aborted/unknown/ongoing, cờ mất đầu/cuối, nguồn nhãn và độ bất định. Đây là **schema dự kiến**, chưa phải định dạng parser đã có. Chi tiết ranh giới theo [problem.md](problem.md).
 
+Cập nhật triển khai: [pipeline training v0](training_pipeline.md) đã có parser manifest JSONL cho nhãn cấp lượt do người dùng chuẩn bị, kèm feature extraction và validation. Chưa có converter nhãn native tự động cho các dataset; schema nghiên cứu rộng hơn phần v0 hỗ trợ.
+
 Một nhãn ứng viên suy từ “bước cuối” phải được kiểm tra bằng video trước khi dùng như ground truth. Có thể khởi đầu bằng gán nhãn thủ công một tập nhỏ đa dạng, nhờ người thứ hai kiểm tra các ca mơ hồ và đo chênh lệch mốc. Xem cả ví dụ thành công, bỏ dở, sửa lỗi và nghỉ; không chỉ chọn video dễ.
 
 Chia recording/subject/view group trước khi sinh window/clip/feature. Giữ split gốc để so sánh paper; split bổ sung phải có tên và protocol riêng. Bản chuyển mã, các view và các clip chồng lấn của cùng trial không đi sang các tập khác nhau.
@@ -311,6 +313,8 @@ Trích feature trước để chạy thử không tự gây vi phạm causal. Đ
 ```
 
 Nguồn mounted như shortcut IKEA có thể nằm ngoài cây đích này; không cần copy lại archive. Mọi dẫn xuất bền vững vẫn lưu ở `MyDrive/Datasets`. Chưa có command `preprocess`/`build-manifest` trong repo; đây là bố trí để xem xét sau pilot.
+
+`train.py extract-features` hiện có thể ghi feature/timestamps và feature manifest vào thư mục do cấu hình/lệnh chỉ định; nó nhận nhãn cấp lượt đã chuẩn bị, chưa tự tạo ground truth từ atomic labels.
 
 ## 11. Pilot và điều kiện sửa bản tạm
 
