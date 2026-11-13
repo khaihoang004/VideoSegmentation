@@ -6,7 +6,7 @@ Mặc định lưu vào `/content/drive/MyDrive/Datasets/<tên_dataset>`. Không
 
 Tài liệu nằm trong [`docs/`](docs/README.md): [định nghĩa bài toán online](docs/problem.md), [khảo sát dataset và đề xuất xử lý video tạm thời](docs/datasets.md), [hướng dẫn thêm downloader](docs/adding_dataset.md).
 
-Nghiên cứu paper: [lộ trình đọc và graph phát triển](docs/reading_order.md), [graph phân nhóm và ma trận thành phần](docs/paper_map.md), [bảng tổng hợp và phân tích](docs/literature_review.md), [PROVIA, metric và protocol](docs/related_work_and_evaluation.md), [thư viện PDF và nguồn](papers/README.md).
+Nghiên cứu paper: [thứ tự đọc 1–36 và chuẩn kiểm tra đã hiểu](docs/reading_order.md), [graph phân nhóm và ma trận thành phần](docs/paper_map.md), [bảng tổng hợp và phân tích](docs/literature_review.md), [PROVIA, metric và protocol](docs/related_work_and_evaluation.md), [thư viện PDF và nguồn](papers/README.md).
 
 Bổ sung từ danh sách người dùng: [đối chiếu 13 link, 4 bài trùng và 9 bài mới](docs/paper_additions.md); PDF đã lưu và roadmap đã tích hợp ActionSwitch, ODAE, VidParse cùng các nhánh state/error/memory.
 

@@ -8,7 +8,7 @@ Phân tích bổ sung về [PROVIA, nghiên cứu ảnh hưởng gián tiếp, m
 
 [Graph phân nhóm và ma trận paper × thành phần](../docs/paper_map.md) gom 23 bài thành 8 nhóm, kèm phạm vi xử lý trực tiếp, phần cần thích nghi và vị trí bằng chứng trong PDF.
 
-[Lộ trình đọc và graph phát triển](../docs/reading_order.md) phân biệt bài cần đọc trước, bài phát triển thành phần từ bài cũ và bài chỉ liên quan; bổ sung CAG-QIL/OAT/MiniROAD.
+[Lộ trình đọc 1–36 và chuẩn hiểu](../docs/reading_order.md) là thứ tự học chính thức: mỗi bài có mức đọc, phần cần đọc và câu hỏi trước khi chuyển bài; từng chặng có bài tự kiểm/đáp án. Phụ lục giữ graph phát triển để phân biệt prerequisite với bài chỉ liên quan.
 
 [Đối chiếu 13 link người dùng và phân tích 9 bài mới](../docs/paper_additions.md) ghi rõ bài trùng, phần đã giải quyết, các kết quả không đồng nhất giữa metric và vị trí đọc. [Manifest bổ sung](additions/manifest.json) giữ cả audit 13 link và metadata của 9 PDF, tách với manifest tập chính bên dưới.
 

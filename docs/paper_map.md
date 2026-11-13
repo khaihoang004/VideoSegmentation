@@ -167,15 +167,15 @@ Ba nhầm lẫn cần tránh khi chọn hướng:
 2. **State/progress ≠ whole-task interval:** P19 đã có factual/accepted state, P03/P12 có phân cấp/progress; phần cần kiểm tra là cấp lượt và ownership, không chỉ đặt tên state mới.
 3. **Offline train ≠ offline inference:** P01 cho phép teacher nhìn toàn video train; student phải causal. Ngược lại không được dùng P09/P16/P14 nguyên bản rồi gọi toàn hệ thống là online.
 
-## 6. Thứ tự đọc sâu theo graph
+## 6. Các câu hỏi đọc sâu theo nhánh
 
-Để học từ nền kiến trúc và phân biệt prerequisite với quan hệ phát triển, xem [lộ trình đọc chi tiết](reading_order.md). Bảng dưới ưu tiên câu hỏi nghiên cứu, không phải yêu cầu đọc hết mọi bài trước khi bắt đầu.
+Để học từ nền kiến trúc và phân biệt prerequisite với quan hệ phát triển, theo [thứ tự duy nhất 1–36 và các mốc kiểm tra hiểu](reading_order.md). Bảng dưới gom câu hỏi nghiên cứu theo nhánh; các mũi tên không tạo một lộ trình học khác.
 
-| Nhánh | Thứ tự đề xuất | Câu hỏi cần trả lời trước khi viết model mới |
+| Nhánh | Các bài liên quan | Câu hỏi cần trả lời trước khi viết model mới |
 | --- | --- | --- |
-| Protocol | P19 → P20/P22/P23 | Evaluator có thưởng duration/EOF/spam hay bỏ qua các lượt khó không? |
-| Đầu ra interval | P18 → P11 → P01 | Khi nào phát end, truy hồi start bằng gì, duplicate/latency xử lý thế nào? |
-| Cấp công việc | P03 → P12 → P13 → P19 | Step, goal, achieved state và task-instance khác nhau ở biến/nhãn nào? |
+| Protocol | P19; P20/P22/P23 | Evaluator có thưởng duration/EOF/spam hay bỏ qua các lượt khó không? |
+| Đầu ra interval | P18; P11; P01 | Khi nào phát end, truy hồi start bằng gì, duplicate/latency xử lý thế nào? |
+| Cấp công việc | P03; P12; P13; P19 | Step, goal, achieved state và task-instance khác nhau ở biến/nhãn nào? |
 | Chỉ khi lỗi thực nghiệm đòi hỏi | P04/P02; P15/P16/P17; P21 | Nút thắt là memory, duration/nhiễu hay góc nhìn? Mỗi thành phần cần nhãn/compute gì thêm? |
 
 Hướng đọc này giúp phân tích paper trước khi sửa mô hình. Pipeline GRU hiện có là hạ tầng đối chứng; graph không tuyên bố đã triển khai các kỹ thuật trên hoặc đã chọn kiến trúc cuối.

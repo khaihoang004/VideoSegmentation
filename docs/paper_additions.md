@@ -67,7 +67,9 @@ Không lặp khẳng định “Mamba thắng mọi setting” từ abstract: Ta
 - **ESOM:** dùng con số thực **4,02%** cùng memory/query time; oracle discovery/tracking chỉ phân tích bottleneck. Object identity trong compact memory hữu ích nhưng không thay raw-video buffer để xuất đầy đủ clip.
 - **WEM:** event cards/provenance là thiết kế đáng học; chưa có kết quả để xếp nó cao hơn model thực nghiệm. Đề xuất causal hóa cần rolling normalization, prefix-safe fusion và quyết định emit; đó là thích nghi của dự án, không phải tính năng đã chứng minh của bài gốc.
 
-## 4. Tuyến đọc sau khi bổ sung
+## 4. Các nhánh sau khi bổ sung
+
+**Thứ tự học chính thức và chuẩn hiểu từng bài nằm ở [roadmap 1–36](reading_order.md)**. Danh sách dưới mô tả quan hệ/nhánh của các bài bổ sung, không thay thế thứ tự toàn cục đó.
 
 1. **Định nghĩa:** P13 §3 + P14 intro; A01 ODAE formulation/metric để hiểu event end.
 2. **Interval branch:** F03 lướt → F01 OAT → P18 MATR. P11 HAT vẫn là nhánh history tùy chọn, không prerequisite của MATR.
