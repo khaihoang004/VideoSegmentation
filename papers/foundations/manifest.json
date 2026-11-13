@@ -1,6 +1,6 @@
 {
   "collection_date": "2026-11-13",
-  "scope": "Three supplementary foundations; separate from P01–P23 core map",
+  "scope": "Four supplementary foundations including TAS survey; separate from P01–P23 core map",
   "papers": [
     {
       "id": "F01",
@@ -49,6 +49,33 @@
       "checked_date": "2026-11-13",
       "selection_reason": "Historical/architectural prerequisite for the reading route; exception to the recent-paper window",
       "review_status": "Definition, method and relation to later papers inspected; not reproduced"
+    },
+    {
+      "id": "F04",
+      "year": 2022,
+      "title": "Temporal Action Segmentation: An Analysis of Modern Techniques",
+      "authors": [
+        "Guodong Ding",
+        "Fadime Sener",
+        "Angela Yao"
+      ],
+      "filename": "F04_2022_tas_survey.pdf",
+      "source_url": "https://arxiv.org/abs/2210.10352",
+      "pdf_url": "https://arxiv.org/pdf/2210.10352v5",
+      "pages": 19,
+      "publication": "TPAMI 2023 according to author arXiv record",
+      "pdf_version": "arXiv v5, updated 2023-10-21",
+      "first_public_date": "2022-10-19",
+      "bytes": 1867598,
+      "sha256": "35023df654025b00ea6f40881834348f0339393bf9d99b560611dbcce4fec865",
+      "checked_date": "2026-11-13",
+      "selection_reason": "User-supplied survey; taxonomy and introductory reading before OAT; explicit older-paper exception",
+      "review_status": "Definitions, taxonomy, temporal/sequential modeling, supervision, evaluation and outlook inspected; no experiments reproduced",
+      "result_evidence": {
+        "location": "Sections 2–5; taxonomy Figure 2, PDF p.2; online outlook PDF p.16",
+        "metric": null,
+        "note": "Survey and benchmark analysis, not a detector with an original improvement score"
+      }
     }
   ]
 }

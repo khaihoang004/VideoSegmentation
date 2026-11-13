@@ -1,6 +1,6 @@
 # Thư viện paper
 
-Ngày thu thập: **2026-11-13**. Tập chính có 23 PDF, tổng 60.349.701 bytes (~57,6 MiB); thêm [3 PDF nền F01–F03](foundations/README.md) và [9 PDF bổ sung A01–A09](additions/README.md) ở thư mục riêng: **35 PDF độc lập**. Các tập bổ sung không tính trong kích thước của 23 bài trên. Giữ nguyên nội dung PDF; quyền tác giả và điều kiện sử dụng theo bản gốc. Không lưu bản text trích xuất vào repo.
+Ngày thu thập: **2026-11-13**. Tập chính có 23 PDF, tổng 60.349.701 bytes (~57,6 MiB); thêm [4 PDF nền F01–F04](foundations/README.md) và [9 PDF bổ sung A01–A09](additions/README.md) ở thư mục riêng: **36 PDF độc lập**. Các tập bổ sung không tính trong kích thước của 23 bài trên. Giữ nguyên nội dung PDF; quyền tác giả và điều kiện sử dụng theo bản gốc. Không lưu bản text trích xuất vào repo.
 
 Phân tích, số liệu, mức đáp ứng yêu cầu và khoảng trống nằm trong [docs/literature_review.md](../docs/literature_review.md). [manifest.json](manifest.json) ghi URL nguồn/PDF, phiên bản, checksum SHA-256, kích thước, số trang và vị trí kết quả để kiểm tra lại. Số liệu là tác giả báo cáo, chưa tái lập.
 

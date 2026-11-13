@@ -1,8 +1,14 @@
 # Lộ trình đọc và quan hệ phát triển giữa các paper
 
-Cập nhật **2026-11-13**. [Bản đồ 23 bài](paper_map.md) phân nhóm theo thành phần; tài liệu này bổ sung **thứ tự học** và **quan hệ phát triển đã đối chiếu method/related work**. Có ba PDF nền F01–F03 ở [papers/foundations](../papers/foundations/README.md) và [9 bài mới A01–A09 từ danh sách người dùng](paper_additions.md). Các tập này giữ riêng với P01–P23; roadmap dưới đây tích hợp cả ba tập.
+Cập nhật **2026-11-13**. [Bản đồ 23 bài](paper_map.md) phân nhóm theo thành phần; tài liệu này bổ sung **thứ tự học** và **quan hệ phát triển đã đối chiếu method/related work**. Có bốn PDF nền F01–F04 ở [papers/foundations](../papers/foundations/README.md) và [9 bài mới A01–A09 từ danh sách người dùng](paper_additions.md). Các tập này giữ riêng với P01–P23; roadmap dưới đây tích hợp cả ba tập.
 
 ## 1. Bắt đầu từ bài nào?
+
+**Đọc định hướng trước:** [F04 — Temporal Action Segmentation: An Analysis of Modern Techniques](../papers/foundations/F04_2022_tas_survey.pdf), bản **arXiv v5 ngày 2023-10-21**, first submission 2022-10-19; arXiv ghi TPAMI 2023. Bài chưa có trong thư viện trước đợt bổ sung này. Đây là survey giúp nắm bản đồ TAS, không phải prerequisite phải đọc hết hay một online detector. [Nguồn và lịch sử phiên bản](https://arxiv.org/abs/2210.10352).
+
+Thứ tự chọn lọc: **§2.1 → §2.3 → §2.4 → §3.2 → §4.1**, sau đó sang OAT. §2.2 hữu ích khi xem dữ liệu; §3.1 xem khi chọn feature encoder. §3.2.2–3.2.3 giúp hiểu sequential modeling, duration và over-segmentation; §4.2.3 về timestamp supervision chỉ cần đọc sâu khi mở nhánh ít nhãn/OnPoint. Có thể để các thuật toán clustering unsupervised chi tiết cho sau.
+
+Giới hạn thời gian/phạm vi: đây là tổng quan TAS đến thời điểm cập nhật 2023, không bao phủ các bài online/completion 2024–2026 trong roadmap. §5 xem online TAS là hướng cần phát triển ở thời điểm đó; không dùng các câu “chưa được nghiên cứu” của survey như kết luận novelty hiện tại. Segmentation theo nhãn thao tác, smoothing dùng ngữ cảnh tương lai hoặc metric frame/edit không tự đáp ứng whole-task completion và thời điểm phát online của dự án. Khi đọc, ghi rõ temporal model nào cần causal hóa và smoothing nào cần tính thêm delay.
 
 **Với dự án này, nên bắt đầu đọc kỹ OAT (ECCV 2022) cho nhánh localization.** Trước đó đọc ngắn phần định nghĩa completed step trong P13 và attempted/achieved trong P14 để không học nhầm đầu ra. OAT làm rõ sliding window, temporal anchors, instance supervision và post-processing online; đó là kiến thức dùng lại khi đọc HAT, MATR và OnPoint. [Paper OAT](https://www.ecva.net/papers/eccv_2022/papers_ECCV/papers/136940640.pdf), §1–3.
 
@@ -16,6 +22,7 @@ OAT có cả hướng phát hiện sớm/anticipation; khi chuyển sang dự á
 
 | Thứ tự | Bài và mức đọc | Cần lấy được gì? | Trước đó cần gì? |
 | --- | --- | --- | --- |
+| Định hướng | **[F04 TAS Survey](../papers/foundations/F04_2022_tas_survey.pdf)**: §2.1/2.3/2.4, §3.2 và §4.1 | Phân biệt TAS/TAL/GEBD; các mức supervision; frame accuracy/edit/F1; temporal vs sequential modeling và over-segmentation. | Không cần các paper trong roadmap trước; chưa cần đọc hết survey. |
 | 0 | [P14 Action Completion](../papers/P14_2018_action_completion.pdf): intro/problem; [P13 IndustReal](../papers/P13_2024_industreal.pdf): §3 và ví dụ lỗi | Attempted khác achieved; completed step khác action end; F1 cần đi cùng delay. Chưa cần đọc kỹ CNN–LSTM cũ của P14. | Không cần paper video trước đó. |
 | 0b | [A01 ODAE](../papers/additions/A01_2025_online_action_end.pdf): formulation và point-level metric | Cần phát một end-event cho mỗi occurrence; tolerance của metric khác deadline/completion achievement. Method Mamba có thể đọc sau. | Phân biệt action end với goal đạt kết quả; OAD cơ bản. |
 | 1 | [F03 CAG-QIL](../papers/foundations/F03_2021_cag_qil.pdf): đọc lướt; **[F01 OAT](../papers/foundations/F01_2022_oat.pdf): đọc kỹ §1–3** | OAD → On-TAL; vì sao grouping frame dễ tick/fragment/merge; window, anchors, cls/reg và OSN. | Hiểu feature sequence, Transformer encoder/decoder và interval IoU ở mức cơ bản. |
