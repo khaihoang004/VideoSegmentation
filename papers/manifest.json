@@ -535,6 +535,166 @@
         "unit": "percentage points",
         "absolute_delta": 4.9
       }
+    },
+    {
+      "id": "P19",
+      "year": 2026,
+      "title": "PROVIA: Procedure State Tracking for Online Mistake Detection in Egocentric Videos",
+      "source_url": "https://arxiv.org/abs/2609.20638v1",
+      "pdf_url": "https://arxiv.org/pdf/2609.20638v1",
+      "filename": "P19_2026_provia.pdf",
+      "checked_date": "2026-11-13",
+      "resolved_pdf_url": "https://arxiv.org/pdf/2609.20638v1",
+      "status": "downloaded",
+      "bytes": 634286,
+      "pages": 9,
+      "sha256": "7f9ee74d2edd2d832e943688243859cdfd81bf7b7b09050d86f7bd17fcb7b23a",
+      "publication": "arXiv preprint; venue unconfirmed",
+      "pdf_version": "arXiv v1",
+      "first_public_date": "2026-09-17",
+      "recent_window_eligible": true,
+      "selection_reason": "Indirect influence: full-trial evaluation, false-alarm controls, marked-point-process segmentation and procedure-state prior art",
+      "influence_dimensions": [
+        "protocol",
+        "metrics",
+        "state_modeling",
+        "online_segmentation"
+      ],
+      "result_evidence": {
+        "location": "Section III; Section IV-B, PDF p.3; Table IV, PDF p.8; Section V-F, PDF pp.7-8",
+        "metric": "CaptainCook4D alarm recall at validation budget 0.1 false alarms per minute of correct operation",
+        "baseline": "MistSense-RGB-style",
+        "baseline_value": 0.128,
+        "method": "PROVIA",
+        "method_value": 0.154,
+        "absolute_delta": 0.026,
+        "unit": "recall fraction",
+        "caveat": "Thresholds frozen on validation, not a test-rate guarantee. No method exceeds all timing-only controls on IndustReal. Controlled baseline implementations share features and segmentation; not direct full-system comparisons."
+      },
+      "review_status": "PDF method/results inspected; no experiments reproduced"
+    },
+    {
+      "id": "P20",
+      "year": 2025,
+      "title": "Toward Interpretable Evaluation Measures for Time Series Segmentation",
+      "source_url": "https://arxiv.org/abs/2510.23261",
+      "pdf_url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/09425891e393e64b0535194a81ba15b7-Paper-Conference.pdf",
+      "filename": "P20_2025_interpretable_segmentation_metrics.pdf",
+      "checked_date": "2026-11-13",
+      "resolved_pdf_url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/09425891e393e64b0535194a81ba15b7-Paper-Conference.pdf",
+      "status": "downloaded",
+      "bytes": 2564967,
+      "pages": 25,
+      "sha256": "b605d223a812b77d85575afcb7c87340eaf0eb6540edb0099c2241fd967a2aa3",
+      "publication": "NeurIPS 2025",
+      "pdf_version": "NeurIPS proceedings PDF",
+      "first_public_date": "2025-10-27",
+      "recent_window_eligible": true,
+      "selection_reason": "Indirect influence: error-aware time-series segmentation metrics",
+      "influence_dimensions": [
+        "metrics",
+        "error_taxonomy"
+      ],
+      "result_evidence": {
+        "location": "Figure 2, PDF p.4; Section 3, PDF pp.6-7; Section 4.1, Figure 4, PDF p.8",
+        "metric": "WARI and State Matching Score, synthetic and five real-data benchmark datasets",
+        "finding": "Sensitivity to error position/type and interpretable error categories; not a detector accuracy gain. SMS uses a label mapping stage and configurable penalties."
+      },
+      "review_status": "PDF method/results inspected; no experiments reproduced"
+    },
+    {
+      "id": "P21",
+      "year": 2025,
+      "title": "Towards Generalizing Temporal Action Segmentation to Unseen Views",
+      "source_url": "https://arxiv.org/abs/2504.02512v1",
+      "pdf_url": "https://arxiv.org/pdf/2504.02512v1",
+      "filename": "P21_2025_unseen_view_tas.pdf",
+      "checked_date": "2026-11-13",
+      "resolved_pdf_url": "https://arxiv.org/pdf/2504.02512v1",
+      "status": "downloaded",
+      "bytes": 5934857,
+      "pages": 22,
+      "sha256": "bf45517feb48b6198954278263178e7452dd821d864a10c37e25b018994e5338",
+      "publication": "arXiv author version inspected; separate IJCV journal revision not merged",
+      "pdf_version": "arXiv v1",
+      "first_public_date": "2025-04-03",
+      "recent_window_eligible": true,
+      "selection_reason": "Indirect influence: unseen-view representations and exo/ego generalization protocols",
+      "influence_dimensions": [
+        "representation",
+        "view_generalization",
+        "protocol"
+      ],
+      "result_evidence": {
+        "location": "Figure 4, PDF p.7; Section 3",
+        "metric": "Assembly101 unseen exocentric views, F1@50",
+        "baseline": "Baseline",
+        "baseline_value": 11.7,
+        "method": "Sequence loss + action loss",
+        "method_value": 13.2,
+        "absolute_delta": 1.5,
+        "unit": "percentage points; author reports 12.8 percent relative improvement",
+        "caveat": "Multi-view training; not evidence of causal inference or whole-task completion."
+      },
+      "review_status": "PDF method/results inspected; no experiments reproduced"
+    },
+    {
+      "id": "P22",
+      "year": 2022,
+      "title": "Local Evaluation of Time Series Anomaly Detection Algorithms",
+      "source_url": "https://arxiv.org/abs/2206.13167v1",
+      "pdf_url": "https://arxiv.org/pdf/2206.13167v1",
+      "filename": "P22_2022_affiliation_metrics.pdf",
+      "checked_date": "2026-11-13",
+      "resolved_pdf_url": "https://arxiv.org/pdf/2206.13167v1",
+      "status": "downloaded",
+      "bytes": 913020,
+      "pages": 11,
+      "sha256": "f254e2a76bd69e9bffa4f330526c08e31ae339545ebe0be04a2be89996b5f708",
+      "publication": "KDD 2022",
+      "pdf_version": "arXiv v1",
+      "first_public_date": "2022-06-27",
+      "recent_window_eligible": false,
+      "selection_reason": "Foundational metric robustness: affiliation and adversarial metric testing",
+      "influence_dimensions": [
+        "metrics",
+        "evaluation_controls"
+      ],
+      "result_evidence": {
+        "location": "Table 5, PDF p.7; Sections 3-4",
+        "metric": "NYC-Taxi adversarial predictor under TaP/TaR F1",
+        "finding": "Adversarial predictions receive F1 0.96 under TaP/TaR; affiliation uses local temporal distance and random-reference normalization. Values across different metrics are not detector performance gains."
+      },
+      "review_status": "PDF method/results inspected; no experiments reproduced"
+    },
+    {
+      "id": "P23",
+      "year": 2018,
+      "title": "Precision and Recall for Time Series",
+      "source_url": "https://proceedings.neurips.cc/paper/2018/hash/8f468c873a32bb0619eaeb2050ba45d1-Abstract.html",
+      "pdf_url": "https://proceedings.neurips.cc/paper/2018/file/8f468c873a32bb0619eaeb2050ba45d1-Paper.pdf",
+      "filename": "P23_2018_range_precision_recall.pdf",
+      "checked_date": "2026-11-13",
+      "resolved_pdf_url": "https://proceedings.neurips.cc/paper/2018/file/8f468c873a32bb0619eaeb2050ba45d1-Paper.pdf",
+      "status": "downloaded",
+      "bytes": 999354,
+      "pages": 11,
+      "sha256": "75095c5740702a96c020359ed6006555fe48053158c9da043e71c799dc3fef42",
+      "publication": "NeurIPS 2018",
+      "pdf_version": "NeurIPS proceedings PDF",
+      "first_public_date": "2018-03-08",
+      "recent_window_eligible": false,
+      "selection_reason": "Foundational range-based precision/recall formulation",
+      "influence_dimensions": [
+        "metrics",
+        "range_evaluation"
+      ],
+      "result_evidence": {
+        "location": "Section 4, PDF pp.3-5; experiments Section 5",
+        "metric": "Range-based precision and recall",
+        "finding": "Models existence, overlap, cardinality and positional bias, generalizing point-based precision/recall. No new task-completion detector result."
+      },
+      "review_status": "PDF method/results inspected; no experiments reproduced"
     }
   ],
   "review_document": "../docs/literature_review.md",
@@ -542,6 +702,10 @@
     "start": "2024-11-13",
     "end": "2026-11-13"
   },
-  "selection_policy": "Prioritize recent papers; explicitly retain foundations. Recent-window eligibility uses first public date where known, otherwise the stated 2025 proceedings date. Not a systematic review.",
-  "total_bytes": 49303217
+  "selection_policy": "Prioritize recent papers; retain identified foundations. Include influence on problem formulation, protocol, metrics, representation and modeling, not only directly matching objectives. First public date used where available; not a systematic review.",
+  "total_bytes": 60349701,
+  "related_review_documents": [
+    "../docs/literature_review.md",
+    "../docs/related_work_and_evaluation.md"
+  ]
 }

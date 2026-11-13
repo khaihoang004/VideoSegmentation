@@ -1,12 +1,14 @@
 # Paper cho định vị online từng lượt công việc
 
-Ngày khảo sát: **2026-11-13**. Trạng thái: **bản nghiên cứu v0.1**, chưa tái lập thực nghiệm và chưa chốt model. Đối chiếu với [problem.md](problem.md) và [datasets.md](datasets.md): video **exocentric**, xử lý causal, trả start/end cho **toàn bộ một lượt công việc**, giữ gián đoạn bên trong, xử lý nhiều lượt và nhận biết hoàn thành.
+Ngày khảo sát: **2026-11-13**. Trạng thái: **bản nghiên cứu v0.2**, chưa tái lập thực nghiệm và chưa chốt model. Bổ sung nghiên cứu ảnh hưởng gián tiếp: PROVIA, protocol/metric và chuyển góc nhìn. Đối chiếu với [problem.md](problem.md) và [datasets.md](datasets.md): video **exocentric**, xử lý causal, trả start/end cho **toàn bộ một lượt công việc**, giữ gián đoạn bên trong, xử lý nhiều lượt và nhận biết hoàn thành.
 
 ## 1. Phạm vi và cách đọc
 
-Đã tải **18 PDF** vào [`papers/`](../papers/README.md). Danh mục ghi tên đầy đủ, nguồn, phiên bản và lý do giữ bài cũ; [`manifest.json`](../papers/manifest.json) lưu checksum, số trang và vị trí bằng chứng kết quả.
+Đã tải **23 PDF** vào [`papers/`](../papers/README.md). Danh mục ghi tên đầy đủ, nguồn, phiên bản và lý do giữ bài cũ; [`manifest.json`](../papers/manifest.json) lưu checksum, số trang và vị trí bằng chứng kết quả. Xem thêm [phân tích PROVIA, metric và protocol](related_work_and_evaluation.md).
 
 Ưu tiên thời gian **2024-11-13 đến 2026-11-13**: P01–P09 thuộc 2025–2026. P10 có preprint ngày 2024-11-02, hơi ngoài cửa sổ, dù công bố NeurIPS 2024; giữ như bài nền online TAS. P11–P18 là ngoại lệ có chủ đích để hiểu instance localization, completion, tiến trình, thời lượng và suy luận xác suất. Không dùng ngày crawler/index thay cho ngày công bố.
+
+P19–P21 bổ sung ba bài 2025–2026 về procedure-state/protocol, metric segmentation và unseen views; P22–P23 là bài nền metric. Tiêu chí chọn mở rộng gồm **cách đặt bài toán, mô hình hóa, biểu diễn, dữ liệu, metric và protocol**, không chỉ trùng objective đầu ra. Một bài không trả interval hoàn thành vẫn có thể ảnh hưởng quyết định nghiên cứu; cột “đã giải quyết chưa” không phải tiêu chí loại bài.
 
 Tìm theo On-TAL/OAD/online TAS, completion/goal-state/procedure verification, hierarchical streaming, Bayesian changepoint và semi-Markov; lần theo tài liệu liên quan của các bài sát nhất. Dùng PDF và trang chính thức/arXiv của tác giả để phân tích, không dùng bản tóm tắt tự động làm bằng chứng kết quả. Đây là tập bài chọn lọc, **chưa phải systematic review hoặc bằng chứng không còn bài liên quan nào khác**.
 
@@ -18,7 +20,7 @@ Quy ước:
 - `pp` = điểm phần trăm; không phải phần trăm tương đối. mAP interval, frame-mAP, F1 segmentation, recall grounding và F1 verification không so trực tiếp với nhau. Chỉ tính cải thiện giữa các cấu hình trong **cùng bảng của cùng bài**.
 - “Tr. PDF” tính từ trang đầu file tải về, khác số trang proceedings. Mỗi ID ở bảng dẫn tới PDF đó.
 
-**Kết luận trong phạm vi 18 bài:** chưa xác lập được một giải pháp đã chứng minh trọn gói yêu cầu của dự án. P03 gần nhất về phân cấp và có thử exo; P13 gần nhất về hoàn thành đúng bước; P18/P01 gần cấu trúc đầu ra online. Cần kết hợp đúng cấp mục tiêu và kiểm chứng, không chỉ ghép các module rồi gọi là giải quyết xong.
+**Kết luận trong phạm vi 23 bài:** chưa xác lập được một giải pháp đã chứng minh trọn gói yêu cầu của dự án. P03 gần về phân cấp và có thử exo; P13 về hoàn thành đúng bước; P18/P01 gần cấu trúc đầu ra online. **P19 là prior art quan trọng** về factual state, accepted progress, filtering và đánh giá whole-trial; phải đối chiếu trước khi coi ý tưởng state tracking là mới. Cần kiểm chứng ở đúng cấp mục tiêu, không chỉ ghép các module rồi gọi là giải quyết xong.
 
 ## 2. Bảng tổng hợp để scan
 
@@ -50,7 +52,17 @@ Quy ước:
 | [P17 — Robust BOCPD, 2023](../papers/P17_2023_robust_bocpd.pdf), ICML | Outlier/misspecification gây change giả; robust Bayes cũ chậm | Filtering bền hơn với nhiễu, tính được nhanh | Generalized Bayes bằng diffusion score matching | Tác giả báo **>10×** nhanh hơn đối thủ gần nhất trong đánh giá của bài; abstract | **Chưa:** không có ngữ nghĩa task; có thể thử trên feature/object-state nhiễu. Không suy ra tốc độ video tương ứng. |
 | [P18 — MATR, 2024](../papers/P18_2024_memory_augmented_transformer.pdf), ECCV | Context ngắn khó tìm start của action dài | Định vị instance dùng lịch sử | Memory queue; end decoder rồi truy hồi start; online NMS | THUMOS14 avg mAP@0.3:0.7: OAT-OSN **44,6 → 49,5**; Bảng 1, tr. 11 | **Một phần:** khớp dạng interval; chưa nhận biết kết quả công việc và ownership qua pause. Baseline trực tiếp đáng thử. |
 
-Không dùng các con số giữa hai bảng để xếp hạng model. Ngay cả EGTEA trong HAT và OnPoint cũng có cấu hình/split/feature khác; phải tái lập cùng điều kiện mới so sánh cho dự án.
+Không dùng các con số giữa các bảng để xếp hạng model. Ngay cả EGTEA trong HAT và OnPoint cũng có cấu hình/split/feature khác; phải tái lập cùng điều kiện mới so sánh cho dự án.
+
+### 2.3. Nghiên cứu ảnh hưởng qua protocol, metric và biểu diễn
+
+| Paper | Vấn đề bài nhận ra | Motivation | Giải pháp/đóng góp chính | Kết quả rất ngắn, tác giả báo cáo | Ảnh hưởng tới dự án / đã giải quyết chưa? |
+| --- | --- | --- | --- | --- | --- |
+| [P19 — PROVIA, 2026](../papers/P19_2026_provia.pdf), preprint | First-mistake protocol thưởng vị trí; sai làm thay đổi trạng thái thực tế | Phát hiện lỗi suốt trial, còn hoạt động sau recovery | Step segmentation causal; factual state tách accepted progress; filter + sequential alarms; whole-trial protocol | CaptainCook4D recall tại budget validation 0,1 FA/phút: **0,128 → 0,154** so MistSense-RGB-style; Bảng IV, tr. 8 | **Ảnh hưởng lớn:** protocol/negative controls và prior art state tracking. Chưa là exo whole-task interval detector; không thắng mọi operating point. |
+| [P20 — Interpretable TSS Metrics, 2025](../papers/P20_2025_interpretable_segmentation_metrics.pdf), NeurIPS | ARI không xét vị trí/loại lỗi temporal segmentation | Biết lỗi sai theo cách nào, không chỉ một điểm số | WARI theo khoảng cách boundary; SMS với delay/isolation/transition/missing | Synthetic và 5 dataset thực; tách loại lỗi mà ARI không phân biệt; §4, tr. 8–10 | **Metric bổ trợ**, chưa là metric completion/latency; mapping nhãn và trọng số cần phù hợp bài toán supervised. |
+| [P21 — Unseen-view TAS, 2025](../papers/P21_2025_unseen_view_tas.pdf), bản arXiv v1 | TAS giảm chất lượng khi đổi góc camera | Generalize sang view chưa thấy | Sequence/action-level similarity losses trên nhiều view train | Assembly101 unseen exo F1@50 **11,7 → 13,2**, +1,5 pp; Hình 4, tr. 7 | **Biểu diễn/protocol hữu ích** cho exo; chưa chứng minh causal/completion. Lợi ích cần thử lại với temporal backbone online. |
+| [P22 — Affiliation Metrics, 2022](../papers/P22_2022_affiliation_metrics.pdf), KDD | Range metrics có thể bị khai thác bằng dự đoán xấu | Đánh giá cục bộ, diễn giải bằng thời gian và baseline ngẫu nhiên | Affiliation precision/recall từ khoảng cách trong vùng GT | Adversarial predictor đạt TaP/TaR F1 **0,96** ở NYC-Taxi; Bảng 5, tr. 7 | **Bài nền chống metric gaming**; dùng để kiểm tra evaluator, không thay one-to-one task matching hoặc emission latency. |
+| [P23 — Precision/Recall for Time Series, 2018](../papers/P23_2018_range_precision_recall.pdf), NeurIPS | Point P/R không diễn đạt coverage/vị trí/phân mảnh interval | Cho phép ưu tiên theo ứng dụng | Range P/R: existence, overlap, cardinality và positional bias | Khái quát point P/R và minh họa thay đổi đánh giá theo yêu cầu; §4–5 | **Bài nền thiết kế metric**; tham số phải khóa trước test, cần đối chứng chống gaming như P22. |
 
 ## 3. Ghi chú theo từng paper
 
@@ -126,6 +138,26 @@ Không dùng các con số giữa hai bảng để xếp hạng model. Ngay cả
 
 **Đọc để dùng:** khớp nhu cầu báo xong rồi tìm lại start trong lịch sử, có thể là baseline interval chính. §3.4 bỏ proposal có end dự đoán vượt thời điểm hiện tại và dùng online NMS. **Nhận định:** điều đó không bảo đảm goal đã đạt, và memory feature không thay bộ đệm video để xuất clip. Cần huấn luyện ở đúng cấp nhãn lượt, log timestamp phát và kiểm tra duplicate khi nhiều lượt sát nhau. [Nguồn ECCV](https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/02834.pdf).
 
+### P19 — PROVIA
+
+**Đọc để dùng:** bài [preprint 2026-09-17](https://arxiv.org/abs/2609.20638v1) đánh giá mistake detection, không phải mask segmentation. Nhận định cho dự án: phải có bước kiểm tra evaluator bằng predictor không nhìn video trước khi so model. Cần so cả ranking và vận hành tại budget báo giả. Cấu trúc state của bài làm thu hẹp phạm vi đóng góp tiềm năng nêu ở mục 5; không được coi “factual state + accepted progress” là ý tưởng chưa có. Phân tích chuyển giao và giới hạn ở [tài liệu protocol](related_work_and_evaluation.md).
+
+### P20 — Interpretable Evaluation Measures
+
+**Đọc để dùng:** [nguồn NeurIPS](https://proceedings.neurips.cc/paper_files/paper/2025/file/09425891e393e64b0535194a81ba15b7-Paper-Conference.pdf) giúp phân loại lỗi. Nhận định: dung sai cho nhãn bước không đồng nghĩa chấp nhận trễ báo hoàn thành. WARI/SMS hợp làm diagnostic; với lớp có nghĩa cố định, không được dùng remapping tối ưu GT để che nhầm semantics. Với cùng một công việc lặp liền nhau, nhãn state còn có thể giống hệt dù thiếu boundary instance. Cần giữ interval/event metrics và ID lượt riêng.
+
+### P21 — Generalizing TAS to Unseen Views
+
+**Đọc để dùng:** [bản arXiv v1](https://arxiv.org/abs/2504.02512v1) là nền liên quan trực tiếp đến giả thuyết exo của dự án dù không có objective completion. Cần nhiều view lúc train; chưa được giả định có đủ từ bản IKEA top-view hiện tại. Nhận định: nên thử loss chỉ ở train với encoder causal, giữ một view ở test. Không áp cùng mức bất biến view cho mọi tín hiệu: vị trí khay thành phẩm có thể hữu ích cho completion, trong khi action representation cần ít phụ thuộc camera.
+
+### P22 — Affiliation Metrics
+
+**Đọc để dùng:** [paper KDD](https://arxiv.org/abs/2206.13167v1) nhắc kiểm thử metric trước khi tối ưu theo nó. Nhận định: predictor luôn bật, spam event, interval rất dài hoặc chạm nhẹ mọi GT cần được chấm kém ở ít nhất một trục vận hành quan trọng. Không mặc định metric có cơ sở toán sẽ ngăn mọi shortcut trong miền mới. Các điểm completion có độ dài bằng không cần quy ước riêng; không biến thành vùng dung sai tùy ý để áp metric rồi giấu thay đổi.
+
+### P23 — Precision and Recall for Time Series
+
+**Đọc để dùng:** [nguồn NeurIPS](https://proceedings.neurips.cc/paper/2018/hash/8f468c873a32bb0619eaeb2050ba45d1-Abstract.html) cho ngôn ngữ mô tả yêu cầu metric theo ứng dụng. Nhận định: overlap và fragmentation ảnh hưởng clip xuất ra; early reward hợp phát hiện sự cố chưa chắc hợp completed event. Chỉ áp positional bias khi có lý do ứng dụng; công bố trọng số, kiểm tra độ nhạy và không dùng test để chọn cấu hình xếp model mình cao nhất.
+
 ## 4. Kỹ thuật đáng phân tích sâu
 
 ### 4.1. Từ phân cấp mô tả sang trạng thái hoàn thành — gợi ý từ P03/P13
@@ -159,6 +191,8 @@ Teacher mạnh có thể dùng toàn video train để cung cấp pseudo labels;
 ## 5. Mô hình toán đề xuất để kiểm chứng
 
 Phần này là **thiết kế nghiên cứu của dự án**, lấy cảm hứng từ các bài trên; không phải mô hình đã chạy, không tuyên bố mới so với toàn bộ literature.
+
+**Cập nhật sau P19:** procedure-state belief, factual/accepted progress, completion hazard và sequential decision đã có prior art gần. Mô hình dưới đây là khung tổ chức giả thuyết/baseline. Chỉ chuyển từ ego sang exo hoặc đổi tên mistake thành completion chưa tạo ra đóng góp mới; cần chứng minh khác biệt ở goal-level instance, pause ownership, bằng chứng quan sát và kết quả theo protocol khó hơn.
 
 ### 5.1. Trạng thái ẩn có thời lượng và identity
 
@@ -236,6 +270,9 @@ Các khoảng trống dưới đây là **suy luận trong phạm vi bài đã �
 | G7. Prior tiến trình/thời lượng dễ thành shortcut | P09 dùng order trên toàn timeline; P12 graph; P16 duration | Prior mềm theo prefix, có pause/error và unknown | Đổi tốc độ, thứ tự hợp lệ, pause dài; xem model có vẫn hoàn thành theo đồng hồ. |
 | G8. Memory không đủ giữ trạng thái lượt và video lịch sử | P02 prototype, P04 event memory, P18 feature queue | Tách feature memory, instance state và video buffer | Stream dài, cold start, reconnect; đo RAM, continuity và clip còn đủ đầu. |
 | G9. Bất định latent chưa là confidence completion đáng tin | P02 có Gaussian latent; P15–P17 có posterior theo mô hình | Calibration/robustness và abstention ở mức event | Reliability, coverage–risk, FP/delay dưới occlusion/outlier; kiểm tra bỏ sót thật. |
+| G10. Protocol/metric có thể thưởng timing hoặc loại lỗi mà không cần hiểu video | P19 kiểm tra timing controls; P20/P22/P23 chỉ ra blind spots khác nhau | Whole-session test, no-perception controls, nhiều trục đánh giá | Cố định threshold trên validation, báo test FA thực, kiểm tra evaluator bằng phản ví dụ; xem tài liệu protocol. |
+
+P19 và P21 là prior art cần đối chiếu cho G3/G8/G9: state tracking và view generalization đã có nghiên cứu. Các hàng này mô tả câu hỏi còn cần kiểm chứng cho **task đích**, không tuyên bố các cơ chế đó chưa tồn tại.
 
 ## 7. Kế hoạch thực nghiệm tối thiểu đề xuất
 
@@ -258,6 +295,8 @@ Giữ split theo recording/subject/view group; khóa test trước khi tune. Pil
 
 Giữ feature/backbone, split, nhãn và quyền truy cập dữ liệu ngang nhau khi so từng thành phần. Nếu B2 có nhãn bước dày hơn B1, báo riêng chi phí và thêm đối chứng cùng ngân sách nhãn. Chỉ thêm pose/calibration/multi-view khi dữ liệu thực sự có; báo setting và tổng latency mới.
 
+Sau khi bổ sung P19, nếu thử factual state/accepted progress phải có đối chứng với cơ chế kiểu PROVIA. Công bố nhãn bước/correctness và demonstrations cần thêm; biến thể đổi sang goal completion phải được ghi là bản thích nghi, không gọi là tái lập nguyên bản hoặc so ngang ngân sách nhãn khi chưa đáp ứng điều kiện đó.
+
 ### 7.3. Báo cáo để tránh kết luận sai
 
 - Interval AP/tIoU và sai số start/end đi cùng recall; goal-completion precision/recall và FP/phút ở negative/aborted.
@@ -268,7 +307,7 @@ Giữ feature/backbone, split, nhãn và quyền truy cập dữ liệu ngang nh
 
 ## 8. Thứ tự đọc và quyết định hiện tại
 
-Đọc kỹ theo chuỗi **P03 → P13 → P18 → P01 → P12 → P10**, rồi P04/P05 cho memory/boundary và P15/P16/P17 cho mô hình xác suất. P06 giúp audit train/test causal; P07/P08/P09 hữu ích khi mở rộng sang task mới, luật ngôn ngữ hoặc prior thứ tự.
+Đọc kỹ **P19 → P20/P22 → P03 → P13 → P18 → P01 → P12 → P10**: kiểm tra protocol trước khi chọn model. P21 bổ sung góc nhìn/representation; P04/P05 cho memory/boundary, P15/P16/P17 cho xác suất. P06 giúp audit train/test causal; P07/P08/P09 hữu ích khi mở rộng sang task mới, luật ngôn ngữ hoặc prior thứ tự.
 
 Hướng nên kiểm chứng đầu tiên là **định vị instance online + bằng chứng goal-state exocentric + trạng thái lượt giữ qua pause**. Temporal model có thể là baseline có sẵn; chưa cần VLM lớn hoặc HDP-HSMM đầy đủ. Chỉ đi sâu mô hình xác suất nếu phân tích lỗi cho thấy uncertainty/duration/grouping thực sự là nút thắt.
 

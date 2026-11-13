@@ -6,7 +6,7 @@ Mặc định lưu vào `/content/drive/MyDrive/Datasets/<tên_dataset>`. Không
 
 Tài liệu nằm trong [`docs/`](docs/README.md): [định nghĩa bài toán online](docs/problem.md), [khảo sát dataset và đề xuất xử lý video tạm thời](docs/datasets.md), [hướng dẫn thêm downloader](docs/adding_dataset.md).
 
-Nghiên cứu paper: [bảng tổng hợp và phân tích](docs/literature_review.md), [thư viện 18 PDF và nguồn](papers/README.md).
+Nghiên cứu paper: [bảng tổng hợp và phân tích](docs/literature_review.md), [PROVIA, metric và protocol](docs/related_work_and_evaluation.md), [thư viện 23 PDF và nguồn](papers/README.md).
 
 ## Colab: mount → clone → chạy CLI
 

@@ -1,8 +1,10 @@
 # Thư viện paper
 
-Ngày thu thập: **2026-11-13**. Đã lưu 18 PDF từ nguồn công khai chính thức/tác giả, tổng 49.303.217 bytes (~47 MiB). Giữ nguyên nội dung PDF; quyền tác giả và điều kiện sử dụng theo bản gốc. Không lưu bản text trích xuất vào repo.
+Ngày thu thập: **2026-11-13**. Đã lưu 23 PDF từ nguồn công khai chính thức/tác giả, tổng 60.349.701 bytes (~57,6 MiB). Giữ nguyên nội dung PDF; quyền tác giả và điều kiện sử dụng theo bản gốc. Không lưu bản text trích xuất vào repo.
 
 Phân tích, số liệu, mức đáp ứng yêu cầu và khoảng trống nằm trong [docs/literature_review.md](../docs/literature_review.md). [manifest.json](manifest.json) ghi URL nguồn/PDF, phiên bản, checksum SHA-256, kích thước, số trang và vị trí kết quả để kiểm tra lại. Số liệu là tác giả báo cáo, chưa tái lập.
+
+Phân tích bổ sung về [PROVIA, nghiên cứu ảnh hưởng gián tiếp, metric và protocol](../docs/related_work_and_evaluation.md) ở tài liệu riêng; các bài mới vẫn có hàng tóm tắt trong bảng khảo sát chung.
 
 | ID | Tên đầy đủ / PDF local | Công bố và bản tải | Nhóm / lý do chọn |
 | --- | --- | --- | --- |
@@ -24,5 +26,10 @@ Phân tích, số liệu, mức đáp ứng yêu cầu và khoảng trống nằ
 | P16 | [Bayesian Nonparametric Hidden Semi-Markov Models](P16_2013_hdp_hsmm.pdf) | [JMLR 14 (2013), 673–701](https://jmlr.org/papers/v14/johnson13a.html) | Bài nền toán; explicit duration và latent states. |
 | P17 | [Robust and Scalable Bayesian Online Changepoint Detection](P17_2023_robust_bocpd.pdf) | [ICML 2023, PMLR 202](https://proceedings.mlr.press/v202/altamirano23a.html) | Nền toán bổ sung; outlier và robust online updates. |
 | P18 | [Online Temporal Action Localization with Memory-Augmented Transformer](P18_2024_memory_augmented_transformer.pdf) | ECCV 2024, [ECVA proceedings PDF](https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/02834.pdf) | Bài nền; baseline end→start retrieval và online NMS. |
+| P19 | [PROVIA: Procedure State Tracking for Online Mistake Detection in Egocentric Videos](P19_2026_provia.pdf) | [Preprint v1, 2026-09-17](https://arxiv.org/abs/2609.20638v1); chưa xác nhận venue | Gần đây; online step segmentation, procedure state và whole-trial evaluation/false-alarm controls. |
+| P20 | [Toward Interpretable Evaluation Measures for Time Series Segmentation](P20_2025_interpretable_segmentation_metrics.pdf) | [NeurIPS 2025 proceedings](https://proceedings.neurips.cc/paper_files/paper/2025/file/09425891e393e64b0535194a81ba15b7-Paper-Conference.pdf); preprint 2025-10-27 | Gần đây; WARI, SMS và loại lỗi segmentation. |
+| P21 | [Towards Generalizing Temporal Action Segmentation to Unseen Views](P21_2025_unseen_view_tas.pdf) | [arXiv v1, 2025-04-03](https://arxiv.org/abs/2504.02512v1); phân tích bản này, không gộp số liệu revision/journal khác | Gần đây; representation và protocol chuyển view, có IKEA/Assembly101. |
+| P22 | [Local Evaluation of Time Series Anomaly Detection Algorithms](P22_2022_affiliation_metrics.pdf) | KDD 2022, [arXiv v1, 2022-06-27](https://arxiv.org/abs/2206.13167v1) | Nền metric; affiliation và adversarial metric checks. |
+| P23 | [Precision and Recall for Time Series](P23_2018_range_precision_recall.pdf) | [NeurIPS 2018 proceedings](https://proceedings.neurips.cc/paper/2018/hash/8f468c873a32bb0619eaeb2050ba45d1-Abstract.html) | Nền metric; range P/R, overlap, cardinality và ưu tiên vị trí. |
 
 Các bản arXiv được cố định `v1`; không mặc định là revision mới nhất. Bản proceedings/journal được ghi riêng. Ngày kiểm tra không thay thế ngày xuất bản. Chi tiết code/tái lập cần được khảo sát tiếp trước thực nghiệm; hiện mới hoàn tất thu thập và phân tích tài liệu.
