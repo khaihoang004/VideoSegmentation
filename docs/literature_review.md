@@ -2,6 +2,8 @@
 
 Ngày khảo sát: **2026-11-13**. Trạng thái: **bản nghiên cứu v0.2**, chưa tái lập thực nghiệm và chưa chốt model. Bổ sung nghiên cứu ảnh hưởng gián tiếp: PROVIA, protocol/metric và chuyển góc nhìn. Đối chiếu với [problem.md](problem.md) và [datasets.md](datasets.md): video **exocentric**, xử lý causal, trả start/end cho **toàn bộ một lượt công việc**, giữ gián đoạn bên trong, xử lý nhiều lượt và nhận biết hoàn thành.
 
+**Bổ sung sau khảo sát chính:** [đối chiếu 13 link người dùng: 4 trùng, 9 bài mới](paper_additions.md). Tập A01–A09 bổ sung ActionSwitch/ODAE, graph parsing, error detection, object-state representation và memory; bảng dưới giữ P01–P23 để không đổi ID. [Roadmap](reading_order.md) đã tích hợp các bài mới; các nhận định khoảng trống cần đọc cùng phần cập nhật này.
+
 ## 1. Phạm vi và cách đọc
 
 Đã tải **23 PDF** vào [`papers/`](../papers/README.md). Danh mục ghi tên đầy đủ, nguồn, phiên bản và lý do giữ bài cũ; [`manifest.json`](../papers/manifest.json) lưu checksum, số trang và vị trí bằng chứng kết quả. Xem [graph phân nhóm, ma trận paper × thành phần và phần còn thiếu](paper_map.md), cùng [phân tích PROVIA, metric và protocol](related_work_and_evaluation.md).

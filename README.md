@@ -8,6 +8,8 @@ Tài liệu nằm trong [`docs/`](docs/README.md): [định nghĩa bài toán on
 
 Nghiên cứu paper: [lộ trình đọc và graph phát triển](docs/reading_order.md), [graph phân nhóm và ma trận thành phần](docs/paper_map.md), [bảng tổng hợp và phân tích](docs/literature_review.md), [PROVIA, metric và protocol](docs/related_work_and_evaluation.md), [thư viện PDF và nguồn](papers/README.md).
 
+Bổ sung từ danh sách người dùng: [đối chiếu 13 link, 4 bài trùng và 9 bài mới](docs/paper_additions.md); PDF đã lưu và roadmap đã tích hợp ActionSwitch, ODAE, VidParse cùng các nhánh state/error/memory.
+
 Huấn luyện: [pipeline online và hướng dẫn Colab](docs/training_pipeline.md), [config baseline](configs/online_gru.yaml). Chạy `python train.py --help`; cài `pip install -e '.[train]'` trước. Có `make-demo` để kiểm tra train/resume/evaluate trước khi chuẩn bị nhãn video thật.
 
 ## Colab: mount → clone → chạy CLI

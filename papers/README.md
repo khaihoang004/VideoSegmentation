@@ -1,6 +1,6 @@
 # Thư viện paper
 
-Ngày thu thập: **2026-11-13**. Đã lưu 23 PDF khảo sát chính từ nguồn công khai chính thức/tác giả, tổng 60.349.701 bytes (~57,6 MiB). Bổ sung [3 PDF nền F01–F03](foundations/README.md) ở thư mục riêng, không tính trong tổng của 23 bài trên. Giữ nguyên nội dung PDF; quyền tác giả và điều kiện sử dụng theo bản gốc. Không lưu bản text trích xuất vào repo.
+Ngày thu thập: **2026-11-13**. Tập chính có 23 PDF, tổng 60.349.701 bytes (~57,6 MiB); thêm [3 PDF nền F01–F03](foundations/README.md) và [9 PDF bổ sung A01–A09](additions/README.md) ở thư mục riêng: **35 PDF độc lập**. Các tập bổ sung không tính trong kích thước của 23 bài trên. Giữ nguyên nội dung PDF; quyền tác giả và điều kiện sử dụng theo bản gốc. Không lưu bản text trích xuất vào repo.
 
 Phân tích, số liệu, mức đáp ứng yêu cầu và khoảng trống nằm trong [docs/literature_review.md](../docs/literature_review.md). [manifest.json](manifest.json) ghi URL nguồn/PDF, phiên bản, checksum SHA-256, kích thước, số trang và vị trí kết quả để kiểm tra lại. Số liệu là tác giả báo cáo, chưa tái lập.
 
@@ -9,6 +9,8 @@ Phân tích bổ sung về [PROVIA, nghiên cứu ảnh hưởng gián tiếp, m
 [Graph phân nhóm và ma trận paper × thành phần](../docs/paper_map.md) gom 23 bài thành 8 nhóm, kèm phạm vi xử lý trực tiếp, phần cần thích nghi và vị trí bằng chứng trong PDF.
 
 [Lộ trình đọc và graph phát triển](../docs/reading_order.md) phân biệt bài cần đọc trước, bài phát triển thành phần từ bài cũ và bài chỉ liên quan; bổ sung CAG-QIL/OAT/MiniROAD.
+
+[Đối chiếu 13 link người dùng và phân tích 9 bài mới](../docs/paper_additions.md) ghi rõ bài trùng, phần đã giải quyết, các kết quả không đồng nhất giữa metric và vị trí đọc. [Manifest bổ sung](additions/manifest.json) giữ cả audit 13 link và metadata của 9 PDF, tách với manifest tập chính bên dưới.
 
 | ID | Tên đầy đủ / PDF local | Công bố và bản tải | Nhóm / lý do chọn |
 | --- | --- | --- | --- |

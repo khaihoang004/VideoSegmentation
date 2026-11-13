@@ -1,0 +1,408 @@
+{
+  "collection_date": "2026-11-13",
+  "scope": "User-supplied batch: 13 links, 4 title/ID duplicates and 9 new related papers; separate from P01–P23 core map and F01–F03 foundations",
+  "input_audit": [
+    {
+      "input_url": "https://arxiv.org/pdf/2408.02957",
+      "status": "duplicate",
+      "library_id": "P18",
+      "match_basis": "exact arXiv ID; official proceedings copy already saved"
+    },
+    {
+      "input_url": "https://www.scitepress.org/Link.aspx?doi=10.5220/0013249700003912",
+      "status": "new",
+      "library_id": "A01",
+      "match_basis": "DOI resolves to publisher title/PDF"
+    },
+    {
+      "input_url": "https://arxiv.org/pdf/2407.12987",
+      "status": "new",
+      "library_id": "A02",
+      "match_basis": "new arXiv ID and title"
+    },
+    {
+      "input_url": "https://arxiv.org/pdf/2408.06437",
+      "status": "duplicate",
+      "library_id": "P11",
+      "match_basis": "exact arXiv ID"
+    },
+    {
+      "input_url": "https://ieeexplore.ieee.org/document/10658157/",
+      "status": "duplicate_by_user_confirmed_title",
+      "library_id": "P12",
+      "match_basis": "User supplied exact ProTAS title; direct IEEE metadata blocked; matched official CVF PDF/title in library"
+    },
+    {
+      "input_url": "https://arxiv.org/pdf/2608.27562",
+      "status": "new",
+      "library_id": "A03",
+      "match_basis": "new arXiv ID; latest v2 saved"
+    },
+    {
+      "input_url": "https://arxiv.org/pdf/2503.11953",
+      "status": "new",
+      "library_id": "A04",
+      "match_basis": "new arXiv ID; latest v2 saved"
+    },
+    {
+      "input_url": "https://arxiv.org/pdf/2512.20409",
+      "status": "new",
+      "library_id": "A05",
+      "match_basis": "new arXiv ID"
+    },
+    {
+      "input_url": "https://arxiv.org/pdf/2411.01122",
+      "status": "duplicate",
+      "library_id": "P10",
+      "match_basis": "exact arXiv ID; NeurIPS proceedings copy already saved"
+    },
+    {
+      "input_url": "https://arxiv.org/pdf/2606.25317",
+      "status": "new",
+      "library_id": "A06",
+      "match_basis": "new arXiv ID"
+    },
+    {
+      "input_url": "https://arxiv.org/pdf/2411.16934",
+      "status": "new",
+      "library_id": "A07",
+      "match_basis": "new arXiv ID; latest v3 saved"
+    },
+    {
+      "input_url": "https://arxiv.org/pdf/2610.00069",
+      "status": "new",
+      "library_id": "A08",
+      "match_basis": "new arXiv ID; offline concept framework"
+    },
+    {
+      "input_url": "https://arxiv.org/pdf/2503.21055",
+      "status": "new",
+      "library_id": "A09",
+      "match_basis": "new arXiv ID; latest v6 saved"
+    }
+  ],
+  "papers": [
+    {
+      "id": "A01",
+      "year": 2025,
+      "filename": "A01_2025_online_action_end.pdf",
+      "title": "Online Detection of End of Take and Release Actions from Egocentric Videos",
+      "authors": [
+        "Alessandro Sebastiano Catinello",
+        "Giovanni Maria Farinella",
+        "Antonino Furnari"
+      ],
+      "source_url": "https://www.scitepress.org/PublishedPapers/2025/132497/",
+      "doi": "10.5220/0013249700003912",
+      "publication": "VISAPP 2025",
+      "first_public_date": null,
+      "pdf_url": "https://www.scitepress.org/Papers/2025/132497/132497.pdf",
+      "pdf_version": "VISAPP2025 official PDF",
+      "pages": 8,
+      "bytes": 553757,
+      "sha256": "cdebc73f4e1da97829146a6081a589dd367b899c8b358f579702874a425bd237",
+      "status": "downloaded",
+      "checked_date": "2026-11-13",
+      "priority_for_project": "high",
+      "roadmap_placement": "MiniROAD / OAD → A01; đọc trước khi thiết kế completion-event evaluator.",
+      "review_status": "PDF definition/method/results and online limitations inspected; no experiments reproduced",
+      "result_evidence": {
+        "location": "Table 3, PDF p.6",
+        "metric": "EK100 take/release verb mp-mAP, no label propagation",
+        "baseline": "TeSTra short memory",
+        "baseline_value": 20.32,
+        "method": "Short memory + one Mamba layer",
+        "method_value": 24.55,
+        "caveat": "Table 4 THUMOS14 long/short TeSTra 53.75 exceeds best shown Mamba 42.12; no universal Mamba win"
+      }
+    },
+    {
+      "id": "A02",
+      "year": 2024,
+      "filename": "A02_2024_actionswitch.pdf",
+      "title": "ActionSwitch: Class-agnostic Detection of Simultaneous Actions in Streaming Videos",
+      "authors": [
+        "Kang, Hyolim",
+        "Hyun, Jeongseok",
+        "An, Joungbin",
+        "Yu, Youngjae",
+        "Kim, Seon Joo"
+      ],
+      "source_url": "https://arxiv.org/abs/2407.12987",
+      "arxiv_id": "2407.12987",
+      "first_public_date": "2024-07-17",
+      "publication": "arXiv version v1",
+      "pdf_url": "https://arxiv.org/pdf/2407.12987v1",
+      "pdf_version": "v1",
+      "pages": 18,
+      "bytes": 3002767,
+      "sha256": "23a644649d601025131cedafc53b0b0237f46b231a79fbe2451160ca261870e6",
+      "status": "downloaded",
+      "checked_date": "2026-11-13",
+      "priority_for_project": "high",
+      "roadmap_placement": "MiniROAD → ActionSwitch → OpenHOUSE; nhánh OAD song song OAT/MATR.",
+      "review_status": "PDF definition/method/results and online limitations inspected; no experiments reproduced",
+      "result_evidence": {
+        "location": "Table 1, PDF p.10",
+        "metric": "FineAction class-agnostic instance F1",
+        "baseline": "CAG-QIL",
+        "baseline_value": 15.67,
+        "method": "ActionSwitch",
+        "method_value": 19.44,
+        "caveat": "Instance/action endpoint, not goal achievement; more overlap capacity than current single-instance target"
+      }
+    },
+    {
+      "id": "A03",
+      "year": 2026,
+      "filename": "A03_2026_vidparse.pdf",
+      "title": "VidParse: Online Parsing of Egocentric Procedures Like a Pro",
+      "authors": [
+        "Gupta, Anubhav",
+        "Kambhamettu, Archit",
+        "Agarwal, Vatsal",
+        "Kumar, Pulkit",
+        "Shrivastava, Abhinav"
+      ],
+      "source_url": "https://arxiv.org/abs/2608.27562",
+      "arxiv_id": "2608.27562",
+      "first_public_date": "2026-08-27",
+      "publication": "arXiv version v2",
+      "pdf_url": "https://arxiv.org/pdf/2608.27562v2",
+      "pdf_version": "v2",
+      "pages": 26,
+      "bytes": 7034887,
+      "sha256": "06c42be8a12fe927c90f6a57f522b9c5236469af37e2fbaa3ed44939f8d1cc31",
+      "status": "downloaded",
+      "checked_date": "2026-11-13",
+      "priority_for_project": "high",
+      "roadmap_placement": "ProTAS / OnlineTAS → VidParse; so graph decoder với state filtering PROVIA.",
+      "review_status": "PDF definition/method/results and online limitations inspected; no experiments reproduced",
+      "result_evidence": {
+        "location": "Table 1, PDF p.11; Sections 3.3–3.5",
+        "metric": "EgoPER segmental F1@0.5",
+        "baseline": "ProTAS as evaluated in this paper",
+        "baseline_value": 51.31,
+        "method": "VidParse",
+        "method_value": 77.6,
+        "caveat": "v2 corrects GTEA to four-split average; no gradient updates still uses training annotations/prototypes/graph; local peak plus fixed-lag commitment needs emission audit"
+      }
+    },
+    {
+      "id": "A04",
+      "year": 2025,
+      "filename": "A04_2025_spoc.pdf",
+      "title": "SPOC: Spatially-Progressing Object State Change Segmentation in Video",
+      "authors": [
+        "Mandikal, Priyanka",
+        "Nagarajan, Tushar",
+        "Stoken, Alex",
+        "Xue, Zihui",
+        "Grauman, Kristen"
+      ],
+      "source_url": "https://arxiv.org/abs/2503.11953",
+      "arxiv_id": "2503.11953",
+      "first_public_date": "2025-03-15",
+      "publication": "arXiv version v2",
+      "pdf_url": "https://arxiv.org/pdf/2503.11953v2",
+      "pdf_version": "v2",
+      "pages": 25,
+      "bytes": 16900291,
+      "sha256": "2d7b0a87879d61ed249ac9ab6e9763b3be43bc0b3285d2a64e7d05a2d97d1318",
+      "status": "downloaded",
+      "checked_date": "2026-11-13",
+      "priority_for_project": "medium",
+      "roadmap_placement": "Action Completion / IndustReal → SPOC → thí nghiệm goal-state head exo.",
+      "review_status": "PDF definition/method/results and online limitations inspected; no experiments reproduced",
+      "result_evidence": {
+        "location": "Table 2, PDF p.6; Sections 3.3–3.4",
+        "metric": "WTC-HowTo mean IoU, pseudo-label stage without model training",
+        "baseline": "SPOC pseudo labels",
+        "baseline_value": 0.411,
+        "method": "Pseudo labels + causal ordering + ambiguity resolution",
+        "method_value": 0.455,
+        "caveat": "Full trained SPOC 0.502; pixel state metric, not temporal interval; causal ordering refers to state dynamics, not demonstrated streaming inference"
+      }
+    },
+    {
+      "id": "A05",
+      "year": 2025,
+      "filename": "A05_2025_detach.pdf",
+      "title": "DETACH : Decomposed Spatio-Temporal Alignment for Exocentric Video and Ambient Sensors with Staged Learning",
+      "authors": [
+        "Yoon, Junho",
+        "Jung, Jaemo",
+        "Kim, Hyunju",
+        "Lee, Dongman"
+      ],
+      "source_url": "https://arxiv.org/abs/2512.20409",
+      "arxiv_id": "2512.20409",
+      "first_public_date": "2025-12-23",
+      "publication": "arXiv version v1",
+      "pdf_url": "https://arxiv.org/pdf/2512.20409v1",
+      "pdf_version": "v1",
+      "pages": 15,
+      "bytes": 7981320,
+      "sha256": "01c9a27a756b8da42a1fd44a6ec721e1883c5cab8deee4ac07d27c891d46fedd",
+      "status": "downloaded",
+      "checked_date": "2026-11-13",
+      "priority_for_project": "conditional",
+      "roadmap_placement": "Đọc nhánh representation exo khi có ambient sensors; không là prerequisite RGB-only.",
+      "review_status": "PDF definition/method/results and online limitations inspected; no experiments reproduced",
+      "result_evidence": {
+        "location": "Table 1 and evaluation protocol, PDF p.6",
+        "metric": "Opportunity++ weighted F1, frozen sensor encoder classification",
+        "baseline": "CAV-MAE",
+        "baseline_value": 0.56,
+        "method": "DETACH",
+        "method_value": 0.73,
+        "caveat": "Video-sensor pretraining with sensor-representation downstream task, not RGB temporal localization; online clustering does not prove causal video pipeline"
+      }
+    },
+    {
+      "id": "A06",
+      "year": 2026,
+      "filename": "A06_2026_estanet.pdf",
+      "title": "ESTANet: Efficient Online Error Detection in Procedural Videos via Prediction Inconsistency",
+      "authors": [
+        "Lee, Shih-Po",
+        "Ghoddoosian, Reza",
+        "Siddiqui, Faizan",
+        "Sachdeva, Enna",
+        "Dariush, Behzad"
+      ],
+      "source_url": "https://arxiv.org/abs/2606.25317",
+      "arxiv_id": "2606.25317",
+      "first_public_date": "2026-06-24",
+      "publication": "arXiv version v1",
+      "pdf_url": "https://arxiv.org/pdf/2606.25317v1",
+      "pdf_version": "v1",
+      "pages": 18,
+      "bytes": 1279261,
+      "sha256": "825f0d8c6b50b035203edf5c13e8114456b8c88de58c786959e43651e3558046",
+      "status": "downloaded",
+      "checked_date": "2026-11-13",
+      "priority_for_project": "high",
+      "roadmap_placement": "MiniROAD / GRU + ProTAS context → ESTANet → PROVIA protocol comparison.",
+      "review_status": "PDF definition/method/results and online limitations inspected; no experiments reproduced",
+      "result_evidence": {
+        "location": "Table 1, PDF p.9; Section 4.1 PDF p.8",
+        "metric": "EgoPER error-segment F1@0.5",
+        "baseline": "DTGL as evaluated in this paper",
+        "baseline_value": 20.9,
+        "method": "ESTANet",
+        "method_value": 21.6,
+        "caveat": "Assembly101-O and EPIC-Tent-O truncate at first error; mode-filter window 30 at 10 FPS needs causal/latency audit; no completed-task output"
+      }
+    },
+    {
+      "id": "A07",
+      "year": 2024,
+      "filename": "A07_2024_esom.pdf",
+      "title": "Online Episodic Memory Visual Query Localization with Egocentric Streaming Object Memory",
+      "authors": [
+        "Manigrasso, Zaira",
+        "Dunnhofer, Matteo",
+        "Furnari, Antonino",
+        "Nottebaum, Moritz",
+        "Finocchiaro, Antonio",
+        "Marana, Davide",
+        "Forte, Rosario",
+        "Farinella, Giovanni Maria",
+        "Micheloni, Christian"
+      ],
+      "source_url": "https://arxiv.org/abs/2411.16934",
+      "arxiv_id": "2411.16934",
+      "first_public_date": "2024-11-25",
+      "publication": "arXiv version v3",
+      "pdf_url": "https://arxiv.org/pdf/2411.16934v3",
+      "pdf_version": "v3",
+      "pages": 17,
+      "bytes": 31569642,
+      "sha256": "a86229afae07d4b911f67723e5c0404a5703d885061d87bbac8a9b61ed2aabf1",
+      "status": "downloaded",
+      "checked_date": "2026-11-13",
+      "priority_for_project": "conditional",
+      "roadmap_placement": "Sau MATR/Event Memory khi cần object identity, provenance và lưu lịch sử.",
+      "review_status": "PDF definition/method/results and online limitations inspected; no experiments reproduced",
+      "result_evidence": {
+        "location": "Table 1, PDF p.6",
+        "metric": "Ego4D OVQ2D success rate",
+        "baseline": "VideoAgent adapted online baseline",
+        "baseline_value": 3.03,
+        "method": "ESOM YOLO + EgoSTARK",
+        "method_value": 4.02,
+        "caveat": "81.92 is oracle detector+tracker, not deployable result; query image and last-seen object track, not task completion"
+      }
+    },
+    {
+      "id": "A08",
+      "year": 2026,
+      "filename": "A08_2026_wem_framework.pdf",
+      "title": "A Framework for Egocentric and Exocentric Procedural Understanding via Temporal Segmentation and Semantic Abstraction",
+      "authors": [
+        "Chavan, Vivek",
+        "Krüger, Jörg"
+      ],
+      "source_url": "https://arxiv.org/abs/2610.00069",
+      "arxiv_id": "2610.00069",
+      "first_public_date": "2026-09-04",
+      "publication": "arXiv version v1",
+      "pdf_url": "https://arxiv.org/pdf/2610.00069v1",
+      "pdf_version": "v1",
+      "pages": 8,
+      "bytes": 448876,
+      "sha256": "6328ca64efadb4de798b318cb45b2093c12965768c258ab147717e3851aafab3",
+      "status": "downloaded",
+      "checked_date": "2026-11-13",
+      "priority_for_project": "low",
+      "roadmap_placement": "Đọc cuối để tham khảo event cards/evidence-linked memory; framework offline.",
+      "review_status": "PDF definition/method/results and online limitations inspected; no experiments reproduced",
+      "result_evidence": {
+        "location": "Section 3 and Figure 1 PDF p.3; Section 4 PDF p.4",
+        "metric": null,
+        "baseline": null,
+        "baseline_value": null,
+        "method_value": null,
+        "caveat": "Explicitly offline batch processing; quantitative evaluation deferred to future work"
+      }
+    },
+    {
+      "id": "A09",
+      "year": 2025,
+      "filename": "A09_2025_state_change_counterfactuals.pdf",
+      "title": "What Changed and What Could Have Changed? State-Change Counterfactuals for Procedure-Aware Video Representation Learning",
+      "authors": [
+        "Kung, Chi-Hsi",
+        "Ramirez, Frangil",
+        "Ha, Juhyung",
+        "Chen, Yi-Ting",
+        "Crandall, David",
+        "Tsai, Yi-Hsuan"
+      ],
+      "source_url": "https://arxiv.org/abs/2503.21055",
+      "arxiv_id": "2503.21055",
+      "first_public_date": "2025-03-27",
+      "publication": "arXiv version v6",
+      "pdf_url": "https://arxiv.org/pdf/2503.21055v6",
+      "pdf_version": "v6",
+      "pages": 17,
+      "bytes": 7790706,
+      "sha256": "c6a6e2b7cfebde783a3304af9aca290f38ab99027a046827aebefbb8a38fb3b9",
+      "status": "downloaded",
+      "checked_date": "2026-11-13",
+      "priority_for_project": "medium",
+      "roadmap_placement": "Sau IndustReal/Action Completion; ghép nhánh SPOC cho state evidence/hard negatives.",
+      "review_status": "PDF definition/method/results and online limitations inspected; no experiments reproduced",
+      "result_evidence": {
+        "location": "Table 1 PDF p.6; Table 2 PDF p.7",
+        "metric": "EgoPER segmentation F1@0.5",
+        "baseline": "HierVL",
+        "baseline_value": 52.6,
+        "method": "State-change counterfactual representation",
+        "method_value": 54.4,
+        "caveat": "Table 2 EDA 71.3→72.7 while AUC 66.2→60.5 vs HierVL; downstream ASFormer is offline; not a proved causal completion detector"
+      }
+    }
+  ]
+}

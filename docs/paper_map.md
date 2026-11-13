@@ -2,6 +2,8 @@
 
 Cập nhật **2026-11-13**, bản phân loại v0.1 của **23 PDF hiện có**. Mục tiêu là quyết định đọc bài nào để xử lý vấn đề nào của [bài toán online, exocentric, toàn lượt](problem.md). Đây là bản đồ nghiên cứu định tính, **không phải citation graph, systematic review hay kết quả tái lập**. Cạnh biểu diễn quan hệ thuộc nhóm hoặc liên quan tới thành phần, không khẳng định paper này xây trên paper kia.
 
+Phạm vi hình/ma trận trên trang là tập **P01–P23**. [9 bài bổ sung A01–A09 từ danh sách người dùng](paper_additions.md) đã được phân tích và đưa vào [roadmap cập nhật](reading_order.md), chưa gộp vào hình 23 bài này. Xem cả tập bổ sung trước khi diễn giải khoảng trống hoặc chọn nhánh state/graph.
+
 ## 1. Graph gom nhóm theo bài toán chính
 
 ![Graph 8 nhóm paper và phần đã xử lý](figures/paper_taxonomy.svg)

@@ -1,6 +1,6 @@
 # Lộ trình đọc và quan hệ phát triển giữa các paper
 
-Cập nhật **2026-11-13**. [Bản đồ 23 bài](paper_map.md) phân nhóm theo thành phần; tài liệu này bổ sung **thứ tự học** và **quan hệ phát triển đã đối chiếu method/related work**. Có thêm ba PDF nền F01–F03 ở [papers/foundations](../papers/foundations/README.md), giữ riêng với tập P01–P23 để không ngầm đổi phạm vi ma trận đã công bố.
+Cập nhật **2026-11-13**. [Bản đồ 23 bài](paper_map.md) phân nhóm theo thành phần; tài liệu này bổ sung **thứ tự học** và **quan hệ phát triển đã đối chiếu method/related work**. Có ba PDF nền F01–F03 ở [papers/foundations](../papers/foundations/README.md) và [9 bài mới A01–A09 từ danh sách người dùng](paper_additions.md). Các tập này giữ riêng với P01–P23; roadmap dưới đây tích hợp cả ba tập.
 
 ## 1. Bắt đầu từ bài nào?
 
@@ -17,14 +17,18 @@ OAT có cả hướng phát hiện sớm/anticipation; khi chuyển sang dự á
 | Thứ tự | Bài và mức đọc | Cần lấy được gì? | Trước đó cần gì? |
 | --- | --- | --- | --- |
 | 0 | [P14 Action Completion](../papers/P14_2018_action_completion.pdf): intro/problem; [P13 IndustReal](../papers/P13_2024_industreal.pdf): §3 và ví dụ lỗi | Attempted khác achieved; completed step khác action end; F1 cần đi cùng delay. Chưa cần đọc kỹ CNN–LSTM cũ của P14. | Không cần paper video trước đó. |
+| 0b | [A01 ODAE](../papers/additions/A01_2025_online_action_end.pdf): formulation và point-level metric | Cần phát một end-event cho mỗi occurrence; tolerance của metric khác deadline/completion achievement. Method Mamba có thể đọc sau. | Phân biệt action end với goal đạt kết quả; OAD cơ bản. |
 | 1 | [F03 CAG-QIL](../papers/foundations/F03_2021_cag_qil.pdf): đọc lướt; **[F01 OAT](../papers/foundations/F01_2022_oat.pdf): đọc kỹ §1–3** | OAD → On-TAL; vì sao grouping frame dễ tick/fragment/merge; window, anchors, cls/reg và OSN. | Hiểu feature sequence, Transformer encoder/decoder và interval IoU ở mức cơ bản. |
 | 2 | **[P18 MATR](../papers/P18_2024_memory_augmented_transformer.pdf)**: method và ablation | Từ window ngắn sang memory; phát end rồi truy hồi start; ONMS. Liên hệ việc trả toàn đoạn quá khứ khi vừa nhận ra hoàn thành. | OAT. Không bắt buộc HAT. |
 | 3 | [F02 MiniROAD](../papers/foundations/F02_2023_miniroad.pdf): method/figure, có thể lướt | RNN causal cho nhãn frame; cơ sở đơn giản để hiểu streaming module và train/inference context. | Chỉ cần GRU/RNN. Có thể bỏ qua ở vòng đầu nếu đã nắm OAD. |
+| 3b | **[A02 ActionSwitch](../papers/additions/A02_2024_actionswitch.pdf)**: §3; §4.3 | State-emitting head, switch-based instance decoding, conservativeness loss. Đây là thành phần OpenHOUSE thực sự dẫn lại. | MiniROAD/RNN OAD; biết vấn đề fragmentation/merge. Không bắt buộc mở rộng model dự án sang nhiều lượt chồng lấp. |
 | 4 | **[P12 ProTAS](../papers/P12_2024_protas.pdf)**: §3–4; **[P03 OpenHOUSE](../papers/P03_2025_openhouse.pdf)**: §3 và thí nghiệm | Progress/task graph; substep–step–goal; boundary liền nhau; cách streaming module gọi VLM. | MiniROAD hỗ trợ đọc backbone OpenHOUSE; ProTAS giúp hiểu progress. Đây không phải tuyên bố OpenHOUSE là bản mở rộng trực tiếp của ProTAS. |
+| 4b | **[A03 VidParse](../papers/additions/A03_2026_vidparse.pdf)**: §3.3–3.5, Table 1 | Similarity boundary + graph-constrained beam search; nhãn/prototypes cần gì dù training-free; cách fixed-lag làm thay đổi emission. | ProTAS/OnlineTAS cho thuật ngữ và baseline; không phải yêu cầu dùng architecture của chúng. |
 | 5 | **[P19 PROVIA](../papers/P19_2026_provia.pdf)**: §III đọc sớm, §IV đọc kỹ sau các bài trên | Whole-trial protocol, timing-only controls; factual state khác accepted progress; filtering và sequential alarms. | Định nghĩa step/completion của P13, segmentation và Bayes filtering cơ bản. Không bắt buộc học toàn bộ HDP-HSMM. |
+| 5b | [A06 ESTANet](../papers/additions/A06_2026_estanet.pdf): method và §4.1; có thể đọc trước PROVIA method | Prediction inconsistency giữa GRU detectors; so complexity, error evidence và first-error/whole-trial protocol. | MiniROAD/GRU + PROVIA §III; error detection là tín hiệu phụ, chưa là completed-task output. |
 | 6 | **[P01 OnPoint](../papers/P01_2026_onpoint.pdf)**: §3 và Appendix B khi cần ít nhãn | Offline teacher → online student; pseudo segments, CAS/CASS, anticipation distillation và direct point loss. | OAT cho student; MATR §3.4 cho ONMS. Teacher HR-Pro/TSASPC chỉ cần đi sâu khi chọn/tái lập teacher. |
 
-Nếu chỉ đủ thời gian cho một vòng: **P13 §3 → OAT → MATR → ProTAS → OpenHOUSE → PROVIA**. P14 và MiniROAD là phần đọc ngắn hỗ trợ; OnPoint để sau khi đã hiểu baseline online và thấy nhãn là nút thắt. §III PROVIA nên xem ngay từ đầu để khóa cách đánh giá, nhưng không cần bắt đầu bằng toàn bộ toán của bài.
+Tuyến chính sau khi bổ sung: **P13 §3 → OAT → MATR → ActionSwitch → ProTAS → OpenHOUSE → VidParse → PROVIA**. P14 intro, A01 formulation và MiniROAD là phần đọc ngắn hỗ trợ; ESTANet là nhánh GRU/error dễ mở khi cần. OnPoint để sau khi đã hiểu baseline online và thấy nhãn là nút thắt. §III PROVIA nên xem ngay từ đầu để khóa cách đánh giá, nhưng không cần bắt đầu bằng toàn bộ toán của bài. Có thể chia thành hai nhánh interval và hierarchy/state thay vì bắt buộc đọc hết liên tục.
 
 ## 3. Graph quan hệ phát triển: có nhánh, không phải một hàng thẳng
 
@@ -40,6 +44,7 @@ flowchart LR
     TEACH["HR-Pro / TSASPC<br/>Offline point-supervised teachers"]
     DUGO["P02 DUGO · 2026<br/>Dual scale + Gaussian memory"]
     MINI["F02 MiniROAD · 2023<br/>Simple RNN OAD"]
+    SWITCH["A02 ActionSwitch · 2024<br/>Switches / state-emitting head"]
     PROTAS["P12 ProTAS · 2024<br/>Action progress + task graph"]
     HOUSE["P03 OpenHOUSE · 2025<br/>Hierarchical streaming + VLM"]
 
@@ -52,6 +57,8 @@ flowchart LR
     OAT -->|"khung anchor và đối chứng ablation"| DUGO
     HAT -.->|"history compression là đối chiếu/motivation"| DUGO
     MINI -->|"simple RNN backbone theo OAD literature"| HOUSE
+    MINI -->|"minimal GRU backbone, ActionSwitch mục 4.3"| SWITCH
+    SWITCH -->|"state-emitting head; OpenHOUSE dẫn reference 18"| HOUSE
     PROTAS -.->|"progress là ý tưởng liên quan; cách dùng khác"| HOUSE
 ```
 
@@ -64,6 +71,7 @@ Các quan hệ chính và bằng chứng:
 | OAT + ONMS của MATR + teacher → OnPoint | OnPoint §3.2, §3.5, §3.8; [hướng dẫn chính thức](https://sakibreza.github.io/OnPoint/implementation/) §1/§4 khuyên bắt đầu từ OAT. | **Không cần HAT → MATR → OnPoint như một chuỗi bắt buộc.** Chỉ phần ONMS của MATR là phụ thuộc cụ thể nêu ở đây. |
 | OAT/history methods → DUGO | DUGO §II đối chiếu OAT/HAT; §III encoder/memory; ablation thêm module trên OAT. [DUGO](https://arxiv.org/abs/2610.41402). | OAT → HAT → DUGO là thứ tự học tốt; không khẳng định DUGO lấy nguyên backbone/code HAT. |
 | MiniROAD → OpenHOUSE | OpenHOUSE §3.3.1, implementation details: simple RNN backbone theo [2] MiniROAD. [OpenHOUSE](https://openaccess.thecvf.com/content/ICCV2025/papers/Kang_Open-ended_Hierarchical_Streaming_Video_Understanding_with_Vision_Language_Models_ICCV_2025_paper.pdf). | MiniROAD là phần đọc trước ngắn nếu chưa hiểu OAD/RNN. |
+| MiniROAD → ActionSwitch → OpenHOUSE | ActionSwitch §4.3: simple GRU theo [1] MiniROAD. OpenHOUSE §3.3.1 dẫn [18] ActionSwitch cho state-emitting head và loss. | **Bổ sung prerequisite ActionSwitch trước OpenHOUSE**, cụ thể hơn việc chỉ đọc MiniROAD hoặc ProTAS. |
 | ProTAS ↔ OpenHOUSE | OpenHOUSE §3.3.1 dẫn prior progress [32] nhưng phân biệt cách dùng progression drops cho boundary. | Đọc ProTAS để hiểu thuật ngữ và giả định progress; không vẽ cạnh kế thừa trực tiếp chỉ vì cùng có progress head. |
 
 **PROVIA là nhánh cần đọc riêng**, không xem nó là “bản nâng cấp MATR/OpenHOUSE”. IndustReal/PSR cung cấp ngữ nghĩa/benchmark hữu ích trước khi đọc, nhưng cùng dataset hoặc cùng chủ đề không chứng minh cùng kiến trúc. Tương tự, P20/P22/P23 là nhánh evaluator, không phải tiền thân model localization.
@@ -86,3 +94,20 @@ Vòng đầu đọc abstract → intro → hình pipeline → problem definition
 Chỉ quay về bài cũ khi không hiểu một module thực sự được dùng lại, một thuật toán inference quyết định đầu ra, hoặc một metric/protocol ảnh hưởng kết luận. Bài được liệt kê trong bảng baseline chưa tự là prerequisite. Đặc biệt phân biệt **OSN của OAT** với **ONMS dùng ở MATR/OnPoint**, và phân biệt future supervision lúc train với truy cập future frames lúc test.
 
 Đây là lộ trình ưu tiên, không phải điều kiện bắt buộc phải đọc hết trước khi huấn luyện baseline. Mỗi bài nên kết thúc bằng một dòng “mượn được gì cho whole-task online exo” và một dòng “vẫn thiếu gì”; đối chiếu lại [ma trận thành phần](paper_map.md) trước khi quyết định thêm module.
+
+## 6. Nhánh bổ sung từ 13 link người dùng gửi
+
+Đã khớp 4 bài trùng (MATR/HAT/ProTAS/OnlineTAS), giữ 9 bài mới. [Bảng phân tích và nguồn PDF](paper_additions.md) có kết quả, phiên bản và giới hạn chi tiết; không cần đọc tất cả trước baseline.
+
+| Nhánh | Thứ tự đọc có ích | Mức cần thiết hiện tại |
+| --- | --- | --- |
+| End-event | MiniROAD/OAD → **A01 ODAE** | Đọc formulation/metric sớm; backbone/label propagation để sau. |
+| Instance → hierarchy | MiniROAD → **A02 ActionSwitch** → OpenHOUSE; ProTAS bổ sung progress | Ưu tiên; quan hệ state-head đã kiểm tra trong method. |
+| Structured decoding | ProTAS/OnlineTAS → **A03 VidParse**, đối chiếu PROVIA | Ưu tiên đọc; training-free không là label-free; beam/fixed lag không phải Bayesian filtering cùng kiến trúc. |
+| Error evidence | GRU/MiniROAD → **A06 ESTANet**, cùng PROVIA §III | Nhánh gần code GRU, có ích khi false completion liên quan execution error. |
+| Goal-state representation | Action Completion/IndustReal → **A09 State-Change Counterfactuals + A04 SPOC** | Vòng hai; hai bài cùng hỗ trợ state evidence, không có cạnh kế thừa giữa chúng được khẳng định ở đây. |
+| Object ownership/history | MATR/P04 → **A07 ESOM** | Chỉ đi sâu khi cần object discovery/tracking và truy hồi history; phải phân biệt oracle với kết quả thực. |
+| Extra modalities | Representation exo → **A05 DETACH** | Có ambient sensors hoặc mục tiêu cross-modal mới; chưa cần cho RGB-only localization. |
+| Memory schema | OpenHOUSE/P04/PROVIA → **A08 WEM Framework** | Đọc cuối để tham khảo event cards/provenance; bản gốc offline và chưa có quantitative benchmark. |
+
+Các mũi tên trong bảng là **thứ tự học** trừ những quan hệ thành phần đã nêu bằng chứng ở mục 3. Không coi ESTANet là bản phát triển từ PROVIA, VidParse là OpenHOUSE mới, hay SPOC là temporal segmentation chỉ từ các từ giống nhau trong tựa đề.
