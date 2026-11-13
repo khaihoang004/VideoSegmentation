@@ -39,7 +39,7 @@ Các phần/§ tính theo **PDF đang lưu trong repo**. Cột cuối là chuẩ
 | # | Paper / mức đọc | Phần cần đọc theo thứ tự | Trước khi chuyển bài, phải giải thích/làm được |
 | --- | --- | --- | --- |
 | **01** | **[F04 — TAS Survey](../papers/foundations/F04_2022_tas_survey.pdf) — C** | §2.1, §2.3–2.4 → §3.2 → §4.1; §3.1 xem feature, §2.2 xem dataset. | Phân biệt TAS, TAL, OAD, GEBD; vẽ được frame features → temporal model → output và nói rõ metric đo gì. |
-| **02** | **[P14 — Action Completion](../papers/P14_2018_action_completion.pdf) — C** | Introduction/problem, hình minh họa; xem voting method ở mức nguyên lý. | Cho ví dụ action được nhận dạng đúng nhưng goal chưa đạt; chỉ ra vì sao dùng frame sau completion phải ghi nhận thời điểm phát muộn hơn. |
+| **02** | **[P14 — Action Completion](../papers/P14_2018_action_completion.pdf) — C** · [Note đọc](NOTES.md#p14-action-completion) | Introduction/problem, hình minh họa; xem voting method ở mức nguyên lý. | Cho ví dụ action được nhận dạng đúng nhưng goal chưa đạt; chỉ ra vì sao dùng frame sau completion phải ghi nhận thời điểm phát muộn hơn. |
 | **03** | **[P13 — IndustReal / PSR](../papers/P13_2024_industreal.pdf) — K** | §3 định nghĩa/metric → ASD/PSR trong benchmark §5 → Table 4. | Viết điều kiện completed step và execution error; đọc F1 cùng delay; giải thích vì sao completed step chưa cung cấp hai biên của whole-task instance. |
 | **04** | **[A01 — Online Detection of Action End](../papers/additions/A01_2025_online_action_end.pdf) — C** | Formulation và point-mAP → overview TeSTra/Mamba → Tables 3–4. | Phân biệt end-event và interval; tự matching one-to-one; nói được tolerance đối xứng 1–10 giây có thể chấp nhận báo sớm/trễ thế nào. |
 
