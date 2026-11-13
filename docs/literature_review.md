@@ -4,7 +4,7 @@ Ngày khảo sát: **2026-11-13**. Trạng thái: **bản nghiên cứu v0.2**, 
 
 ## 1. Phạm vi và cách đọc
 
-Đã tải **23 PDF** vào [`papers/`](../papers/README.md). Danh mục ghi tên đầy đủ, nguồn, phiên bản và lý do giữ bài cũ; [`manifest.json`](../papers/manifest.json) lưu checksum, số trang và vị trí bằng chứng kết quả. Xem thêm [phân tích PROVIA, metric và protocol](related_work_and_evaluation.md).
+Đã tải **23 PDF** vào [`papers/`](../papers/README.md). Danh mục ghi tên đầy đủ, nguồn, phiên bản và lý do giữ bài cũ; [`manifest.json`](../papers/manifest.json) lưu checksum, số trang và vị trí bằng chứng kết quả. Xem [graph phân nhóm, ma trận paper × thành phần và phần còn thiếu](paper_map.md), cùng [phân tích PROVIA, metric và protocol](related_work_and_evaluation.md).
 
 Ưu tiên thời gian **2024-11-13 đến 2026-11-13**: P01–P09 thuộc 2025–2026. P10 có preprint ngày 2024-11-02, hơi ngoài cửa sổ, dù công bố NeurIPS 2024; giữ như bài nền online TAS. P11–P18 là ngoại lệ có chủ đích để hiểu instance localization, completion, tiến trình, thời lượng và suy luận xác suất. Không dùng ngày crawler/index thay cho ngày công bố.
 

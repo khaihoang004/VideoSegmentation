@@ -6,6 +6,8 @@ Phân tích, số liệu, mức đáp ứng yêu cầu và khoảng trống nằ
 
 Phân tích bổ sung về [PROVIA, nghiên cứu ảnh hưởng gián tiếp, metric và protocol](../docs/related_work_and_evaluation.md) ở tài liệu riêng; các bài mới vẫn có hàng tóm tắt trong bảng khảo sát chung.
 
+[Graph phân nhóm và ma trận paper × thành phần](../docs/paper_map.md) gom 23 bài thành 8 nhóm, kèm phạm vi xử lý trực tiếp, phần cần thích nghi và vị trí bằng chứng trong PDF.
+
 | ID | Tên đầy đủ / PDF local | Công bố và bản tải | Nhóm / lý do chọn |
 | --- | --- | --- | --- |
 | P01 | [OnPoint: Offline-to-Online Multi-Level Distillation for Point-Supervised Online Temporal Action Localization](P01_2026_onpoint.pdf) | ECCV 2026 theo ghi chú tác giả; [arXiv v1, 2026-07-01](https://arxiv.org/abs/2607.00289v1) | Gần đây; giảm nhãn cho On-TAL. |

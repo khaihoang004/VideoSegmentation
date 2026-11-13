@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1008pt" height="856.8pt" viewBox="0 0 1008 856.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.7.4, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 856.8
+L 1008 856.8
+L 1008 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="line2d_1">
+    <path d="M 504 138.24
+L 504 710.64
+" clip-path="url(#p419f717aad)" style="fill: none; stroke: #94a3b8; stroke-width: 1.3; stroke-linecap: square"/>
+   </g>
+   <g id="patch_2">
+    <path d="M 502.000488 235.44
+Q 485.998427 235.44 471.449811 235.44
+" clip-path="url(#p419f717aad)" style="fill: none; stroke: #94a3b8; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 476.249811 237.84
+L 471.449811 235.44
+L 476.249811 233.04
+z
+" clip-path="url(#p419f717aad)" style="fill: #94a3b8; stroke: #94a3b8; stroke-width: 1.3; stroke-linecap: round"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 505.999512 235.44
+Q 522.001573 235.44 536.550189 235.44
+" clip-path="url(#p419f717aad)" style="fill: none; stroke: #94a3b8; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 531.750189 233.04
+L 536.550189 235.44
+L 531.750189 237.84
+z
+" clip-path="url(#p419f717aad)" style="fill: #94a3b8; stroke: #94a3b8; stroke-width: 1.3; stroke-linecap: round"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 502.000488 393.84
+Q 485.998427 393.84 471.449811 393.84
+" clip-path="url(#p419f717aad)" style="fill: none; stroke: #94a3b8; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 476.249811 396.24
+L 471.449811 393.84
+L 476.249811 391.44
+z
+" clip-path="url(#p419f717aad)" style="fill: #94a3b8; stroke: #94a3b8; stroke-width: 1.3; stroke-linecap: round"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 505.999512 393.84
+Q 522.001573 393.84 536.550189 393.84
+" clip-path="url(#p419f717aad)" style="fill: none; stroke: #94a3b8; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 531.750189 391.44
+L 536.550189 393.84
+L 531.750189 396.24
+z
+" clip-path="url(#p419f717aad)" style="fill: #94a3b8; stroke: #94a3b8; stroke-width: 1.3; stroke-linecap: round"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 502.000488 552.24
+Q 485.998427 552.24 471.449811 552.24
+" clip-path="url(#p419f717aad)" style="fill: none; stroke: #94a3b8; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 476.249811 554.64
+L 471.449811 552.24
+L 476.249811 549.84
+z
+" clip-path="url(#p419f717aad)" style="fill: #94a3b8; stroke: #94a3b8; stroke-width: 1.3; stroke-linecap: round"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 505.999512 552.24
+Q 522.001573 552.24 536.550189 552.24
+" clip-path="url(#p419f717aad)" style="fill: none; stroke: #94a3b8; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 531.750189 549.84
+L 536.550189 552.24
+L 531.750189 554.64
+z
+" clip-path="url(#p419f717aad)" style="fill: #94a3b8; stroke: #94a3b8; stroke-width: 1.3; stroke-linecap: round"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 502.000488 710.64
+Q 485.998427 710.64 471.449811 710.64
+" clip-path="url(#p419f717aad)" style="fill: none; stroke: #94a3b8; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 476.249811 713.04
+L 471.449811 710.64
+L 476.249811 708.24
+z
+" clip-path="url(#p419f717aad)" style="fill: #94a3b8; stroke: #94a3b8; stroke-width: 1.3; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 505.999512 710.64
+Q 522.001573 710.64 536.550189 710.64
+" clip-path="url(#p419f717aad)" style="fill: none; stroke: #94a3b8; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 531.750189 708.24
+L 536.550189 710.64
+L 531.750189 713.04
+z
+" clip-path="url(#p419f717aad)" style="fill: #94a3b8; stroke: #94a3b8; stroke-width: 1.3; stroke-linecap: round"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 325.44 86.4
+L 682.56 86.4
+Q 691.2 86.4 691.2 95.04
+L 691.2 129.6
+Q 691.2 138.24 682.56 138.24
+L 325.44 138.24
+Q 316.8 138.24 316.8 129.6
+L 316.8 95.04
+Q 316.8 86.4 325.44 86.4
+z
+" clip-path="url(#p419f717aad)" style="fill: #eff6ff; stroke: #2563eb; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 37.44 165.6
+L 459.36 165.6
+Q 468 165.6 468 174.24
+L 468 297.36
+Q 468 306 459.36 306
+L 37.44 306
+Q 28.8 306 28.8 297.36
+L 28.8 174.24
+Q 28.8 165.6 37.44 165.6
+z
+" clip-path="url(#p419f717aad)" style="fill: #fafcfe; stroke: #2563eb; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 548.64 165.6
+L 970.56 165.6
+Q 979.2 165.6 979.2 174.24
+L 979.2 297.36
+Q 979.2 306 970.56 306
+L 548.64 306
+Q 540 306 540 297.36
+L 540 174.24
+Q 540 165.6 548.64 165.6
+z
+" clip-path="url(#p419f717aad)" style="fill: #fafcfe; stroke: #0891b2; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 37.44 324
+L 459.36 324
+Q 468 324 468 332.64
+L 468 455.76
+Q 468 464.4 459.36 464.4
+L 37.44 464.4
+Q 28.8 464.4 28.8 455.76
+L 28.8 332.64
+Q 28.8 324 37.44 324
+z
+" clip-path="url(#p419f717aad)" style="fill: #fafcfe; stroke: #7c3aed; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 548.64 324
+L 970.56 324
+Q 979.2 324 979.2 332.64
+L 979.2 455.76
+Q 979.2 464.4 970.56 464.4
+L 548.64 464.4
+Q 540 464.4 540 455.76
+L 540 332.64
+Q 540 324 548.64 324
+z
+" clip-path="url(#p419f717aad)" style="fill: #fafcfe; stroke: #059669; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 37.44 482.4
+L 459.36 482.4
+Q 468 482.4 468 491.04
+L 468 614.16
+Q 468 622.8 459.36 622.8
+L 37.44 622.8
+Q 28.8 622.8 28.8 614.16
+L 28.8 491.04
+Q 28.8 482.4 37.44 482.4
+z
+" clip-path="url(#p419f717aad)" style="fill: #fafcfe; stroke: #d97706; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 548.64 482.4
+L 970.56 482.4
+Q 979.2 482.4 979.2 491.04
+L 979.2 614.16
+Q 979.2 622.8 970.56 622.8
+L 548.64 622.8
+Q 540 622.8 540 614.16
+L 540 491.04
+Q 540 482.4 548.64 482.4
+z
+" clip-path="url(#p419f717aad)" style="fill: #fafcfe; stroke: #475569; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 37.44 640.8
+L 459.36 640.8
+Q 468 640.8 468 649.44
+L 468 772.56
+Q 468 781.2 459.36 781.2
+L 37.44 781.2
+Q 28.8 781.2 28.8 772.56
+L 28.8 649.44
+Q 28.8 640.8 37.44 640.8
+z
+" clip-path="url(#p419f717aad)" style="fill: #fafcfe; stroke: #be185d; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_18">
+    <path d="M 548.64 640.8
+L 970.56 640.8
+Q 979.2 640.8 979.2 649.44
+L 979.2 772.56
+Q 979.2 781.2 970.56 781.2
+L 548.64 781.2
+Q 540 781.2 540 772.56
+L 540 649.44
+Q 540 640.8 548.64 640.8
+z
+" clip-path="url(#p419f717aad)" style="fill: #fafcfe; stroke: #9a3412; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="fill: #172338; font: 700 23px 'DejaVu Sans'; text-anchor: start" x="28.8" y="38.632656" transform="rotate(-0 28.8 38.632656)">Bản đồ paper: 8 nhóm theo bài toán chính</text>
+   </g>
+   <g id="text_2">
+    <text style="fill: #526277; font: 12px 'DejaVu Sans'; text-anchor: start" x="28.8" y="62.344688" transform="rotate(-0 28.8 62.344688)">23 paper • một nhóm chính mỗi bài; kỹ thuật giao nhau xem ma trận thành phần</text>
+   </g>
+   <g id="text_3">
+    <text style="fill: #172338; font: 700 17px 'DejaVu Sans'; text-anchor: middle" x="504" y="110.804531" transform="rotate(-0 504 110.804531)">Định vị online toàn lượt công việc</text>
+   </g>
+   <g id="text_4">
+    <text style="fill: #172338; font: 11px 'DejaVu Sans'; text-anchor: middle" x="504" y="128.064531" transform="rotate(-0 504 128.064531)">Exocentric • nhiều lượt • pause/repair • completion</text>
+   </g>
+   <g id="text_5">
+    <text style="fill: #2563eb; font: 700 13.5px 'DejaVu Sans'; text-anchor: start" x="43.2" y="188.735625" transform="rotate(-0 43.2 188.735625)">G1 · Định vị action online</text>
+   </g>
+   <g id="text_6">
+    <text style="fill: #172338; font: 11.2px 'DejaVu Sans'; text-anchor: start" x="43.2" y="212.6105" transform="rotate(-0 43.2 212.6105)">P01 OnPoint · P02 DUGO · P07 OZ-TAL · P11 HAT · P18 MATR</text>
+   </g>
+   <g id="text_7">
+    <text style="fill: #172338; font: 10.8px 'DejaVu Sans'; text-anchor: start" x="43.2" y="251.840812" transform="rotate(-0 43.2 251.840812)">Xử lý: Nhiều interval; history/memory; ít nhãn hoặc zero-shot.</text>
+   </g>
+   <g id="text_8">
+    <text style="fill: #526277; font: 10.5px 'DejaVu Sans'; text-anchor: start" x="43.2" y="281.747344" transform="rotate(-0 43.2 281.747344)">Giới hạn: Action end chưa mặc định là hoàn thành toàn công việc.</text>
+   </g>
+   <g id="text_9">
+    <text style="fill: #0891b2; font: 700 13.5px 'DejaVu Sans'; text-anchor: start" x="554.4" y="188.982422" transform="rotate(-0 554.4 188.982422)">G2 · Frame, step và boundary</text>
+   </g>
+   <g id="text_10">
+    <text style="fill: #172338; font: 11.2px 'DejaVu Sans'; text-anchor: start" x="554.4" y="212.6105" transform="rotate(-0 554.4 212.6105)">P05 Online GEBD · P06 CMeRT · P10 OnlineTAS</text>
+   </g>
+   <g id="text_11">
+    <text style="fill: #172338; font: 10.8px 'DejaVu Sans'; text-anchor: start" x="554.4" y="251.650969" transform="rotate(-0 554.4 251.650969)">Xử lý: Nhãn frame, segmentation hoặc boundary candidates.</text>
+   </g>
+   <g id="text_12">
+    <text style="fill: #526277; font: 10.5px 'DejaVu Sans'; text-anchor: start" x="554.4" y="282.063164" transform="rotate(-0 554.4 282.063164)">Giới hạn: Đổi thao tác/nghỉ chưa phải kết thúc một lượt.</text>
+   </g>
+   <g id="text_13">
+    <text style="fill: #7c3aed; font: 700 13.5px 'DejaVu Sans'; text-anchor: start" x="43.2" y="347.943516" transform="rotate(-0 43.2 347.943516)">G3 · Phân cấp và tiến trình</text>
+   </g>
+   <g id="text_14">
+    <text style="fill: #172338; font: 11.2px 'DejaVu Sans'; text-anchor: start" x="43.2" y="371.0105" transform="rotate(-0 43.2 371.0105)">P03 OpenHOUSE · P12 ProTAS</text>
+   </g>
+   <g id="text_15">
+    <text style="fill: #172338; font: 10.8px 'DejaVu Sans'; text-anchor: start" x="43.2" y="410.050969" transform="rotate(-0 43.2 410.050969)">Xử lý: Substep–step–goal; action progress và task graph.</text>
+   </g>
+   <g id="text_16">
+    <text style="fill: #526277; font: 10.5px 'DejaVu Sans'; text-anchor: start" x="43.2" y="440.463164" transform="rotate(-0 43.2 440.463164)">Giới hạn: Hiểu goal/tiến trình chưa xác nhận đã đạt goal.</text>
+   </g>
+   <g id="text_17">
+    <text style="fill: #059669; font: 700 13.5px 'DejaVu Sans'; text-anchor: start" x="554.4" y="347.382422" transform="rotate(-0 554.4 347.382422)">G4 · Completion và trạng thái quy trình</text>
+   </g>
+   <g id="text_18">
+    <text style="fill: #172338; font: 11.2px 'DejaVu Sans'; text-anchor: start" x="554.4" y="371.0105" transform="rotate(-0 554.4 371.0105)">P08 PHGC · P13 IndustReal / PSR · P14 Action Completion</text>
+   </g>
+   <g id="text_19">
+    <text style="fill: #172338; font: 11.2px 'DejaVu Sans'; text-anchor: start" x="554.4" y="386.1305" transform="rotate(-0 554.4 386.1305)">P19 PROVIA</text>
+   </g>
+   <g id="text_20">
+    <text style="fill: #172338; font: 10.8px 'DejaVu Sans'; text-anchor: start" x="554.4" y="410.422219" transform="rotate(-0 554.4 410.422219)">Xử lý: Verification, hoàn tất bước, completion moment, lỗi/state.</text>
+   </g>
+   <g id="text_21">
+    <text style="fill: #526277; font: 10.5px 'DejaVu Sans'; text-anchor: start" x="554.4" y="440.385234" transform="rotate(-0 554.4 440.385234)">Giới hạn: Đầu ra và quyền nhìn dữ liệu của bốn bài khác nhau.</text>
+   </g>
+   <g id="text_22">
+    <text style="fill: #d97706; font: 700 13.5px 'DejaVu Sans'; text-anchor: start" x="43.2" y="505.782422" transform="rotate(-0 43.2 505.782422)">G5 · Grounding theo ngôn ngữ</text>
+   </g>
+   <g id="text_23">
+    <text style="fill: #172338; font: 11.2px 'DejaVu Sans'; text-anchor: start" x="43.2" y="529.4105" transform="rotate(-0 43.2 529.4105)">P04 Event Memory · P09 Bayesian-VSLNet</text>
+   </g>
+   <g id="text_24">
+    <text style="fill: #172338; font: 10.8px 'DejaVu Sans'; text-anchor: start" x="43.2" y="568.450969" transform="rotate(-0 43.2 568.450969)">Xử lý: Tìm interval theo query; event memory hoặc order prior.</text>
+   </g>
+   <g id="text_25">
+    <text style="fill: #526277; font: 10.5px 'DejaVu Sans'; text-anchor: start" x="43.2" y="598.785234" transform="rotate(-0 43.2 598.785234)">Giới hạn: P04 online; P09 offline. Cần query/step description.</text>
+   </g>
+   <g id="text_26">
+    <text style="fill: #475569; font: 700 13.5px 'DejaVu Sans'; text-anchor: start" x="554.4" y="506.290781" transform="rotate(-0 554.4 506.290781)">G6 · Nền xác suất theo thời gian</text>
+   </g>
+   <g id="text_27">
+    <text style="fill: #172338; font: 11.2px 'DejaVu Sans'; text-anchor: start" x="554.4" y="529.4105" transform="rotate(-0 554.4 529.4105)">P15 BOCPD · P16 HDP-HSMM · P17 Robust BOCPD</text>
+   </g>
+   <g id="text_28">
+    <text style="fill: #172338; font: 10.8px 'DejaVu Sans'; text-anchor: start" x="554.4" y="568.450969" transform="rotate(-0 554.4 568.450969)">Xử lý: Changepoint, run length, duration, robust filtering.</text>
+   </g>
+   <g id="text_29">
+    <text style="fill: #526277; font: 10.5px 'DejaVu Sans'; text-anchor: start" x="554.4" y="598.909102" transform="rotate(-0 554.4 598.909102)">Giới hạn: Không có sẵn ngữ nghĩa goal; P16 không là online filter.</text>
+   </g>
+   <g id="text_30">
+    <text style="fill: #be185d; font: 700 13.5px 'DejaVu Sans'; text-anchor: start" x="43.2" y="664.948125" transform="rotate(-0 43.2 664.948125)">G7 · Biểu diễn và chuyển góc nhìn</text>
+   </g>
+   <g id="text_31">
+    <text style="fill: #172338; font: 11.2px 'DejaVu Sans'; text-anchor: start" x="43.2" y="687.8105" transform="rotate(-0 43.2 687.8105)">P21 Unseen-view TAS</text>
+   </g>
+   <g id="text_32">
+    <text style="fill: #172338; font: 10.8px 'DejaVu Sans'; text-anchor: start" x="43.2" y="726.850969" transform="rotate(-0 43.2 726.850969)">Xử lý: Representation và protocol unseen-view TAS.</text>
+   </g>
+   <g id="text_33">
+    <text style="fill: #526277; font: 10.5px 'DejaVu Sans'; text-anchor: start" x="43.2" y="757.185234" transform="rotate(-0 43.2 757.185234)">Giới hạn: Cần dữ liệu nhiều view train; chưa chứng minh causal.</text>
+   </g>
+   <g id="text_34">
+    <text style="fill: #9a3412; font: 700 13.5px 'DejaVu Sans'; text-anchor: start" x="554.4" y="663.965156" transform="rotate(-0 554.4 663.965156)">G8 · Metric và chẩn đoán lỗi</text>
+   </g>
+   <g id="text_35">
+    <text style="fill: #172338; font: 11.2px 'DejaVu Sans'; text-anchor: start" x="554.4" y="687.8105" transform="rotate(-0 554.4 687.8105)">P20 WARI / SMS · P22 Affiliation Metrics · P23 Range P/R</text>
+   </g>
+   <g id="text_36">
+    <text style="fill: #172338; font: 10.8px 'DejaVu Sans'; text-anchor: start" x="554.4" y="726.850969" transform="rotate(-0 554.4 726.850969)">Xử lý: WARI/SMS, affiliation, range precision/recall.</text>
+   </g>
+   <g id="text_37">
+    <text style="fill: #526277; font: 10.5px 'DejaVu Sans'; text-anchor: start" x="554.4" y="757.263164" transform="rotate(-0 554.4 757.263164)">Giới hạn: Không thay identity matching hoặc thời điểm phát event.</text>
+   </g>
+   <g id="text_38">
+    <text style="fill: #526277; font: 11px 'DejaVu Sans'; text-anchor: start" x="28.8" y="820.169297" transform="rotate(-0 28.8 820.169297)">Cạnh = thuộc nhóm nghiên cứu; không phải quan hệ trích dẫn hoặc module đã ghép thành hệ thống.</text>
+   </g>
+   <g id="text_39">
+    <text style="fill: #526277; font: 10px 'DejaVu Sans'; text-anchor: start" x="28.8" y="838.246875" transform="rotate(-0 28.8 838.246875)">Khảo sát v0.1 · 2026-11-13 · phạm vi/nguồn: docs/paper_map.md</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p419f717aad">
+   <rect x="0" y="0" width="1008" height="856.8"/>
+  </clipPath>
+ </defs>
+</svg>

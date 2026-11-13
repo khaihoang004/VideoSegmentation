@@ -1,0 +1,234 @@
+{
+  "version": "0.1",
+  "updated": "2026-11-13",
+  "scope": "Phân loại 23 paper đã lưu; đánh giá định tính theo setting gốc, chưa tái lập. Không phải citation graph hoặc bảng xếp hạng.",
+  "legend": {
+    "N": "Xử lý trực tiếp trong setting gốc; không đồng nghĩa giải quyết yêu cầu dự án.",
+    "R": "Liên quan nhưng khác cấp độ, đầu ra hoặc giả định; cần thích nghi/kiểm chứng.",
+    "-": "Chưa ghi nhận là thành phần được bài xử lý trong khảo sát này; không chứng minh bất khả thi."
+  },
+  "components": [
+    {"id": "C", "label": "Causal", "definition": "Quyết định theo prefix trong setting bài; chưa audit toàn bộ backbone/code, chưa bảo đảm real-time end-to-end."},
+    {"id": "I", "label": "Interval", "definition": "Định vị start/end theo action instance hoặc text query. Segmentation/điểm boundary đơn thuần chỉ là liên quan."},
+    {"id": "H", "label": "Cấu trúc", "definition": "Phân cấp, thứ tự bước, task graph hoặc tiến trình quy trình; không tự bao gồm identity toàn lượt qua pause."},
+    {"id": "G", "label": "Hoàn tất", "definition": "Phân biệt đã đạt kết quả với chỉ thực hiện. Nhãn goal, tiến trình và phát hiện lỗi chỉ là liên quan nếu chưa xác nhận achievement."},
+    {"id": "M", "label": "Bộ nhớ dài", "definition": "Cơ chế khai thác lịch sử ngoài ngữ cảnh ngắn là thành phần nghiên cứu; không mặc định đồng nghĩa memory của đúng task-instance."},
+    {"id": "U", "label": "Xác suất", "definition": "Filtering, prior thứ tự hoặc thời lượng được mô hình hóa rõ. Gaussian prototypes không tự là posterior completion hay uncertainty đã calibration."},
+    {"id": "V", "label": "Đổi góc", "definition": "Chủ đích học/đánh giá generalization sang view chưa thấy. Chỉ có thí nghiệm exocentric không đủ để đánh N."},
+    {"id": "L", "label": "Ít nhãn", "definition": "Giảm interval supervision bằng point supervision/distillation; nhãn phân cấp tạo có hỗ trợ LLM là liên quan, không tương đương cùng ngân sách nhãn."},
+    {"id": "E", "label": "Đánh giá", "definition": "Protocol/metric hoặc phân tích accuracy-latency là đóng góp rõ; không đánh dấu chỉ vì bài có báo một điểm benchmark."}
+  ],
+  "groups": [
+    {
+      "id": "G1", "name": "Định vị action online", "color": "#2563eb",
+      "members": ["P01", "P02", "P07", "P11", "P18"],
+      "handles": "Nhiều interval; history/memory; ít nhãn hoặc zero-shot.",
+      "limit": "Action end chưa mặc định là hoàn thành toàn công việc."
+    },
+    {
+      "id": "G2", "name": "Frame, step và boundary", "color": "#0891b2",
+      "members": ["P05", "P06", "P10"],
+      "handles": "Nhãn frame, segmentation hoặc boundary candidates.",
+      "limit": "Đổi thao tác/nghỉ chưa phải kết thúc một lượt."
+    },
+    {
+      "id": "G3", "name": "Phân cấp và tiến trình", "color": "#7c3aed",
+      "members": ["P03", "P12"],
+      "handles": "Substep–step–goal; action progress và task graph.",
+      "limit": "Hiểu goal/tiến trình chưa xác nhận đã đạt goal."
+    },
+    {
+      "id": "G4", "name": "Completion và trạng thái quy trình", "color": "#059669",
+      "members": ["P08", "P13", "P14", "P19"],
+      "handles": "Verification, hoàn tất bước, completion moment, lỗi/state.",
+      "limit": "Đầu ra và quyền nhìn dữ liệu của bốn bài khác nhau."
+    },
+    {
+      "id": "G5", "name": "Grounding theo ngôn ngữ", "color": "#d97706",
+      "members": ["P04", "P09"],
+      "handles": "Tìm interval theo query; event memory hoặc order prior.",
+      "limit": "P04 online; P09 offline. Cần query/step description."
+    },
+    {
+      "id": "G6", "name": "Nền xác suất theo thời gian", "color": "#475569",
+      "members": ["P15", "P16", "P17"],
+      "handles": "Changepoint, run length, duration, robust filtering.",
+      "limit": "Không có sẵn ngữ nghĩa goal; P16 không là online filter."
+    },
+    {
+      "id": "G7", "name": "Biểu diễn và chuyển góc nhìn", "color": "#be185d",
+      "members": ["P21"],
+      "handles": "Representation và protocol unseen-view TAS.",
+      "limit": "Cần dữ liệu nhiều view train; chưa chứng minh causal."
+    },
+    {
+      "id": "G8", "name": "Metric và chẩn đoán lỗi", "color": "#9a3412",
+      "members": ["P20", "P22", "P23"],
+      "handles": "WARI/SMS, affiliation, range precision/recall.",
+      "limit": "Không thay identity matching hoặc thời điểm phát event."
+    }
+  ],
+  "papers": [
+    {
+      "id": "P01", "name": "OnPoint", "coverage": {"C": "N", "I": "N", "L": "N", "E": "R"},
+      "setting": "Online student; offline teacher chỉ lúc train; point/action instance.",
+      "solves": "Teacher→student distillation nhiều mức; định vị interval với point labels.",
+      "gap": "Điểm nhãn và action interval chưa là completion/interval toàn lượt.",
+      "evidence": "§3–4; Appendix B.2–B.3 về decoding/latency; PDF tr. 22–23."
+    },
+    {
+      "id": "P02", "name": "DUGO", "coverage": {"C": "N", "I": "N", "M": "N", "U": "R"},
+      "setting": "On-TAL; ego procedural và MUSES.",
+      "solves": "Dual-scale context và Gaussian prototypes cho localization.",
+      "gap": "Gaussian memory chưa chứng minh belief về kết quả/identity của lượt đang mở.",
+      "evidence": "§III-B–III-C, đặc biệt Gaussian memory; PDF tr. 4–5."
+    },
+    {
+      "id": "P03", "name": "OpenHOUSE", "coverage": {"C": "N", "I": "N", "H": "N", "G": "R", "L": "R"},
+      "setting": "Hierarchical streaming; có thí nghiệm exocentric.",
+      "solves": "Localization và mô tả phân cấp; actionness/progression tách action liền nhau.",
+      "gap": "Goal description/accuracy chưa là bằng chứng goal achievement và ownership qua pause.",
+      "evidence": "§3–4; Table 3, PDF tr. 7, gồm hàng exocentric."
+    },
+    {
+      "id": "P04", "name": "Event Memory", "coverage": {"C": "N", "I": "N", "M": "N", "E": "N"},
+      "setting": "Online video temporal grounding với text query.",
+      "solves": "Hierarchical event memory và future prediction để đổi accuracy lấy start delay.",
+      "gap": "Predicted/anticipated boundary không đồng nghĩa đã hoàn thành; chưa tự phát hiện mọi lượt của task.",
+      "evidence": "§3; Table 1, PDF tr. 7: grounding cùng start/end delay."
+    },
+    {
+      "id": "P05", "name": "Online GEBD", "coverage": {"C": "N", "I": "R"},
+      "setting": "Online generic event boundaries, không phụ thuộc action class.",
+      "solves": "Prediction error/surprise và ngưỡng thích nghi để phát boundary.",
+      "gap": "Không biết boundary thuộc thao tác, pause hay completed task.",
+      "evidence": "§3: ESTimator; Table 1, PDF tr. 6."
+    },
+    {
+      "id": "P06", "name": "CMeRT", "coverage": {"C": "N", "M": "N"},
+      "setting": "Online action detection, đầu ra nhãn frame hiện tại.",
+      "solves": "Giảm lệch context train/test bằng near-past và memory-refined near-future.",
+      "gap": "Không có đầu ra task-instance hoặc completed-event theo yêu cầu dự án.",
+      "evidence": "§3–4: context enhancement/memory refinement; Table 2, PDF tr. 6."
+    },
+    {
+      "id": "P07", "name": "OZ-TAL", "coverage": {"C": "N", "I": "N", "M": "N", "L": "R"},
+      "setting": "Online zero-shot localization với VLM đóng băng.",
+      "solves": "Memory-guided enhancement và background discrimination cho lớp chưa học.",
+      "gap": "Zero-shot class transfer khác point-supervision; chưa xác minh goal achievement.",
+      "evidence": "§III: VFEAL; Table I, PDF tr. 6."
+    },
+    {
+      "id": "P08", "name": "PHGC", "coverage": {"H": "N", "G": "R"},
+      "setting": "Video–natural-language-rule verification; không phải causal interval detector.",
+      "solves": "Heterogeneous graph kết nối video, thực thể và luật quy trình.",
+      "gap": "Graph completion trong tên bài không có nghĩa phát hiện mốc hoàn thành công việc.",
+      "evidence": "§3, problem/method; Table 2, PDF tr. 6: task verification F1."
+    },
+    {
+      "id": "P09", "name": "Bayesian-VSLNet", "coverage": {"I": "N", "H": "N", "U": "N"},
+      "setting": "Offline language grounding; có step descriptions và order prior.",
+      "solves": "Likelihood grounding × prior thứ tự để phân biệt step occurrence lặp.",
+      "gap": "Prior/normalization theo video đầy đủ cần thiết kế lại để causal và cho repair.",
+      "evidence": "§4.2, Eq. 11, PDF tr. 5; Table 1, PDF tr. 6."
+    },
+    {
+      "id": "P10", "name": "OnlineTAS", "coverage": {"C": "N", "I": "R", "M": "N", "E": "R"},
+      "setting": "Online/semi-online temporal action segmentation; có exo.",
+      "solves": "Adaptive memory, causal TCN và post-processing giảm over-segmentation.",
+      "gap": "Step segments khác whole-task instances; phải tính delay của việc giữ/sửa nhãn.",
+      "evidence": "§3.4–3.5, PDF tr. 5; Table 1, PDF tr. 6: online/semi-online và post-processing."
+    },
+    {
+      "id": "P11", "name": "HAT", "coverage": {"C": "N", "I": "N", "M": "N"},
+      "setting": "Procedural On-TAL, đặc biệt ego.",
+      "solves": "History augmentation, anchor refinement và adaptive focal loss.",
+      "gap": "Action history/interval không xác nhận task đã đạt kết quả.",
+      "evidence": "§3: history augmentation và anchor refinement; Table 1, PDF tr. 10."
+    },
+    {
+      "id": "P12", "name": "ProTAS", "coverage": {"C": "N", "I": "R", "H": "N", "G": "R"},
+      "setting": "Online segmentation của ego procedural actions.",
+      "solves": "Action-progress prediction và task graph hỗ trợ causal segmentation.",
+      "gap": "Progress của action chưa là completed whole-task; chưa đủ ca lỗi/repair của dự án.",
+      "evidence": "§4.2–4.4: APP/task graph; §5.1 và Table 1, PDF tr. 6."
+    },
+    {
+      "id": "P13", "name": "IndustReal / PSR", "coverage": {"C": "N", "I": "R", "H": "N", "G": "N", "E": "N"},
+      "setting": "Ego; online procedure-step recognition và assembly-state detection.",
+      "solves": "Nhận biết bước hoàn thành đúng, execution errors, thứ tự và delay PSR.",
+      "gap": "Completion cấp bước chưa cung cấp start/end nhiều lượt toàn công việc trong exo.",
+      "evidence": "§3–4: PSR/ASD; Table 4, PDF tr. 8: F1 và delay."
+    },
+    {
+      "id": "P14", "name": "Action Completion", "coverage": {"I": "R", "G": "N"},
+      "setting": "Sequence-level completion moment; kết quả chính dùng cả frame sau completion.",
+      "solves": "Attempted vs achieved; voting classification/regression cho completion moment.",
+      "gap": "Không chứng minh online emission nhiều task-instance với đủ hai biên.",
+      "evidence": "Abstract, PDF tr. 1; §4.1–4.2 voting; Table 1, PDF tr. 8."
+    },
+    {
+      "id": "P15", "name": "BOCPD", "coverage": {"C": "N", "U": "N"},
+      "setting": "Online filtering cho time series, không phải video task model.",
+      "solves": "Posterior run length, predictive likelihood và hazard cho changepoint.",
+      "gap": "Changepoint không có sẵn ngữ nghĩa goal; cần kiểm tra recursion/latency khi decode.",
+      "evidence": "§2–3 và Algorithm 1: message passing/run-length posterior."
+    },
+    {
+      "id": "P16", "name": "HDP-HSMM", "coverage": {"H": "R", "U": "N"},
+      "setting": "Batch Gibbs inference của latent-state time series.",
+      "solves": "Explicit state duration và flexible latent-state model.",
+      "gap": "Không tự là causal filter; latent state chưa có task semantics hoặc instance identity.",
+      "evidence": "§2–4: explicit-duration HSMM và Gibbs sampling; JMLR bản đã lưu."
+    },
+    {
+      "id": "P17", "name": "Robust BOCPD", "coverage": {"C": "N", "U": "N"},
+      "setting": "Online robust Bayesian changepoint detection ngoài video.",
+      "solves": "Generalized Bayes/score matching giảm ảnh hưởng outlier và chi phí filtering.",
+      "gap": "Không nhận biết completed task; độ nhanh của chuỗi thử nghiệm không là FPS video.",
+      "evidence": "§3–4: robust online inference và experiments; abstract."
+    },
+    {
+      "id": "P18", "name": "MATR", "coverage": {"C": "N", "I": "N", "M": "N"},
+      "setting": "On-TAL; THUMOS14/MUSES, không phải industrial goal benchmark.",
+      "solves": "Memory queue; dự đoán end rồi truy hồi start; online NMS.",
+      "gap": "Dạng đầu ra phù hợp nhưng end-of-action chưa xác nhận goal/ownership qua pause.",
+      "evidence": "§3.2–3.4, PDF tr. 6–9; Table 1, PDF tr. 11."
+    },
+    {
+      "id": "P19", "name": "PROVIA", "coverage": {"C": "N", "I": "R", "H": "N", "G": "R", "M": "N", "U": "N", "E": "N"},
+      "setting": "Ego online mistake detection trên whole trials; step segmentation là tầng đầu.",
+      "solves": "Factual state tách accepted progress; Bayesian filtering, hazard và sequential alarms; no-perception controls.",
+      "gap": "Không trả whole-task start/end; recovery có prior art nhưng ownership của lượt qua pause chưa được chứng minh ở setting đích.",
+      "evidence": "§III protocol; §IV-B–IV-E segmentation/state/filter/alarms; §V protocol checks."
+    },
+    {
+      "id": "P20", "name": "WARI / SMS", "coverage": {"E": "N"},
+      "setting": "Đánh giá time-series segmentation; không phải detector.",
+      "solves": "Metric nhạy vị trí boundary và tách delay/isolation/transition/missing.",
+      "gap": "Không đo thời điểm phát completion hoặc identity các lượt; mapping semantics cần kiểm tra.",
+      "evidence": "§2.2–3, PDF tr. 4–7; §4 evaluation."
+    },
+    {
+      "id": "P21", "name": "Unseen-view TAS", "coverage": {"I": "R", "V": "N", "E": "N"},
+      "setting": "Unseen-view TAS; nhiều view train, exo/ego test; chưa chứng minh causal.",
+      "solves": "Sequence/action similarity losses và protocol camera chưa thấy.",
+      "gap": "Cần đưa loss vào causal encoder và kiểm tra vẫn giữ bằng chứng goal-state đặc thù view.",
+      "evidence": "§3: sequence/action loss và protocol; Figure 4, PDF tr. 7."
+    },
+    {
+      "id": "P22", "name": "Affiliation Metrics", "coverage": {"E": "N"},
+      "setting": "Đánh giá interval anomaly trong time series.",
+      "solves": "Local temporal-distance P/R và kiểm tra metric bị khai thác bởi dự đoán xấu.",
+      "gap": "Không thay one-to-one task matching hay completion emission latency.",
+      "evidence": "§3–4; Table 5, PDF tr. 7: adversarial predictor."
+    },
+    {
+      "id": "P23", "name": "Range P/R", "coverage": {"E": "N"},
+      "setting": "Precision/recall cho time-series ranges.",
+      "solves": "Existence, overlap, cardinality và positional bias theo yêu cầu ứng dụng.",
+      "gap": "Metric có tham số; cần kiểm tra gaming và không mặc định early reward hợp completion.",
+      "evidence": "§4, PDF tr. 3–5: định nghĩa range P/R; §5 experiments."
+    }
+  ]
+}
