@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "videosegmentation-ikea-protas-runtime"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = ["torch>=2.3,<3", "numpy>=1.23,<3", "requests>=2.32,<3", "tqdm>=4.66,<5"]
+[project.optional-dependencies]
+train = []
+video = ["av>=12,<20", "Pillow>=9.1,<13"]
+[tool.setuptools.packages.find]
+include = ["experiences*", "videosegmentation*"]
+exclude = ["experiences.third_party*"]
